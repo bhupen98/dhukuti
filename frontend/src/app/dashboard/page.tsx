@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Avatar from "react-avatar";
+import Avatar from "boring-avatars";
 import {
   FaBell,
   FaUsers,
