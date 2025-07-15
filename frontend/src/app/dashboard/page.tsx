@@ -5,13 +5,23 @@ import Avatar from "boring-avatars";
 import {
   FaBell,
   FaUsers,
-  FaPlus,
   FaCrown,
   FaStar,
   FaCheckCircle,
   FaCommentDots,
   FaQuestionCircle,
 } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+
+// Protects dashboard: redirects to /login if not logged in
+function useAuthGuard() {
+  const router = useRouter();
+  useEffect(() => {
+    if (typeof window !== "undefined" && !localStorage.getItem("token")) {
+      router.replace("/login");
+    }
+  }, [router]);
+}
 
 // Fetches group activity from Django API
 function ActivityFeed() {
@@ -68,7 +78,6 @@ function ActivityFeed() {
   );
 }
 
-// The rest of your dashboard components (TopBar, UserProfileCard, etc) are unchanged:
 function TopBar() {
   return (
     <div className="flex items-center justify-start max-w-5xl mx-auto py-4 px-4 mb-2 gap-4">
@@ -178,12 +187,13 @@ function HelpCenterWidget() {
 }
 
 export default function DashboardPage() {
+  useAuthGuard();
   return (
     <div className="max-w-5xl mx-auto py-8 px-4 grid grid-cols-[1fr_320px] gap-8">
       <div>
         <TopBar />
         <Separator />
-        <ActivityFeed /> {/* <-- Activity is fetched live from Django */}
+        <ActivityFeed />
       </div>
       <aside className="sticky top-20">
         <UserProfileCard />

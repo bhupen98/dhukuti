@@ -11,33 +11,66 @@ export default function CreateGroupPage() {
   const [members, setMembers] = useState(10);
   const [startDate, setStartDate] = useState("");
   const [success, setSuccess] = useState(false);
-
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  // Simulated submit handler (replace with real backend call later)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccess(false);
+    setError("");
 
-    // You would send the data to the backend here:
-    // await fetch("/api/groups/create/", { ... })
+    const groupData = {
+      name: groupName,
+      description,
+      amount,
+      frequency,
+      members,
+      start_date: startDate,
+    };
 
-    setSuccess(true);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/groups/create/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(groupData),
+      });
 
-    // Wait a moment, then redirect to My Groups page
-    setTimeout(() => {
-      router.push("/dashboard/groups");
-    }, 1200);
+      if (response.ok) {
+        setSuccess(true);
+        setTimeout(() => {
+          router.push("/dashboard/groups");
+        }, 1200);
+      } else {
+        const errData = await response.json();
+        setError(
+          errData?.detail ||
+            "Something went wrong. Please check your inputs and try again."
+        );
+      }
+    } catch (err) {
+      setError("Failed to connect to server. Is the backend running?");
+    }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold text-blue-900 mb-6">Create Group</h1>
-        {success ? (
+
+        {success && (
           <div className="text-green-600 font-bold text-center mb-4">
             Group created! Redirecting to My Groups...
           </div>
-        ) : null}
+        )}
+
+        {error && (
+          <div className="text-red-500 font-bold text-center mb-4">
+            {error}
+          </div>
+        )}
+
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block font-semibold mb-1">Group Name</label>
@@ -105,20 +138,10 @@ export default function CreateGroupPage() {
                 className="w-full border border-gray-300 rounded px-3 py-2"
                 value={startDate}
                 onChange={e => setStartDate(e.target.value)}
+                required
               />
             </div>
           </div>
-          {/* Optional: Photo Upload
-          <div>
-            <label className="block font-semibold mb-1">Photo (optional)</label>
-            <input
-              type="file"
-              accept="image/*"
-              className="w-full"
-              onChange={e => setPhoto(e.target.files?.[0] || null)}
-            />
-          </div>
-          */}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white rounded py-3 font-bold mt-4 hover:bg-blue-700 transition"
@@ -127,6 +150,7 @@ export default function CreateGroupPage() {
             Create
           </button>
         </form>
+
         <div className="mt-6 text-center">
           <Link
             href="/dashboard/groups"

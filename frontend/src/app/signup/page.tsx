@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaUser, FaEnvelope, FaLock, FaGlobe } from "react-icons/fa";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -13,9 +15,9 @@ export default function SignupPage() {
     terms: false,
   });
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -23,7 +25,7 @@ export default function SignupPage() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -40,24 +42,29 @@ export default function SignupPage() {
       return;
     }
 
-    setSuccess(true);
+    setLoading(true);
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/auth/register/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: form.name,
+          email: form.email,
+          password: form.password,
+          // country is not used in backend by default
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        router.push("/login?registered=1");
+      } else {
+        setError(data.error || "Registration failed.");
+      }
+    } catch {
+      setError("Network error. Please try again.");
+    }
+    setLoading(false);
   };
-
-  if (success) {
-    return (
-      <main className="flex min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 items-center justify-center">
-        <div className="bg-white/90 rounded-2xl shadow-2xl p-8 md:p-10 w-full max-w-md flex flex-col items-center gap-5">
-          <h1 className="text-2xl font-bold text-blue-700 mb-2">🎉 Welcome to Dhukuti!</h1>
-          <p className="text-gray-600 text-center">
-            Your account was created. Please check your email to verify your account and log in.
-          </p>
-          <Link href="/login" className="text-blue-600 hover:underline font-semibold">
-            Go to Login
-          </Link>
-        </div>
-      </main>
-    );
-  }
 
   return (
     <main className="flex min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 items-center justify-center">
@@ -76,7 +83,6 @@ export default function SignupPage() {
             {error}
           </div>
         )}
-
         <div className="relative">
           <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
           <input
@@ -157,8 +163,9 @@ export default function SignupPage() {
         <button
           type="submit"
           className="bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold py-3 rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-500 transition text-lg"
+          disabled={loading}
         >
-          Create Account
+          {loading ? "Creating..." : "Create Account"}
         </button>
         <p className="text-sm text-gray-500 text-center mt-2">
           Already have an account?{" "}
