@@ -2,23 +2,72 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.contrib.auth.tokens import default_token_generator
+from django.urls import reverse
+from django.conf import settings
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth import get_user_model
 from .models import Group
 from .serializers import GroupSerializer
 
-# Register User Endpoint
+# 1. USER REGISTRATION ENDPOINT (with email verification)
 @api_view(['POST'])
 def register_user(request):
     username = request.data.get('username')
     password = request.data.get('password')
     email = request.data.get('email')
-    if not username or not password:
-        return Response({'error': 'Username and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Check for required fields
+    if not username or not password or not email:
+        return Response({'error': 'Username, password, and email are required.'}, status=status.HTTP_400_BAD_REQUEST)
+    # Email format validation
+    try:
+        validate_email(email)
+    except ValidationError:
+        return Response({'error': 'Please enter a valid email address.'}, status=status.HTTP_400_BAD_REQUEST)
+    # Duplicate checks
     if User.objects.filter(username=username).exists():
         return Response({'error': 'Username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
-    user = User.objects.create_user(username=username, password=password, email=email)
-    return Response({'message': 'User registered successfully.'}, status=status.HTTP_201_CREATED)
+    if User.objects.filter(email=email).exists():
+        return Response({'error': 'Email already registered.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# Group Activity Endpoint (Dummy Data)
+    # Create inactive user
+    user = User.objects.create_user(username=username, password=password, email=email, is_active=False)
+
+    # Generate verification token and URL
+    token = default_token_generator.make_token(user)
+    verify_url = request.build_absolute_uri(
+        reverse('verify_email') + f'?uid={user.pk}&token={token}'
+    )
+    # Send verification email
+    send_mail(
+        'Verify your Dhukuti account',
+        f'Hi {username},\n\nPlease verify your account by clicking the link below:\n{verify_url}\n\nIf you did not sign up, ignore this email.',
+        settings.DEFAULT_FROM_EMAIL,
+        [email],
+        fail_silently=False,
+    )
+    return Response({'message': 'Registration successful! Please check your email to verify your account.'}, status=status.HTTP_201_CREATED)
+
+# 2. EMAIL VERIFICATION ENDPOINT (redirects to pretty Next.js page)
+@api_view(['GET'])
+def verify_email(request):
+    uid = request.GET.get('uid')
+    token = request.GET.get('token')
+    UserModel = get_user_model()
+    user = get_object_or_404(UserModel, pk=uid)
+    if default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        # Redirect to your Next.js /verified page (change to your deployed domain if needed)
+        return redirect('http://localhost:3000/verified')
+    else:
+        return Response({'error': 'Invalid or expired verification link.'}, status=status.HTTP_400_BAD_REQUEST)
+
+# 3. GROUP ACTIVITY ENDPOINT (Dummy Data)
 from django.http import JsonResponse
 
 def group_activity(request):
@@ -47,7 +96,7 @@ def group_activity(request):
     ]
     return JsonResponse(data, safe=False)
 
-# Group List Endpoint
+# 4. GROUP LIST ENDPOINT
 @api_view(["GET"])
 def group_list(request):
     groups = Group.objects.all()
@@ -64,7 +113,7 @@ def group_list(request):
         group_data.append(group)
     return Response(group_data)
 
-# Group Create Endpoint
+# 5. GROUP CREATE ENDPOINT
 @api_view(["POST"])
 def create_group(request):
     serializer = GroupSerializer(data=request.data)
