@@ -13,22 +13,20 @@ from django.contrib.auth import get_user_model
 from .models import Group
 from .serializers import GroupSerializer
 
-# 1. USER REGISTRATION ENDPOINT (with email verification)
+# 1. USER REGISTRATION (with email verification)
 @api_view(['POST'])
 def register_user(request):
     username = request.data.get('username')
     password = request.data.get('password')
     email = request.data.get('email')
 
-    # Check for required fields
+    # Validation
     if not username or not password or not email:
         return Response({'error': 'Username, password, and email are required.'}, status=status.HTTP_400_BAD_REQUEST)
-    # Email format validation
     try:
         validate_email(email)
     except ValidationError:
         return Response({'error': 'Please enter a valid email address.'}, status=status.HTTP_400_BAD_REQUEST)
-    # Duplicate checks
     if User.objects.filter(username=username).exists():
         return Response({'error': 'Username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
     if User.objects.filter(email=email).exists():
@@ -37,12 +35,11 @@ def register_user(request):
     # Create inactive user
     user = User.objects.create_user(username=username, password=password, email=email, is_active=False)
 
-    # Generate verification token and URL
+    # Generate email verification token and link
     token = default_token_generator.make_token(user)
     verify_url = request.build_absolute_uri(
         reverse('verify_email') + f'?uid={user.pk}&token={token}'
     )
-    # Send verification email
     send_mail(
         'Verify your Dhukuti account',
         f'Hi {username},\n\nPlease verify your account by clicking the link below:\n{verify_url}\n\nIf you did not sign up, ignore this email.',
@@ -52,7 +49,7 @@ def register_user(request):
     )
     return Response({'message': 'Registration successful! Please check your email to verify your account.'}, status=status.HTTP_201_CREATED)
 
-# 2. EMAIL VERIFICATION ENDPOINT (redirects to pretty Next.js page)
+# 2. EMAIL VERIFICATION ENDPOINT
 @api_view(['GET'])
 def verify_email(request):
     uid = request.GET.get('uid')
@@ -62,12 +59,56 @@ def verify_email(request):
     if default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        # Redirect to your Next.js /verified page (change to your deployed domain if needed)
-        return redirect('http://localhost:3000/verified')
+        return redirect('http://localhost:3000/verified')  # Change to your domain if deployed
     else:
         return Response({'error': 'Invalid or expired verification link.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# 3. GROUP ACTIVITY ENDPOINT (Dummy Data)
+# 3. PASSWORD RESET: Request link
+@api_view(['POST'])
+def password_reset_request(request):
+    email = request.data.get('email')
+    if not email:
+        return Response({'error': 'Email is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response({'message': 'If an account with that email exists, a reset link has been sent.'})
+
+    token = default_token_generator.make_token(user)
+    reset_url = request.build_absolute_uri(
+        reverse('password_reset_confirm') + f'?uid={user.pk}&token={token}'
+    )
+
+    send_mail(
+        'Reset your Dhukuti password',
+        f'Hi,\n\nPlease reset your password by clicking the link below:\n{reset_url}\n\nIf you did not request a password reset, ignore this email.',
+        settings.DEFAULT_FROM_EMAIL,
+        [email],
+        fail_silently=False,
+    )
+
+    return Response({'message': 'If an account with that email exists, a reset link has been sent.'})
+
+# 4. PASSWORD RESET: Confirm new password
+@api_view(['POST'])
+def password_reset_confirm(request):
+    uid = request.GET.get('uid')
+    token = request.GET.get('token')
+    new_password = request.data.get('new_password')
+
+    if not new_password:
+        return Response({'error': 'New password is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = get_object_or_404(User, pk=uid)
+    if not default_token_generator.check_token(user, token):
+        return Response({'error': 'Invalid or expired reset link.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.set_password(new_password)
+    user.save()
+    return Response({'message': 'Password reset successful. You can now log in.'})
+
+# 5. GROUP ACTIVITY ENDPOINT (Dummy Data)
 from django.http import JsonResponse
 
 def group_activity(request):
@@ -96,7 +137,7 @@ def group_activity(request):
     ]
     return JsonResponse(data, safe=False)
 
-# 4. GROUP LIST ENDPOINT
+# 6. GROUP LIST ENDPOINT
 @api_view(["GET"])
 def group_list(request):
     groups = Group.objects.all()
@@ -113,7 +154,7 @@ def group_list(request):
         group_data.append(group)
     return Response(group_data)
 
-# 5. GROUP CREATE ENDPOINT
+# 7. GROUP CREATE ENDPOINT
 @api_view(["POST"])
 def create_group(request):
     serializer = GroupSerializer(data=request.data)

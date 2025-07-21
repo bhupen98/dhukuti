@@ -1,13 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Avatar from "boring-avatars";
 import {
-  FaBell,
   FaUsers,
-  FaCrown,
-  FaStar,
-  FaCheckCircle,
   FaCommentDots,
   FaQuestionCircle,
 } from "react-icons/fa";
@@ -78,6 +73,7 @@ function ActivityFeed() {
   );
 }
 
+// Top bar with quick links (still useful)
 function TopBar() {
   return (
     <div className="flex items-center justify-start max-w-5xl mx-auto py-4 px-4 mb-2 gap-4">
@@ -85,7 +81,7 @@ function TopBar() {
         href="/dashboard/groups/create"
         className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition font-bold"
       >
-        + Create Group
+        Create Group
       </Link>
       <Link
         href="/dashboard/groups"
@@ -94,35 +90,13 @@ function TopBar() {
         <FaUsers />
         My Groups
       </Link>
-      <Link
-        href="/dashboard/notifications"
-        className="flex items-center gap-2 bg-yellow-200 text-yellow-900 px-4 py-2 rounded shadow hover:bg-yellow-300 transition font-semibold"
-      >
-        <FaBell />
-        Notifications
-      </Link>
     </div>
   );
 }
 function Separator() {
   return <hr className="max-w-5xl mx-auto border-t border-gray-300 mb-6" />;
 }
-function UserProfileCard() {
-  return (
-    <div className="bg-white border border-gray-300 shadow p-4 flex flex-col items-center mb-6 max-w-xs mx-auto">
-      <Avatar name="Bhupen Thapa" size={72} round />
-      <span className="font-extrabold text-lg mt-2 text-blue-900">Bhupen</span>
-      <span className="text-gray-700 text-xs font-bold uppercase mt-1">
-        Trusted by 5 groups
-      </span>
-      <div className="flex gap-2 mt-2">
-        <FaCrown className="text-yellow-500" title="Group Leader" />
-        <FaStar className="text-indigo-400" title="Always Pays On Time" />
-        <FaCheckCircle className="text-green-500" title="Verified Email" />
-      </div>
-    </div>
-  );
-}
+
 function InviteWidget() {
   return (
     <div className="bg-white border border-gray-300 shadow p-4 flex flex-col items-center mb-6 max-w-xs mx-auto">
@@ -196,7 +170,6 @@ export default function DashboardPage() {
         <ActivityFeed />
       </div>
       <aside className="sticky top-20">
-        <UserProfileCard />
         <InviteWidget />
         <GroupChatPreview />
         <HelpCenterWidget />

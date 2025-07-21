@@ -138,18 +138,18 @@ REST_FRAMEWORK = {
 # -----------------------------------
 # Use the following for development/testing:
 # Emails will be printed to the console (not sent for real).
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@dhukuti.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# DEFAULT_FROM_EMAIL = 'noreply@dhukuti.com'
 
 # -----------------------------------
 # PRODUCTION EMAIL SETTINGS (Uncomment and fill when deploying)
 # -----------------------------------
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.yourprovider.com'
-# EMAIL_PORT = 587  # Or 465 for SSL
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your@email.com'
-# EMAIL_HOST_PASSWORD = 'your-email-password'
-# DEFAULT_FROM_EMAIL = 'noreply@dhukuti.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Or 465 for SSL
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'thapa.bhupen47@gmail.com'
+EMAIL_HOST_PASSWORD = 'cqwminlnwbekcxit'
+DEFAULT_FROM_EMAIL = 'thapa.bhupen47@gmail.com'
 
 # Tip: Use environment variables for sensitive info in production!
