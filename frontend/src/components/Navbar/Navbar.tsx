@@ -82,14 +82,14 @@ export default function Navbar() {
   // Render: Main navigation bar
   // ---------------------------------------------------------------------------
   return (
-    <nav className="border-b border-gray-200 bg-white sticky top-0 z-40 shadow-sm">
+    <nav className="border-b border-gray-200 bg-white sticky top-0 z-40 shadow-sm" style={{ fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
             href={loggedIn ? "/dashboard" : "/"}
-            className="text-blue-700 font-bold text-2xl hover:underline focus:outline-none"
-            style={{ letterSpacing: "0.05em" }}
+            className="text-blue-700 font-extrabold text-2xl tracking-wide hover:underline focus:outline-none"
+            style={{ letterSpacing: "0.08em", fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
           >
             Dhukuti
           </Link>
@@ -98,7 +98,8 @@ export default function Navbar() {
             {!loggedIn && (
               <Link
                 href="/about"
-                className="px-3 py-1 text-gray-700 rounded hover:bg-gray-100 hover:text-blue-700 transition"
+                className="px-3 py-1 text-gray-700 rounded hover:bg-gray-100 hover:text-blue-700 transition font-medium"
+                style={{ fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
               >
                 About
               </Link>
@@ -109,6 +110,7 @@ export default function Navbar() {
                 className="relative p-2 rounded-full hover:bg-gray-100 focus:outline-none"
                 aria-label="Notifications"
                 type="button"
+                style={{ fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
               >
                 <FaBell className="text-2xl text-gray-600" />
               </button>
@@ -118,13 +120,15 @@ export default function Navbar() {
               <>
                 <Link
                   href="/signup"
-                  className="px-3 py-1 text-gray-700 rounded hover:bg-gray-100 hover:text-blue-700 transition"
+                  className="px-3 py-1 text-gray-700 rounded hover:bg-gray-100 hover:text-blue-700 transition font-medium"
+                  style={{ fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
                 >
                   Sign Up
                 </Link>
                 <Link
                   href="/login"
-                  className="px-3 py-1 text-blue-700 font-semibold rounded hover:bg-blue-50 transition"
+                  className="px-3 py-1 text-blue-700 font-semibold rounded hover:bg-blue-50 transition font-bold"
+                  style={{ fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
                 >
                   Log In
                 </Link>
@@ -135,6 +139,7 @@ export default function Navbar() {
                   onClick={() => setDropdownOpen((v) => !v)}
                   className="flex items-center p-1 rounded-full hover:bg-gray-100 focus:outline-none"
                   aria-label="Profile"
+                  style={{ fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
                 >
                   <Avatar name={user.name} size={36} round={36} />
                   {/* Chevron */}
@@ -149,21 +154,30 @@ export default function Navbar() {
                   </svg>
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg z-50 py-2 border border-gray-100">
-                    <div className="px-4 py-2 text-gray-700 font-bold border-b">
-                      {user.name}
-                      <div className="text-xs text-gray-500">{user.email}</div>
+                  <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl z-50 py-4 border border-gray-100 flex flex-col items-center" style={{ fontFamily: 'Roboto Mono, Fira Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
+                    {/* Profile Card */}
+                    <div className="flex flex-col items-center w-full px-6 pb-4 border-b border-gray-100">
+                      <Avatar name={user.name} size={48} round={48} className="mb-2" />
+                      <span className="font-extrabold text-lg text-blue-900 mb-1">{user.name}</span>
+                      <span className="text-xs text-gray-500 mb-2">{user.email}</span>
+                      <div className="flex gap-4 text-xs text-gray-600 mb-2">
+                        <span className="flex items-center gap-1"><span role="img" aria-label="role">🧑‍💼</span> Member</span>
+                        <span className="flex items-center gap-1"><span role="img" aria-label="since">📅</span> Since 2024</span>
+                      </div>
+                      <span className="text-xs text-gray-400 italic">View and edit your profile details</span>
                     </div>
                     <Link
                       href="/profile"
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-50"
+                      className="block w-full px-6 py-3 text-blue-700 font-bold hover:bg-blue-50 text-center transition"
                       onClick={() => setDropdownOpen(false)}
+                      style={{ fontFamily: 'inherit' }}
                     >
-                      Profile
+                      My Profile
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+                      className="w-full px-6 py-3 text-left text-red-600 font-bold hover:bg-red-50 transition"
+                      style={{ fontFamily: 'inherit' }}
                     >
                       Logout
                     </button>
