@@ -1,12 +1,30 @@
+// -----------------------------------------------------------------------------
+// File: page.tsx
+// Description: Dashboard page for displaying user's groups in a grid view.
+//              Fetches group data from backend API and renders group cards.
+// Author: [Your Name]
+// Created: [Date]
+// -----------------------------------------------------------------------------
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Avatar from "boring-avatars";
 
+import { useEffect, useState } from "react";
+import type { Group } from "@/types/group";
+import Image from "next/image";
+import Link from "next/link";
+import UserAvatar from "@/components/Avatar/Avatar";
+
+/**
+ * MyGroupsPage Component
+ * Renders the user's groups with avatars, details, and navigation.
+ * Handles loading, empty, and populated states.
+ */
 export default function MyGroupsPage() {
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // ---------------------------------------------------------------------------
+  // Effect: Fetch groups from backend API on mount
+  // ---------------------------------------------------------------------------
   useEffect(() => {
     async function fetchGroups() {
       try {
@@ -14,7 +32,7 @@ export default function MyGroupsPage() {
         if (!res.ok) throw new Error("Failed to fetch groups");
         const data = await res.json();
         setGroups(data);
-      } catch (error) {
+      } catch {
         setGroups([]);
       } finally {
         setLoading(false);
@@ -23,8 +41,12 @@ export default function MyGroupsPage() {
     fetchGroups();
   }, []);
 
+  // ---------------------------------------------------------------------------
+  // Render: Main dashboard layout and group cards
+  // ---------------------------------------------------------------------------
   return (
     <div className="max-w-5xl mx-auto py-8 px-2 md:px-4">
+      {/* Header Section */}
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-extrabold text-blue-900 tracking-tight">My Groups</h1>
         <Link
@@ -35,6 +57,7 @@ export default function MyGroupsPage() {
         </Link>
       </div>
 
+      {/* Loading State */}
       {loading ? (
         <div className="text-gray-500 flex items-center gap-2">
           <svg className="animate-spin h-5 w-5 text-blue-600" viewBox="0 0 24 24">
@@ -44,6 +67,7 @@ export default function MyGroupsPage() {
           Loading groups...
         </div>
       ) : groups.length === 0 ? (
+        // Empty State
         <div className="text-gray-500 border rounded-xl bg-white py-12 text-center shadow">
           <p className="mb-3">You have no groups yet.</p>
           <Link href="/dashboard/groups/create" className="underline text-blue-700 font-bold">
@@ -51,32 +75,37 @@ export default function MyGroupsPage() {
           </Link>
         </div>
       ) : (
+        // Groups Grid
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
-          {groups.map((group) => (
+          {groups.map((group: Group) => (
             <Link
               key={group.id}
               href={`/dashboard/groups/${group.id}`}
               className="group block bg-white rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-200"
             >
+              {/* Group Card Header: Avatar and Name */}
               <div className="flex items-center gap-4 p-5 pb-2">
-                <Avatar
-                  size={52}
+                <UserAvatar
                   name={group.name}
-                  variant="beam"
-                  colors={["#2563eb", "#38bdf8", "#60a5fa", "#a7f3d0", "#fbbf24"]}
+                  size={52}
+                  round={26}
                 />
                 <div>
                   <div className="font-extrabold text-lg text-blue-900 group-hover:underline">{group.name}</div>
+                  {/* Member Avatars */}
                   <div className="flex -space-x-2 mt-2">
                     {(group.members_list || []).slice(0, 5).map((member, i) =>
                       member.avatar ? (
-                        <img
+                        <Image
                           key={i}
                           src={member.avatar}
                           alt={member.name}
+                          width={28}
+                          height={28}
                           className="w-7 h-7 rounded-full border-2 border-white shadow -ml-2"
                           title={member.name}
                           style={{ zIndex: 10 - i }}
+                          unoptimized
                         />
                       ) : (
                         <div
@@ -89,6 +118,7 @@ export default function MyGroupsPage() {
                         </div>
                       )
                     )}
+                    {/* Show extra member count if more than 5 */}
                     {group.members_list && group.members_list.length > 5 && (
                       <span className="ml-2 text-xs text-gray-400 font-semibold">
                         +{group.members_list.length - 5} more
@@ -98,6 +128,7 @@ export default function MyGroupsPage() {
                   <div className="text-xs text-gray-500 mt-1">{group.frequency} • {group.members} members</div>
                 </div>
               </div>
+              {/* Group Card Body: Description and Details */}
               <div className="px-5 pb-5 pt-1">
                 <div className="text-gray-700 mb-2 text-sm line-clamp-2">{group.description || <span className="italic text-gray-400">No description.</span>}</div>
                 <div className="flex gap-4 text-xs text-gray-500 mb-2">

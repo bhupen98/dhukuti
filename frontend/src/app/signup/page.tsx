@@ -1,10 +1,20 @@
+// -----------------------------------------------------------------------------
+// File: page.tsx
+// Description: Signup page for Dhukuti app. Handles user registration and signup form.
+// Author: [Your Name]
+// Created: [Date]
+// -----------------------------------------------------------------------------
 "use client";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaUser, FaEnvelope, FaLock, FaGlobe } from "react-icons/fa";
 
+
 export default function SignupPage() {
+  // ---------------------------------------------------------------------------
+  // State: Router, form fields, error, and loading
+  // ---------------------------------------------------------------------------
   const router = useRouter();
   const [form, setForm] = useState({
     name: "",
@@ -17,15 +27,25 @@ export default function SignupPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  // ---------------------------------------------------------------------------
+  // Handler: Update form fields on change
+  // ---------------------------------------------------------------------------
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    let fieldValue: string | boolean = value;
+    if (type === "checkbox") {
+      fieldValue = (e.target as HTMLInputElement).checked;
+    }
     setForm((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: fieldValue,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  // ---------------------------------------------------------------------------
+  // Handler: Submit signup form and register user
+  // ---------------------------------------------------------------------------
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
@@ -66,6 +86,9 @@ export default function SignupPage() {
     setLoading(false);
   };
 
+  // ---------------------------------------------------------------------------
+  // Render: Signup form and UI
+  // ---------------------------------------------------------------------------
   return (
     <main className="flex min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 items-center justify-center">
       <form

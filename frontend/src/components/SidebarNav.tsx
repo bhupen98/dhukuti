@@ -1,12 +1,27 @@
+
+// -----------------------------------------------------------------------------
+// File: SidebarNav.tsx
+// Description: Full-featured sidebar navigation for Dhukuti app dashboard.
+// Author: [Your Name]
+// Created: [Date]
+// -----------------------------------------------------------------------------
+
 import Link from "next/link";
 import { FaHome, FaUsers, FaPlusCircle, FaBell, FaUserCircle, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
 
+
+/**
+ * SidebarNav Component
+ * Renders the sidebar navigation for the dashboard, including links to main sections.
+ */
 export default function SidebarNav() {
   return (
     <aside className="hidden md:flex flex-col bg-white shadow-lg rounded-2xl p-6 w-60 h-[calc(100vh-32px)] sticky top-4 gap-8">
+      {/* App Logo */}
       <Link href="/dashboard" className="font-bold text-blue-700 text-2xl mb-4">
         Dhukuti
       </Link>
+      {/* Navigation Links */}
       <nav className="flex flex-col gap-4 flex-1">
         <Link href="/dashboard" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium">
           <FaHome /> Dashboard
@@ -24,6 +39,7 @@ export default function SidebarNav() {
           <FaQuestionCircle /> Help
         </Link>
       </nav>
+      {/* Profile and Logout */}
       <div>
         <Link href="/profile" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 mb-2 font-medium">
           <FaUserCircle /> Profile

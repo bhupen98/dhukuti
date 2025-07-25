@@ -1,6 +1,16 @@
+
+// -----------------------------------------------------------------------------
+// File: page.tsx
+// Description: Terms and Conditions page for Dhukuti app. Lists platform rules and disclaimers.
+// Author: [Your Name]
+// Created: [Date]
+// -----------------------------------------------------------------------------
 import Link from "next/link";
 
 export default function TermsPage() {
+  // ---------------------------------------------------------------------------
+  // Render: Terms and Conditions content
+  // ---------------------------------------------------------------------------
   return (
     <main className="max-w-3xl mx-auto py-12 px-4">
       <h1 className="text-3xl font-extrabold text-blue-700 mb-6">Dhukuti – Terms and Conditions</h1>

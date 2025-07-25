@@ -1,4 +1,15 @@
+
+// -----------------------------------------------------------------------------
+// File: page.tsx
+// Description: Account verification success page for Dhukuti app.
+// Author: [Your Name]
+// Created: [Date]
+// -----------------------------------------------------------------------------
+
 export default function VerifiedPage() {
+  // ---------------------------------------------------------------------------
+  // Render: Verified account success message and login link
+  // ---------------------------------------------------------------------------
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-green-100 to-blue-200">
       <div className="bg-white/90 p-8 rounded-2xl shadow-2xl flex flex-col items-center max-w-md w-full">

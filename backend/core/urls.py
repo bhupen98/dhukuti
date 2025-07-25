@@ -1,3 +1,11 @@
+
+# -----------------------------------------------------------------------------
+# File: urls.py
+# Description: URL patterns for Dhukuti core app (groups, auth, JWT, etc).
+# Author: [Your Name]
+# Created: [Date]
+# -----------------------------------------------------------------------------
+
 from django.urls import path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,

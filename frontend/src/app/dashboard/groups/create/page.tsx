@@ -1,9 +1,19 @@
+// -----------------------------------------------------------------------------
+// File: page.tsx
+// Description: Create Group page for Dhukuti app. Allows users to create a new group.
+// Author: [Your Name]
+// Created: [Date]
+// -----------------------------------------------------------------------------
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+
 export default function CreateGroupPage() {
+  // ---------------------------------------------------------------------------
+  // State: Form fields, success/error, and router
+  // ---------------------------------------------------------------------------
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
@@ -14,7 +24,10 @@ export default function CreateGroupPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  // ---------------------------------------------------------------------------
+  // Handler: Submit form and create group via backend API
+  // ---------------------------------------------------------------------------
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSuccess(false);
     setError("");
@@ -49,11 +62,14 @@ export default function CreateGroupPage() {
             "Something went wrong. Please check your inputs and try again."
         );
       }
-    } catch (err) {
+    } catch {
       setError("Failed to connect to server. Is the backend running?");
     }
   };
 
+  // ---------------------------------------------------------------------------
+  // Render: Create Group form and UI
+  // ---------------------------------------------------------------------------
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">

@@ -1,10 +1,20 @@
+// -----------------------------------------------------------------------------
+// File: page.tsx
+// Description: Login page for Dhukuti app. Handles user authentication and login form.
+// Author: [Your Name]
+// Created: [Date]
+// -----------------------------------------------------------------------------
 "use client";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaUser, FaLock } from "react-icons/fa";
 import Link from "next/link";
 
+
 export default function LoginPage() {
+  // ---------------------------------------------------------------------------
+  // State: Router, form fields, loading, error, and registration status
+  // ---------------------------------------------------------------------------
   const router = useRouter();
   const params = useSearchParams();
   const [form, setForm] = useState({ username: "", password: "" });
@@ -13,11 +23,17 @@ export default function LoginPage() {
 
   const registered = params.get("registered");
 
-  const handleChange = (e) => {
+  // ---------------------------------------------------------------------------
+  // Handler: Update form fields on change
+  // ---------------------------------------------------------------------------
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  async function handleSubmit(e) {
+  // ---------------------------------------------------------------------------
+  // Handler: Submit login form and authenticate user
+  // ---------------------------------------------------------------------------
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -45,6 +61,9 @@ export default function LoginPage() {
     setLoading(false);
   }
 
+  // ---------------------------------------------------------------------------
+  // Render: Login form and UI
+  // ---------------------------------------------------------------------------
   return (
     <main className="flex min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 items-center justify-center">
       <form
@@ -102,7 +121,7 @@ export default function LoginPage() {
           {loading ? "Logging in..." : "Login"}
         </button>
         <p className="text-sm text-gray-500 text-center mt-2">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/signup" className="text-blue-600 hover:underline font-semibold">
             Sign Up
           </Link>
