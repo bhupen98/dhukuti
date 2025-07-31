@@ -1,17 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: NextRequest) {
   try {
+    // Hash the admin password
+    const hashedPassword = await bcrypt.hash('admin123', 12);
+    
     // Ensure admin user exists with correct role
     const adminUser = await prisma.user.upsert({
       where: { email: 'admin@dhukuti.com' },
       update: {
         role: 'ADMIN', // Use the correct enum value
+        password: hashedPassword, // Update password if needed
       },
       create: {
         email: 'admin@dhukuti.com',
-        name: 'Admin User',
+        name: 'Dhukuti Administrator',
+        password: hashedPassword, // Include hashed password
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
         phoneNumber: '+61412345678',
         address: 'Sydney, NSW',

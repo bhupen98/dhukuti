@@ -1,37 +1,23 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["@prisma/client"],
-  images: {
-    domains: [
-      "source.boringavatars.com",
-      "lh3.googleusercontent.com",
-      "avatars.githubusercontent.com",
-    ],
-  },
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
+  // Remove experimental.appDir as it's now default in Next.js 15
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "X-Frame-Options",
-            value: "DENY",
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
           },
           {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
           },
           {
-            key: "Referrer-Policy",
-            value: "origin-when-cross-origin",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
           },
         ],
       },

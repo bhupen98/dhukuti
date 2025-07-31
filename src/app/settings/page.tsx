@@ -4,19 +4,7 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Avatar from "boring-avatars";
-
-function useAuthGuard() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  React.useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
-
-  return { session, status };
-}
+import { useAuthGuard } from "@/hooks/useAdminGuard";
 
 export default function SettingsPage() {
   const { session, status } = useAuthGuard();

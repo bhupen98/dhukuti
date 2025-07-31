@@ -7,19 +7,7 @@ import Link from "next/link";
 import { MarketingDashboard } from "@/components/events/MarketingDashboard";
 import { TicketManager } from "@/components/events/TicketManager";
 import { TeamCollaboration } from "@/components/events/TeamCollaboration";
-
-function useAuthGuard() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  React.useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
-
-  return { session, status };
-}
+import { useAuthGuard } from "@/hooks/useAdminGuard";
 
 interface ManagedEvent {
   id: string;
@@ -203,7 +191,7 @@ export default function ManageEventsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-5xl mx-auto px-2 py-2">
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center justify-between">

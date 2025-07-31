@@ -1,8 +1,8 @@
 # 💰 Dhukuti - Traditional Nepali Rotating Savings Platform
 
-**Modernize traditional Dhukuti groups with digital automation.**
+**Modernize traditional Dhukuti groups with digital automation for the Nepalese community in Australia.**
 
-A comprehensive platform for managing traditional Nepali rotating savings and credit associations (Dhukuti) with modern digital tools, secure transactions, and community features.
+A comprehensive platform for managing traditional Nepali rotating savings and credit associations (Dhukuti) with modern digital tools, secure transactions, and community features specifically designed for the Nepalese community in Australia.
 
 ## 🚀 Live Features
 
@@ -21,6 +21,7 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 - **Transaction History**: Complete audit trail for all financial activities
 - **Data Protection**: Secure data handling with Prisma ORM
 - **Activity Logging**: Comprehensive activity tracking for transparency
+- **Admin Security**: Token-based admin access with rate limiting and audit logging
 
 ### 👥 **User Management**
 
@@ -29,6 +30,7 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 - **Reputation System**: Track member reliability and payment history
 - **Emergency Contacts**: Safety features for group members
 - **Verification System**: User verification for trust building
+- **Profile Management**: Edit profile, change password, upload avatar
 
 ### 📊 **Advanced Analytics**
 
@@ -61,6 +63,7 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 - **Event Oversight**: Monitor and manage all events
 - **Analytics Dashboard**: Platform-wide performance metrics
 - **System Settings**: Configure platform settings
+- **Security Overview**: Monitor login attempts and system health
 
 ## 🏗️ Architecture
 
@@ -81,16 +84,18 @@ src/
 │       ├── admin/        # Admin API routes
 │       ├── groups/       # Group management
 │       ├── events/       # Event management
-│       └── reset-session/ # Session management
+│       └── user/         # User profile & activities
 ├── components/
 │   ├── features/         # Feature-specific components
 │   │   ├── groups/       # Group management
 │   │   ├── contributions/ # Contribution tracking
 │   │   ├── events/       # Event management
 │   │   ├── chat/         # Messaging system
-│   │   └── analytics/    # Analytics components
+│   │   ├── analytics/    # Analytics components
+│   │   └── profile/      # Profile management
 │   ├── common/           # Reusable UI components
 │   ├── layout/           # Navigation components
+│   ├── admin/            # Admin-specific components
 │   └── providers/        # Context providers
 ├── lib/                  # Utilities, auth, config
 ├── hooks/                # Custom React hooks
@@ -98,387 +103,175 @@ src/
 └── types/                # TypeScript definitions
 ```
 
-### **Database Schema (Prisma + PostgreSQL)**
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ 
+- PostgreSQL 12+
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd dhukuti
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp env.example .env.local
+   ```
+   
+   Update `.env.local` with your database credentials:
+   ```env
+   DATABASE_URL="postgresql://username:password@localhost:5432/dhukuti"
+   NEXTAUTH_SECRET="your-secret-key-here"
+   NEXTAUTH_URL="http://localhost:3000"
+   ```
+
+4. **Set up the database**
+   ```bash
+   npx prisma db push
+   npx prisma db seed
+   ```
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 👥 Test Accounts
+
+### Admin User
+- **Email**: `admin@dhukuti.com`
+- **Password**: `admin123`
+
+### Regular Users
+- **Email**: `ramesh.thapa@email.com`
+- **Password**: `password123`
+- **Email**: `sita.gurung@email.com`
+- **Password**: `password123`
+- **Email**: `bhupen.rai@email.com`
+- **Password**: `password123`
+- **Email**: `anjali.shrestha@email.com`
+- **Password**: `password123`
+
+## 🛠️ Tech Stack
+
+### **Frontend**
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **React Hot Toast** - Toast notifications
+- **NextAuth.js** - Authentication
+
+### **Backend**
+- **Next.js API Routes** - Server-side API endpoints
+- **Prisma ORM** - Database toolkit
+- **PostgreSQL** - Primary database
+- **bcryptjs** - Password hashing
+
+### **Development Tools**
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **TypeScript** - Type checking
+
+## 📁 Project Structure
 
 ```
-prisma/
-└── schema.prisma         # Complete data model
-
-Key Models:
-- User (authentication, profile, reputation, role)
-- Group (Dhukuti group management)
-- GroupMember (member relationships)
-- Contribution (payment tracking)
-- Transaction (financial records)
-- Activity (audit logging)
-- Message (group communication)
-- Event (event management)
-- Ticket (ticket management)
+dhukuti/
+├── src/
+│   ├── app/              # Next.js App Router pages
+│   ├── components/       # React components
+│   ├── lib/             # Utilities and configurations
+│   ├── hooks/           # Custom React hooks
+│   └── types/           # TypeScript type definitions
+├── prisma/
+│   ├── schema.prisma    # Database schema
+│   └── seed.ts          # Database seeding
+├── docs/                # Documentation
+├── public/              # Static assets
+└── package.json         # Dependencies and scripts
 ```
 
-### **Database Schema Highlights**
+## 🔧 Development
 
-- **10+ Core Models** with full relationships and indexes
-- **Financial Tracking**: Contributions, transactions with Decimal precision
-- **Member Management**: Roles, status, reputation tracking
-- **Activity System**: Comprehensive audit logging
-- **Communication**: Built-in messaging system
-- **Event Management**: Complete event and ticket system
-- **Security**: Authentication and role-based authorization
+### Available Scripts
 
-## 🎯 User Workflows
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npx prisma studio` - Open Prisma Studio
+- `npx prisma db push` - Push schema to database
+- `npx prisma db seed` - Seed database with test data
 
-### **👥 Group Owner Journey**
-
-1. **Create Group** → Set contribution amount and cycle duration
-2. **Invite Members** → Add trusted community members
-3. **Manage Cycles** → Track contributions and distribute payouts
-4. **Monitor Health** → View analytics and member performance
-5. **Communicate** → Use built-in messaging for updates
-
-### **💸 Member Journey**
-
-1. **Join Group** → Accept invitation to trusted Dhukuti group
-2. **Make Contributions** → Pay scheduled contributions on time
-3. **Track Progress** → Monitor personal balance and group status
-4. **Receive Payout** → Get payout when cycle completes
-5. **Build Reputation** → Maintain good standing for future groups
-
-### **🎫 Event Organizer Journey**
-
-1. **Create Event** → Set up event details and ticket pricing
-2. **Manage Tickets** → Handle ticket sales and distribution
-3. **Track Sales** → Monitor ticket sales and revenue
-4. **Promote Event** → Use built-in marketing tools
-5. **Host Event** → Manage event day operations
-
-### **📊 Admin Journey**
-
-1. **Secure Access** → Use token-based admin authentication
-2. **Monitor Platform** → Oversee all Dhukuti groups and events
-3. **User Management** → Manage user accounts and verification
-4. **Analytics Review** → Review platform performance metrics
-5. **System Maintenance** → Ensure platform stability
-
-## 💎 Premium Features
-
-### **🏪 Group Management**
-
-- **Flexible Cycles**: Customizable contribution schedules
-- **Member Roles**: Owner, Admin, and Member permissions
-- **Group Analytics**: Performance metrics and health indicators
-- **Document Storage**: Share important group documents
-- **Event Scheduling**: Plan and manage group meetings
-
-### **💰 Financial Tracking**
-
-- **Contribution Scheduling**: Automated due date tracking
-- **Payment Status**: Real-time payment status updates
-- **Balance Tracking**: Individual and group balance management
-- **Transaction History**: Complete financial audit trail
-- **Payout Automation**: Automated payout distribution
-
-### **💬 Communication Hub**
-
-- **Group Chat**: Real-time messaging for members
-- **Activity Feed**: Live updates on group activities
-- **Notifications**: Automated reminders and alerts
-- **File Sharing**: Share documents and images
-- **Event Management**: Schedule and track group events
-
-### **🎫 Event Management**
-
-- **Event Creation**: Multi-step event creation wizard
-- **Ticket Sales**: Secure payment processing
-- **Marketing Tools**: Built-in promotion features
-- **Analytics**: Event performance tracking
-- **Team Collaboration**: Multi-organizer support
-
-### **📈 Business Intelligence**
-
-- **Group Analytics**: Performance metrics and trends
-- **Member Insights**: Individual participation tracking
-- **Financial Reports**: Detailed contribution analysis
-- **Health Monitoring**: Group sustainability indicators
-- **Predictive Analytics**: Future performance forecasting
-
-## 🛠️ Technical Stack
-
-| **Technology**   | **Purpose**       | **Version** |
-| ---------------- | ----------------- | ----------- |
-| **Next.js**      | Full-stack framework | 15.3.5      |
-| **React**        | UI library        | 19.x        |
-| **TypeScript**   | Type safety       | Latest      |
-| **Tailwind CSS** | Styling framework | Latest      |
-| **Prisma**       | Database ORM      | Latest      |
-| **PostgreSQL**   | Database          | Latest      |
-| **NextAuth.js**  | Authentication    | Latest      |
-| **Vercel**       | Hosting platform  | Latest      |
-
-## 🚀 Getting Started
-
-### **Prerequisites**
-
-- Node.js 18+ and npm
-- PostgreSQL database
-- Git
-
-### **Installation**
+### Database Management
 
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/dhukuti.git
-cd dhukuti
+# Generate Prisma client
+npx prisma generate
 
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp env.example .env.local
-# Edit .env.local with your credentials
-
-# Set up database
+# Push schema changes
 npx prisma db push
-npm run db:seed
 
-# Start development server
-npm run dev
+# Seed database
+npx prisma db seed
+
+# Open Prisma Studio
+npx prisma studio
 ```
 
-### **Environment Variables**
+## 🚀 Deployment
 
-```bash
-# Database
-DATABASE_URL="postgresql://..."
+### Vercel (Recommended)
 
-# Authentication
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key"
+1. **Connect your GitHub repository to Vercel**
+2. **Set environment variables in Vercel dashboard**
+3. **Deploy automatically on push to main branch**
 
-# Admin Access
+### Environment Variables for Production
+
+```env
+DATABASE_URL="your-production-database-url"
+NEXTAUTH_SECRET="your-production-secret"
+NEXTAUTH_URL="https://your-domain.com"
 ADMIN_ACCESS_TOKEN="your-admin-token"
-
-# App Configuration
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-NEXT_PUBLIC_APP_NAME="Dhukuti"
 ```
-
-## 📊 Data Overview
-
-### **Test Data Included**
-
-- **Demo User**: `demo@example.com` / `demo123` (Regular user)
-- **Admin User**: `admin@dhukuti.com` / `admin123` (Admin access)
-- **Sample Groups** with different contribution amounts and cycles
-- **Sample Events** with ticket sales and management
-- **Complete Relationships** between all entities
-
-### **Sample Groups**
-
-- **Sydney Nepali Community**: $1,000 contributions, 30-day cycles
-- **Melbourne Students Group**: $500 contributions, 15-day cycles
-- **Brisbane Business Network**: $2,000 contributions, 45-day cycles
-
-### **Sample Events**
-
-- **Community Concert**: Music event with ticket sales
-- **Business Workshop**: Educational event with registration
-- **Cultural Festival**: Multi-day event with various ticket types
-
-## 🔒 Security Features
-
-### **Authentication & Authorization**
-
-- NextAuth.js with credentials provider
-- Session-based authentication
-- Role-based access control (USER, ADMIN, MODERATOR)
-- Admin token-based authentication
-- Account verification system
-
-### **Data Protection**
-
-- Input validation and sanitization
-- SQL injection prevention with Prisma
-- XSS protection with CSP headers
-- CSRF protection
-- Rate limiting on sensitive endpoints
-- Security headers implementation
-
-### **Financial Security**
-
-- Transaction audit logging
-- Payment status tracking
-- Balance verification
-- Fraud detection measures
-- Secure data encryption
-
-### **Admin Security**
-
-- Token-based admin authentication
-- Separate admin layout without navigation
-- Role-based admin access control
-- Secure admin API routes
-
-## 💰 Revenue Model
-
-### **Platform Features**
-
-- **Free Tier**: Basic group management and tracking
-- **Premium Features**: Advanced analytics and automation
-- **Event Management**: Ticket sales and event hosting
-- **Enterprise**: Custom solutions for large organizations
-
-### **Value Proposition**
-
-1. **Traditional Trust**: Maintains traditional Dhukuti principles
-2. **Digital Efficiency**: Automates manual processes
-3. **Transparency**: Complete audit trail and reporting
-4. **Community**: Built-in communication and collaboration
-5. **Security**: Modern security for traditional practices
-6. **Event Management**: Integrated event hosting and ticketing
-
-## 📈 Analytics & Monitoring
-
-### **Key Metrics Tracked**
-
-- **Group Performance**: Success rates and member participation
-- **Financial Health**: Contribution compliance and payout efficiency
-- **User Engagement**: Platform usage and feature adoption
-- **Community Growth**: New groups and member acquisition
-- **Event Performance**: Ticket sales and event success metrics
-- **System Performance**: Platform stability and response times
-
-### **Dashboard Features**
-
-- Real-time group statistics
-- Member performance tracking
-- Financial health indicators
-- Activity monitoring
-- Event analytics
-- System health metrics
-
-## 🛣️ Roadmap
-
-### **Phase 1: Core Platform** ✅
-
-- [x] User authentication and profiles
-- [x] Group creation and management
-- [x] Basic contribution tracking
-- [x] Member management system
-
-### **Phase 2: Advanced Features** ✅
-
-- [x] Activity feed and notifications
-- [x] Group chat and messaging
-- [x] Financial analytics dashboard
-- [x] Automated payment reminders
-- [x] Document sharing system
-
-### **Phase 3: Event Management** ✅
-
-- [x] Event creation and management
-- [x] Ticket sales and distribution
-- [x] Payment processing
-- [x] Event analytics
-- [x] Marketing tools
-
-### **Phase 4: Admin System** ✅
-
-- [x] Admin authentication system
-- [x] Admin dashboard
-- [x] User management
-- [x] Platform analytics
-- [x] System settings
-
-### **Phase 5: Growth Features** 📋
-
-- [ ] Mobile app development
-- [ ] Advanced analytics and reporting
-- [ ] Integration with payment gateways
-- [ ] Multi-language support
-- [ ] API for third-party integrations
-
-### **Phase 6: Scale Features** 📋
-
-- [ ] Enterprise features
-- [ ] Advanced security features
-- [ ] Machine learning insights
-- [ ] International expansion
-- [ ] White-label solutions
-
-## 🐛 Recent Fixes & Improvements
-
-### **Performance & Security**
-
-- ✅ Implemented comprehensive security headers
-- ✅ Added proper error handling and validation
-- ✅ Fixed API response structure consistency
-- ✅ Enhanced database schema with proper indexes
-- ✅ Improved authentication flow
-- ✅ Added admin token-based authentication
-
-### **User Experience**
-
-- ✅ Enhanced dashboard with real-time data
-- ✅ Improved activity feed with filtering
-- ✅ Added loading states and error boundaries
-- ✅ Enhanced responsive design
-- ✅ Improved navigation and layout
-- ✅ Clean admin interface without navigation
-
-### **Data & Analytics**
-
-- ✅ Comprehensive database seeding
-- ✅ Enhanced analytics with real-time metrics
-- ✅ Improved data relationships and queries
-- ✅ Added activity logging system
-- ✅ Enhanced user statistics tracking
-- ✅ Event management and analytics
-
-### **Admin System**
-
-- ✅ Secure admin authentication
-- ✅ Clean admin dashboard
-- ✅ User management features
-- ✅ Platform analytics
-- ✅ Separate admin layout
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### **Development Workflow**
-
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### **Code Style**
-
-- TypeScript for type safety
-- ESLint + Prettier for formatting
-- Conventional commits
-- Component-driven development
-
-## 📧 Support
-
-- **Documentation**: [docs/](./docs/)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/dhukuti/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/dhukuti/discussions)
-- **Email**: support@dhukuti.com
-
-## 📄 License
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🎯 Mission
+## 🙏 Acknowledgments
 
-**Dhukuti** exists to preserve and modernize the traditional Nepali rotating savings system by providing secure, transparent, and efficient digital tools that maintain the community trust and financial cooperation that makes Dhukuti so valuable.
+- **Nepalese Community in Australia** - For inspiration and cultural context
+- **Next.js Team** - For the amazing framework
+- **Prisma Team** - For the excellent ORM
+- **Tailwind CSS** - For the utility-first CSS framework
+
+## 📞 Support
+
+For support, email support@dhukuti.com or create an issue in this repository.
 
 ---
 
-**Built with 💜 by the Dhukuti team**
-
-_Preserving tradition through modern technology, one group at a time._
+**Built with ❤️ for the Nepalese community in Australia**

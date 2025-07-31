@@ -116,7 +116,7 @@ export function GroupChat({ groupId, groupName, isOpen, onClose }: GroupChatProp
       const message: Message = {
         id: Date.now().toString(),
         userId: session.user?.id || "demo",
-        userName: session.user?.name || "Demo User",
+        userName: session.user?.email === 'admin@dhukuti.com' ? 'User' : session.user?.name || "Demo User",
         userAvatar: session.user?.image || "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
         content: newMessage,
         timestamp: new Date(),

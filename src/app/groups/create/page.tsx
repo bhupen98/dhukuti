@@ -3,20 +3,7 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
-function useAuthGuard() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  React.useEffect(() => {
-    if (status === "loading") return;
-    if (!session) {
-      router.replace("/login");
-    }
-  }, [session, status, router]);
-
-  return { session, status };
-}
+import { useAuthGuard } from "@/hooks/useAdminGuard";
 
 export default function CreateGroupPage() {
   const { session, status } = useAuthGuard();

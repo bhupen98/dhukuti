@@ -17,15 +17,7 @@ export default function DebugPage() {
     window.location.reload();
   };
 
-  const resetToAdmin = async () => {
-    await signOut({ redirect: false });
-    await signIn("credentials", {
-      email: "admin@dhukuti.com",
-      password: "admin123",
-      redirect: false,
-    });
-    window.location.reload();
-  };
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -51,12 +43,7 @@ export default function DebugPage() {
             >
               Reset to Demo User
             </button>
-            <button
-              onClick={resetToAdmin}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 ml-4"
-            >
-              Reset to Admin User
-            </button>
+
             <button
               onClick={() => signOut()}
               className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 ml-4"
@@ -75,12 +62,7 @@ export default function DebugPage() {
             >
               Go to Dashboard
             </button>
-            <button
-              onClick={() => router.push("/admin")}
-              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 ml-4"
-            >
-              Go to Admin
-            </button>
+
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Avatar from "boring-avatars";
 import { Notifications } from "@/components/common/Notifications";
+import { dhukutiToast } from "@/lib/toast.tsx";
 
 export function Navigation() {
   const { data: session } = useSession();
@@ -15,6 +16,7 @@ export function Navigation() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: "📊" },
@@ -29,51 +31,97 @@ export function Navigation() {
     setIsSearchOpen(false);
   };
 
+  const handleSignOut = async () => {
+    if (isSigningOut) return;
+    
+    try {
+      setIsSigningOut(true);
+      console.log("Signing out user...");
+      await signOut({ callbackUrl: "/" });
+      dhukutiToast.logoutSuccess();
+    } catch (error) {
+      console.error("Error during sign out:", error);
+      dhukutiToast.error("Failed to sign out. Please try again.");
+      setIsSigningOut(false);
+    }
+  };
+
   const closeAllDropdowns = () => {
     setIsQuickActionsOpen(false);
     setIsUserMenuOpen(false);
     setIsNotificationsOpen(false);
+    setIsSearchOpen(false);
   };
+
+  // Close dropdowns when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      
+      const isOutsideQuickActions = !target.closest('[data-dropdown="quick-actions"]');
+      const isOutsideUserMenu = !target.closest('[data-dropdown="user-menu"]');
+      const isOutsideNotifications = !target.closest('[data-dropdown="notifications"]');
+      const isOutsideSearch = !target.closest('[data-dropdown="search"]');
+      
+      if (!isOutsideQuickActions || !isOutsideUserMenu || !isOutsideNotifications || !isOutsideSearch) {
+        return;
+      }
+      
+      closeAllDropdowns();
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   if (!session) {
     return null;
   }
 
+  // Check if we're on an admin route
+  const isAdminRoute = pathname.startsWith("/admin");
+  
+  // If we're on admin route, don't show this navigation
+  if (isAdminRoute) {
+    return null;
+  }
+
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-10">
+    <nav className="glass sticky top-0 z-50 border-b border-slate-200/50">
+      <div className="max-w-5xl mx-auto px-3">
+        <div className="flex items-center justify-between h-12">
           {/* Left - Logo & Navigation */}
           <div className="flex items-center space-x-4">
             {/* Logo */}
-            <Link href="/dashboard" className="flex items-center space-x-1.5">
-              <div className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
-                <span className="text-white font-bold text-xs">D</span>
+            <Link href="/dashboard" className="flex items-center space-x-2 group">
+              <div className="w-6 h-6 theme-blue rounded-lg flex items-center justify-center shadow-clean group-hover:scale-110 transition-transform duration-200">
+                <span className="text-white font-bold text-sm">D</span>
               </div>
-              <span className="text-base font-semibold text-gray-900">Dhukuti</span>
+              <span className="text-lg font-bold text-gradient-blue">Dhukuti</span>
             </Link>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-0.5">
+            <div className="hidden md:flex items-center space-x-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center space-x-1 ${
-                    pathname === item.href
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  className={`nav-link-compact ${
+                    pathname === item.href ? "active" : ""
                   }`}
                 >
                   <span className="text-xs">{item.icon}</span>
-                  <span>{item.name}</span>
+                  <span className="text-xs">{item.name}</span>
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Center - Search Bar (Professional Style) */}
-          <div className="flex-1 max-w-2xl mx-4">
+          {/* Center - Search Bar */}
+          <div className="flex-1 max-w-xl mx-4" data-dropdown="search">
             <form onSubmit={handleSearch} className="w-full">
               <div className="relative">
                 <input
@@ -81,199 +129,133 @@ export function Navigation() {
                   placeholder="Search groups, members, payments..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 hover:bg-white transition-colors"
+                  className="input-compact w-full pl-8 pr-3 bg-white border-slate-300 focus:border-blue-500"
                 />
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-gray-400 text-xs">🔍</span>
+                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+                  <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
                 </div>
               </div>
             </form>
           </div>
 
-          {/* Right - Actions */}
-          <div className="flex items-center space-x-0.5">
+          {/* Right - Actions & User Menu */}
+          <div className="flex items-center space-x-1.5">
             {/* Quick Actions */}
-            <div className="relative">
+            <div className="relative" data-dropdown="quick-actions">
               <button
-                onClick={() => {
-                  setIsQuickActionsOpen(!isQuickActionsOpen);
-                  setIsUserMenuOpen(false);
-                  setIsNotificationsOpen(false);
-                }}
-                className="p-1.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
-                title="Quick Actions"
+                onClick={() => setIsQuickActionsOpen(!isQuickActionsOpen)}
+                className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors group"
               >
-                <span className="text-xs">➕</span>
+                <svg className="w-4 h-4 text-slate-600 group-hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
               </button>
               
               {isQuickActionsOpen && (
-                <div className="absolute right-0 mt-1 w-44 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                  <div className="px-3 py-1 border-b border-gray-100">
-                    <h3 className="text-sm font-medium text-gray-900">Quick Actions</h3>
-                  </div>
-                  <Link
-                    href="/groups/create"
-                    className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                    onClick={() => setIsQuickActionsOpen(false)}
-                  >
-                    <span className="text-xs">➕</span>
-                    <span>Create Group</span>
+                <div className="absolute right-0 mt-2 w-48 glass rounded-xl border border-slate-200/50 shadow-clean py-1">
+                  <Link href="/groups/create" className="block px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors">
+                    Create Group
                   </Link>
-                  <Link
-                    href="/groups/join"
-                    className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                    onClick={() => setIsQuickActionsOpen(false)}
-                  >
-                    <span className="text-xs">🔗</span>
-                    <span>Join Group</span>
+                  <Link href="/events/create" className="block px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors">
+                    Create Event
                   </Link>
-                  <Link
-                    href="/contributions/new"
-                    className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                    onClick={() => setIsQuickActionsOpen(false)}
-                  >
-                    <span className="text-xs">💳</span>
-                    <span>Make Payment</span>
-                  </Link>
-                  <Link
-                    href="/reports"
-                    className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                    onClick={() => setIsQuickActionsOpen(false)}
-                  >
-                    <span className="text-xs">📈</span>
-                    <span>View Reports</span>
+                  <Link href="/contributions/new" className="block px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors">
+                    Add Contribution
                   </Link>
                 </div>
               )}
             </div>
 
             {/* Notifications */}
-            <div className="relative">
+            <div className="relative" data-dropdown="notifications">
               <button
-                onClick={() => {
-                  setIsNotificationsOpen(!isNotificationsOpen);
-                  setIsQuickActionsOpen(false);
-                  setIsUserMenuOpen(false);
-                }}
-                className="p-1.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors relative"
-                title="Notifications"
+                onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors group relative"
               >
-                <span className="text-xs">📢</span>
-                <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                <svg className="w-4 h-4 text-slate-600 group-hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM4.19 4.19A2 2 0 006 3h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" />
+                </svg>
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
               </button>
               
-              <Notifications
-                isOpen={isNotificationsOpen}
-                onClose={() => setIsNotificationsOpen(false)}
-              />
+              {isNotificationsOpen && (
+                <div className="absolute right-0 mt-2 w-80 glass rounded-xl border border-slate-200/50 shadow-clean py-2">
+                  <div className="px-3 py-2 border-b border-slate-200">
+                    <h3 className="text-xs font-semibold text-slate-800">Notifications</h3>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    <div className="px-3 py-2 hover:bg-slate-50 transition-colors">
+                      <p className="text-xs text-slate-700">New contribution received</p>
+                      <p className="text-xs text-slate-500">2 minutes ago</p>
+                    </div>
+                    <div className="px-3 py-2 hover:bg-slate-50 transition-colors">
+                      <p className="text-xs text-slate-700">Group meeting scheduled</p>
+                      <p className="text-xs text-slate-500">1 hour ago</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* User Menu */}
-            <div className="relative">
+            <div className="relative" data-dropdown="user-menu">
               <button
-                onClick={() => {
-                  setIsUserMenuOpen(!isUserMenuOpen);
-                  setIsQuickActionsOpen(false);
-                  setIsNotificationsOpen(false);
-                }}
-                className="flex items-center space-x-1.5 p-1 rounded-md hover:bg-gray-100 transition-colors"
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center space-x-2 p-1 rounded-lg hover:bg-slate-100 transition-colors group"
               >
                 <Avatar
-                  name={session.user?.name || "User"}
-                  size={20}
+                  size={28}
+                  name={session.user?.name || session.user?.email || "User"}
+                  colors={["#3b82f6", "#1d4ed8", "#1e40af", "#1e3a8a", "#172554"]}
                   variant="beam"
-                  colors={["#1a73e8", "#4285f4", "#34a853", "#fbbc04", "#ea4335"]}
                 />
-                <svg
-                  className={`w-3 h-3 text-gray-400 transition-transform duration-200 ${
-                    isUserMenuOpen ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
+                <svg className="w-3 h-3 text-slate-600 group-hover:text-slate-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               
               {isUserMenuOpen && (
-                <div className="absolute right-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                  <div className="px-3 py-2 border-b border-gray-100">
-                    <div className="text-sm font-medium text-gray-900">{session.user?.name}</div>
-                    <div className="text-xs text-gray-500">{session.user?.email}</div>
+                <div className="absolute right-0 mt-2 w-56 glass rounded-xl border border-slate-200/50 shadow-clean py-2">
+                  {/* User Info */}
+                  <div className="px-3 py-2 border-b border-slate-200">
+                    <div className="flex items-center space-x-2.5">
+                      <Avatar
+                        size={32}
+                        name={session.user?.name || session.user?.email || "User"}
+                        colors={["#3b82f6", "#1d4ed8", "#1e40af", "#1e3a8a", "#172554"]}
+                        variant="beam"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold text-slate-800 truncate">
+                          {session.user?.email === 'admin@dhukuti.com' ? 'User' : session.user?.name}
+                        </p>
+                        <p className="text-xs text-slate-500 truncate">
+                          {session.user?.email === 'admin@dhukuti.com' ? 'user@example.com' : session.user?.email}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="py-1">
-                    <Link
-                      href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      👤 Profile
-                    </Link>
-                    <Link
-                      href="/settings"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      ⚙️ Settings
-                    </Link>
-                    <Link
-                      href="/reports"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      📈 Reports
-                    </Link>
-                    <Link
-                      href="/admin"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      🛡️ Admin
-                    </Link>
-                    <button
-                      onClick={() => signOut()}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      🚪 Sign Out
-                    </button>
-                  </div>
+                  {/* Menu Items */}
+                  <Link href="/profile" className="block px-3 py-2 text-xs text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors">
+                    Profile
+                  </Link>
+                  <div className="border-t border-slate-200 my-1"></div>
+                  <button
+                    onClick={handleSignOut}
+                    disabled={isSigningOut}
+                    className="w-full text-left px-3 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+                  >
+                    {isSigningOut ? "Signing Out..." : "Sign Out"}
+                  </button>
                 </div>
               )}
             </div>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        <div className="md:hidden border-t border-gray-200">
-          <div className="flex justify-around py-1.5">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex flex-col items-center space-y-0.5 px-2 py-1 rounded text-xs transition-colors ${
-                  pathname === item.href
-                    ? "text-blue-600 bg-blue-50"
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                <span className="text-xs">{item.icon}</span>
-                <span>{item.name}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
       </div>
-
-      {/* Click outside to close dropdowns */}
-      {(isQuickActionsOpen || isUserMenuOpen || isNotificationsOpen) && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={closeAllDropdowns}
-        />
-      )}
     </nav>
   );
 } 
