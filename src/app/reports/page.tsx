@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useAuthGuard } from "@/hooks/useAdminGuard";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 import Link from "next/link";
 
 interface Report {

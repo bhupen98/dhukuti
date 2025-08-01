@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSession } from "next-auth/react";
 import Avatar from "boring-avatars";
 import { formatCurrency } from "@/lib/utils";
@@ -8,15 +8,15 @@ import { formatCurrency } from "@/lib/utils";
 interface UserStats {
   totalGroups: number;
   totalContributions: number;
-  totalBalance: number;
+  balance: number;
 }
 
 export function ProfileWidget() {
   const { data: session } = useSession();
-  const [stats, setStats] = useState<UserStats | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = React.useState<UserStats | null>(null);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchStats = async () => {
       try {
         const response = await fetch('/api/user/stats');
@@ -41,7 +41,7 @@ export function ProfileWidget() {
   const defaultStats = {
     totalGroups: 3,
     totalContributions: 12,
-    totalBalance: 34000,
+    balance: 34000,
   };
 
   const displayStats = stats || defaultStats;
@@ -99,7 +99,7 @@ export function ProfileWidget() {
               <span className="text-sm text-muted-foreground">Balance</span>
             </div>
             <span className="font-medium text-primary">
-              {formatCurrency(displayStats.totalBalance)}
+              {formatCurrency(displayStats.balance)}
             </span>
           </div>
         </div>

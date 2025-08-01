@@ -52,7 +52,7 @@ export function SummaryCard() {
   const defaultStats = {
     totalGroups: 3,
     totalContributions: 12,
-    totalBalance: 34000,
+    balance: 34000,
   };
 
   const displayStats = stats || defaultStats;
@@ -82,7 +82,7 @@ export function SummaryCard() {
           </div>
           
           <div className="text-center">
-            <div className="metric-value text-chart-orange">{formatCurrency(displayStats.totalBalance)}</div>
+            <div className="metric-value text-chart-orange">{formatCurrency(displayStats.balance || 0)}</div>
             <div className="metric-label">Total Balance</div>
             <div className="mt-2">
               <span className="metric-change positive text-sm">+7.6% this month</span>

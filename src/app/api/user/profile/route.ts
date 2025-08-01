@@ -67,6 +67,35 @@ export async function PUT(request: NextRequest) {
     const body = await request.json()
     const { name, phoneNumber, address, emergencyContact } = body
 
+    // Validate input
+    if (name && typeof name !== 'string') {
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        error: 'Name must be a string',
+      }, { status: 400 })
+    }
+
+    if (phoneNumber && typeof phoneNumber !== 'string') {
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        error: 'Phone number must be a string',
+      }, { status: 400 })
+    }
+
+    if (address && typeof address !== 'string') {
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        error: 'Address must be a string',
+      }, { status: 400 })
+    }
+
+    if (emergencyContact && typeof emergencyContact !== 'string') {
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        error: 'Emergency contact must be a string',
+      }, { status: 400 })
+    }
+
     const updatedUser = await prisma.user.update({
       where: {
         id: session.user.id,

@@ -6,7 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Avatar from "boring-avatars";
 import { Notifications } from "@/components/common/Notifications";
-import { dhukutiToast } from "@/lib/toast.tsx";
+import { dhukutiToast } from "@/lib/toast";
 
 export function Navigation() {
   const { data: session } = useSession();
@@ -81,13 +81,7 @@ export function Navigation() {
     return null;
   }
 
-  // Check if we're on an admin route
-  const isAdminRoute = pathname.startsWith("/admin");
-  
-  // If we're on admin route, don't show this navigation
-  if (isAdminRoute) {
-    return null;
-  }
+
 
   return (
     <nav className="glass sticky top-0 z-50 border-b border-slate-200/50">
@@ -229,13 +223,15 @@ export function Navigation() {
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold text-slate-800 truncate">
-                          {session.user?.email === 'admin@dhukuti.com' ? 'User' : session.user?.name}
+                          {session.user?.name}
                         </p>
                         <p className="text-xs text-slate-500 truncate">
-                          {session.user?.email === 'admin@dhukuti.com' ? 'user@example.com' : session.user?.email}
+                          {session.user?.email}
                         </p>
                       </div>
                     </div>
+
+                    
                   </div>
                   
                   {/* Menu Items */}

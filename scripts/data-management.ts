@@ -10,6 +10,7 @@ export class DhukutiDataManager {
   async createUser(userData: {
     email: string
     name: string
+    password: string
     phoneNumber?: string
     address?: string
     emergencyContact?: string
@@ -293,6 +294,7 @@ export async function initializeNewDhukutiGroup(
     owner = await dataManager.createUser({
       email: ownerEmail,
       name: ownerEmail.split('@')[0], // Simple name from email
+      password: 'defaultPassword123', // This should be changed in production
       role: 'USER'
     })
   }

@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
       }, { status: 401 })
     }
 
-    // For now, we'll return a placeholder avatar URL
-    // In a real implementation, you would:
+    // For now, we'll generate a new avatar URL using DiceBear
+    // In a production environment, you would:
     // 1. Parse the multipart form data
     // 2. Upload the image to a cloud storage service (AWS S3, Cloudinary, etc.)
     // 3. Get the public URL of the uploaded image
@@ -38,13 +38,13 @@ export async function POST(request: NextRequest) {
       data: {
         avatarUrl,
       },
-      message: 'Avatar uploaded successfully',
+      message: 'Avatar updated successfully',
     })
   } catch (error) {
-    console.error('Error uploading avatar:', error)
+    console.error('Error updating avatar:', error)
     return NextResponse.json<ApiResponse>({
       success: false,
-      error: 'Failed to upload avatar',
+      error: 'Failed to update avatar',
     }, { status: 500 })
   }
 } 

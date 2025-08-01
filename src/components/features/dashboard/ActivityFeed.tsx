@@ -53,7 +53,8 @@ export function ActivityFeed() {
     {
       id: "1",
       type: "CONTRIBUTION_PAID",
-      message: "Bhupen paid contribution for Sydney Savers group",
+      title: "Contribution Paid",
+      description: "Bhupen paid contribution for Sydney Savers group",
       timestamp: new Date().toISOString(),
       user: {
         name: "Bhupen Thapa",
@@ -66,7 +67,8 @@ export function ActivityFeed() {
     {
       id: "2", 
       type: "GROUP_CREATED",
-      message: "New group 'Melbourne Money' created",
+      title: "Group Created",
+      description: "New group 'Melbourne Money' created",
       timestamp: new Date(Date.now() - 86400000).toISOString(),
       user: {
         name: "Asha Sharma",
@@ -79,7 +81,8 @@ export function ActivityFeed() {
     {
       id: "3",
       type: "MEMBER_JOINED", 
-      message: "Ramesh joined Brisbane Buddies group",
+      title: "Member Joined",
+      description: "Ramesh joined Brisbane Buddies group",
       timestamp: new Date(Date.now() - 172800000).toISOString(),
       user: {
         name: "Ramesh Kumar",
@@ -138,7 +141,7 @@ export function ActivityFeed() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-foreground leading-relaxed">
-                  {activity.message}
+                  {activity.description || activity.title}
                 </p>
                 <div className="flex items-center space-x-3 mt-1">
                   <span className="text-xs text-muted-foreground">

@@ -18,10 +18,18 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { currentPassword, newPassword } = body
 
+    // Validate input
     if (!currentPassword || !newPassword) {
       return NextResponse.json<ApiResponse>({
         success: false,
         error: 'Current password and new password are required',
+      }, { status: 400 })
+    }
+
+    if (typeof currentPassword !== 'string' || typeof newPassword !== 'string') {
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        error: 'Passwords must be strings',
       }, { status: 400 })
     }
 

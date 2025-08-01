@@ -7,7 +7,7 @@ import Link from "next/link";
 import { MarketingDashboard } from "@/components/events/MarketingDashboard";
 import { TicketManager } from "@/components/events/TicketManager";
 import { TeamCollaboration } from "@/components/events/TeamCollaboration";
-import { useAuthGuard } from "@/hooks/useAdminGuard";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 interface ManagedEvent {
   id: string;

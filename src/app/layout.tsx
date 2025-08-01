@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "@/components/providers/SessionProvider";
-import { AdminNavigationProvider } from "@/components/providers/AdminNavigationProvider";
+import { Navigation } from "@/components/layout/Navigation";
+
 import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -67,7 +68,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100`}>
         <SessionProvider>
-          <AdminNavigationProvider />
+          <Navigation />
           <main className="min-h-screen">
             {children}
           </main>

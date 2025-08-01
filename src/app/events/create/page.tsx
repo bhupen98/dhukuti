@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useAuthGuard } from "@/hooks/useAdminGuard";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 interface EventFormData {
   title: string;

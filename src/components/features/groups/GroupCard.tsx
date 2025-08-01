@@ -29,7 +29,7 @@ export function GroupCard({ group, onClick }: GroupCardProps) {
       <div className="space-y-2 mb-4">
         <div className="flex justify-between">
           <span className="text-sm text-gray-500">Contribution:</span>
-          <span className="text-sm font-semibold">{formatCurrency(group.contributionAmount)}</span>
+          <span className="text-sm font-semibold">{formatCurrency(Number(group.contributionAmount))}</span>
         </div>
         <div className="flex justify-between">
           <span className="text-sm text-gray-500">Members:</span>

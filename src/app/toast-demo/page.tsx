@@ -1,6 +1,6 @@
 "use client";
 
-import { dhukutiToast } from "@/lib/toast.tsx";
+import { dhukutiToast } from "@/lib/toast";
 
 export default function ToastDemoPage() {
   return (
@@ -128,36 +128,7 @@ export default function ToastDemoPage() {
           </div>
         </div>
 
-        {/* Admin Notifications */}
-        <div className="mt-8 bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">Admin Notifications</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <button
-              onClick={() => dhukutiToast.adminAction("User management updated")}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              User Management
-            </button>
-            <button
-              onClick={() => dhukutiToast.adminAction("System backup completed")}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              System Backup
-            </button>
-            <button
-              onClick={() => dhukutiToast.adminAction("Security audit passed")}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Security Audit
-            </button>
-            <button
-              onClick={() => dhukutiToast.adminAction("Database optimized")}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Database Optimized
-            </button>
-          </div>
-        </div>
+
 
         <div className="mt-8 text-center">
           <p className="text-gray-600">

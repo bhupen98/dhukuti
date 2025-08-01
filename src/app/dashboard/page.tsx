@@ -3,7 +3,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useAuthGuard } from "@/hooks/useAdminGuard";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { ProfileWidget } from "@/components/features/dashboard/ProfileWidget";
 
 export default function DashboardPage() {
   const { session, status } = useAuthGuard();
@@ -49,7 +50,7 @@ export default function DashboardPage() {
         <h1 className="text-lg font-bold text-gradient-blue mb-1">Dashboard</h1>
         <p className="text-xs text-slate-600">
           Welcome back, <span className="font-semibold text-slate-800">
-            {session.user?.email === 'admin@dhukuti.com' ? 'User' : session.user?.name}
+                            {session.user?.name}
           </span>! Here's your financial overview.
         </p>
       </div>
@@ -322,72 +323,8 @@ export default function DashboardPage() {
         
         <div className="space-y-2">
           {/* Profile Widget */}
-          <div className="card slide-up" style={{ animationDelay: '0.6s' }}>
-            <div className="card-header">
-              <h3 className="card-title">Profile</h3>
-              <p className="card-description">Your account overview</p>
-            </div>
-            <div className="card-content">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="w-8 h-8 theme-blue rounded-xl flex items-center justify-center shadow-clean">
-                  <span className="text-white font-bold text-sm">
-                    {session.user?.email === 'admin@dhukuti.com' ? 'U' : session.user?.name?.charAt(0) || 'U'}
-                  </span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-slate-800 truncate text-xs">
-                    {session.user?.email === 'admin@dhukuti.com' ? 'User' : session.user?.name}
-                  </h4>
-                  <p className="text-xs text-slate-500 truncate">
-                    {session.user?.email === 'admin@dhukuti.com' ? 'user@example.com' : session.user?.email}
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between p-2 bg-slate-50 rounded-xl">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-5 h-5 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-2.5 h-2.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </div>
-                    <span className="text-xs font-medium text-slate-700">Groups</span>
-                  </div>
-                  <span className="font-bold text-slate-800 text-xs">
-                    {isDemoUser ? "3" : "0"}
-                  </span>
-                </div>
-                
-                <div className="flex items-center justify-between p-2 bg-slate-50 rounded-xl">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-5 h-5 bg-emerald-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-2.5 h-2.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
-                    </div>
-                    <span className="text-xs font-medium text-slate-700">Contributions</span>
-                  </div>
-                  <span className="font-bold text-slate-800 text-xs">
-                    {isDemoUser ? "12" : "0"}
-                  </span>
-                </div>
-                
-                <div className="flex items-center justify-between p-2 bg-slate-50 rounded-xl">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-5 h-5 bg-amber-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-2.5 h-2.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
-                    </div>
-                    <span className="text-xs font-medium text-slate-700">Balance</span>
-                  </div>
-                  <span className="font-bold text-blue-600 text-xs">
-                    {isDemoUser ? "$34,000" : "$0"}
-                  </span>
-                </div>
-              </div>
-            </div>
+          <div className="slide-up" style={{ animationDelay: '0.6s' }}>
+            <ProfileWidget />
           </div>
 
           {/* Quick Actions */}

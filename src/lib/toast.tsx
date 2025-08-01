@@ -59,12 +59,7 @@ export const dhukutiToast = {
     });
   },
 
-  // Admin actions
-  adminAction: (action: string) => {
-    toast.success(`Admin action: ${action} completed successfully! 🛡️`, {
-      duration: 4000,
-    });
-  },
+
 
   // Authentication
   loginSuccess: (userName: string) => {

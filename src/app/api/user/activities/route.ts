@@ -56,7 +56,9 @@ export async function GET(request: NextRequest) {
         id: activity.id,
         type: activity.type,
         description: getActivityDescription(activity),
-        amount: activity.amount ? Number(activity.amount) : undefined,
+        amount: activity.metadata && typeof activity.metadata === 'object' && 'amount' in activity.metadata 
+          ? Number(activity.metadata.amount) 
+          : undefined,
         groupName: activity.group?.name,
         createdAt: activity.createdAt.toISOString(),
       })),
@@ -85,19 +87,23 @@ export async function GET(request: NextRequest) {
 }
 
 function getActivityDescription(activity: any): string {
+  const amount = activity.metadata && typeof activity.metadata === 'object' && 'amount' in activity.metadata 
+    ? activity.metadata.amount 
+    : undefined;
+    
   switch (activity.type) {
     case 'GROUP_JOINED':
       return `Joined group ${activity.group?.name || 'Unknown'}`
     case 'GROUP_LEFT':
       return `Left group ${activity.group?.name || 'Unknown'}`
     case 'CONTRIBUTION_PAID':
-      return `Paid contribution of ${activity.amount} to ${activity.group?.name || 'Unknown'}`
+      return `Paid contribution of ${amount} to ${activity.group?.name || 'Unknown'}`
     case 'CONTRIBUTION_DUE':
-      return `Contribution due: ${activity.amount} to ${activity.group?.name || 'Unknown'}`
+      return `Contribution due: ${amount} to ${activity.group?.name || 'Unknown'}`
     case 'GROUP_CREATED':
       return `Created group ${activity.group?.name || 'Unknown'}`
     case 'TRANSACTION_COMPLETED':
-      return `Transaction completed: ${activity.amount}`
+      return `Transaction completed: ${amount}`
     default:
       return activity.description || 'Activity recorded'
   }
