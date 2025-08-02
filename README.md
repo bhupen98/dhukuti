@@ -105,13 +105,43 @@ src/
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Docker (Recommended)
 
+#### Prerequisites
+- Docker Desktop installed and running
+- At least 4GB of available RAM
+
+#### Quick Start with Docker
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd dhukuti
+   ```
+
+2. **Start the development environment**
+   ```bash
+   docker-compose -f docker-compose.dev.yml up --build
+   ```
+
+3. **Access the application**
+   - Application: http://localhost:3000
+   - Database: localhost:5432
+
+4. **Run database migrations (in a new terminal)**
+   ```bash
+   docker-compose -f docker-compose.dev.yml exec app-dev npm run db:push
+   docker-compose -f docker-compose.dev.yml exec app-dev npm run db:seed
+   ```
+
+### Option 2: Local Development
+
+#### Prerequisites
 - Node.js 18+ 
 - PostgreSQL 12+
 - npm or yarn
 
-### Installation
+#### Installation
 
 1. **Clone the repository**
    ```bash
@@ -185,6 +215,8 @@ src/
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
 - **TypeScript** - Type checking
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
 
 ## 📁 Project Structure
 
@@ -232,7 +264,65 @@ npx prisma db seed
 npx prisma studio
 ```
 
+## 🐳 Docker
+
+### Development Environment
+
+The project includes a complete Docker setup for easy development:
+
+```bash
+# Start development environment
+docker-compose -f docker-compose.dev.yml up --build
+
+# Stop development environment
+docker-compose -f docker-compose.dev.yml down
+
+# View logs
+docker-compose -f docker-compose.dev.yml logs -f app-dev
+
+# Run commands in the app container
+docker-compose -f docker-compose.dev.yml exec app-dev npm run lint
+docker-compose -f docker-compose.dev.yml exec app-dev npm run db:studio
+```
+
+### Production Environment
+
+```bash
+# Start production environment
+docker-compose up --build
+
+# Stop production environment
+docker-compose down
+
+# View logs
+docker-compose logs -f app
+
+# Run database migrations
+docker-compose exec app npm run db:push
+docker-compose exec app npm run db:seed
+```
+
+### Docker Services
+
+- **PostgreSQL Database** (port 5432)
+- **Next.js Application** (port 3000)
+- **Prisma Studio** (port 5555, optional)
+
+For detailed Docker documentation, see [DOCKER_SETUP.md](DOCKER_SETUP.md).
+
 ## 🚀 Deployment
+
+### Docker Deployment
+
+1. **Build the production image**
+   ```bash
+   docker build -t dhukuti:latest .
+   ```
+
+2. **Run with docker-compose**
+   ```bash
+   docker-compose up --build
+   ```
 
 ### Vercel (Recommended)
 

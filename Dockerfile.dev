@@ -1,0 +1,28 @@
+# Use the official Node.js 18 image as base
+FROM node:18-alpine
+
+# Install dependencies for native modules and SSL
+RUN apk add --no-cache libc6-compat openssl
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json* ./
+
+# Copy Prisma schema first
+COPY prisma ./prisma/
+
+# Install all dependencies (including dev dependencies)
+RUN npm ci
+
+# Generate Prisma client
+RUN npx prisma generate
+
+# Copy the rest of the application
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Start development server
+CMD ["npm", "run", "dev"] 

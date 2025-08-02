@@ -5,13 +5,11 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Avatar from "boring-avatars";
-import { Notifications } from "@/components/common/Notifications";
 import { dhukutiToast } from "@/lib/toast";
 
 export function Navigation() {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -28,7 +26,6 @@ export function Navigation() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Searching for:", searchQuery);
-    setIsSearchOpen(false);
   };
 
   const handleSignOut = async () => {
@@ -50,7 +47,6 @@ export function Navigation() {
     setIsQuickActionsOpen(false);
     setIsUserMenuOpen(false);
     setIsNotificationsOpen(false);
-    setIsSearchOpen(false);
   };
 
   // Close dropdowns when clicking outside
