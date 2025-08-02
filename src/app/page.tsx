@@ -6,85 +6,121 @@ export default async function HomePage() {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className="min-h-screen bg-gradient-clean">
-      {/* Navigation Bar */}
-      <nav className="relative z-50 px-4 py-4">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 theme-blue rounded-lg flex items-center justify-center shadow-clean">
-              <span className="text-white font-bold text-sm">D</span>
-            </div>
-            <span className="text-xl font-bold text-gradient-blue">Dhukuti</span>
-          </div>
+    <div className="min-h-screen bg-white">
+      {/* Professional Header - Only show when NOT logged in */}
+      {!session && (
+        <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              {/* Logo */}
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm">
+                  <span className="text-white font-bold text-lg">💰</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl font-bold text-gray-900">Dhukuti</span>
+                  <span className="text-xs text-gray-500 -mt-1">Community Savings</span>
+                </div>
+              </div>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-6">
-            <a href="#features" className="text-slate-600 hover:text-slate-800 transition-colors">Features</a>
-            <a href="#about" className="text-slate-600 hover:text-slate-800 transition-colors">About</a>
-            <a href="#contact" className="text-slate-600 hover:text-slate-800 transition-colors">Contact</a>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex items-center space-x-3">
-            {session ? (
-              <>
-                <Link href="/dashboard" className="btn btn-ghost btn-sm">
-                  Dashboard
-                </Link>
-                <Link href="/groups" className="btn btn-primary btn-sm">
-                  Go to App
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="btn btn-ghost btn-sm">
+              {/* Right side - Auth buttons */}
+              <div className="flex items-center space-x-4">
+                <Link href="/login" className="text-gray-600 hover:text-gray-900 transition-colors font-medium text-sm">
                   Sign In
                 </Link>
-                <Link href="/login" className="btn btn-primary btn-sm">
+                <Link href="/login" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-all duration-200 text-sm shadow-sm">
                   Get Started
                 </Link>
-              </>
-            )}
+              </div>
+            </div>
           </div>
-        </div>
-      </nav>
+        </header>
+      )}
 
-      {/* Hero Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-5xl mx-auto text-center">
+      {/* Enhanced Hero Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute top-40 left-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+        
+                <div className="relative max-w-7xl mx-auto text-center">
           {session ? (
             <>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
-                Welcome Back to <span className="text-gradient-blue">Dhukuti</span>
+              <div className="mb-8">
+                <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
+                  Welcome back! Your Dhukuti groups are ready
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Welcome back to <span className="text-blue-600">Dhukuti</span>
               </h1>
-              <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
-                Continue managing your Nepalese community savings groups and track your financial progress.
+              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Continue managing your Nepalese community savings groups and track your financial progress with our modern platform.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/dashboard" className="btn btn-primary btn-lg">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <Link href="/dashboard" className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition-all duration-200 shadow-sm text-lg">
                   Go to Dashboard
                 </Link>
-                <Link href="/groups/create" className="btn btn-outline btn-lg">
+                <Link href="/groups/create" className="px-8 py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-md border border-gray-300 transition-all duration-200 text-lg shadow-sm">
                   Create New Group
                 </Link>
+              </div>
+              {/* Quick stats for logged in users */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                  <div className="text-2xl font-bold text-blue-600">3</div>
+                  <div className="text-sm text-gray-600">Active Groups</div>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                  <div className="text-2xl font-bold text-green-600">$2,400</div>
+                  <div className="text-sm text-gray-600">This Month</div>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                  <div className="text-2xl font-bold text-purple-600">24</div>
+                  <div className="text-sm text-gray-600">Members</div>
+                </div>
               </div>
             </>
           ) : (
             <>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
-                Traditional Nepalese <span className="text-gradient-blue">Community Savings</span>
+              <div className="mb-8">
+                <div className="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium mb-6">
+                  <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                  Trusted by 1000+ Nepalese community members
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Traditional Nepalese <span className="text-blue-600">Community Savings</span>
               </h1>
-              <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
-                Join the trusted Dhukuti system - a modern platform for traditional Nepalese community savings groups in Australia.
+              <p className="text-xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
+                Join the trusted Dhukuti system - a modern platform for traditional Nepalese community savings groups in Australia. Build wealth together, support each other, and strengthen your community bonds.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/login" className="btn btn-primary btn-lg">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <Link href="/login" className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition-all duration-200 shadow-sm text-lg">
                   Get Started Today
                 </Link>
-                <Link href="/groups/join" className="btn btn-outline btn-lg">
+                <Link href="/groups/join" className="px-8 py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-md border border-gray-300 transition-all duration-200 text-lg shadow-sm">
                   Join Existing Group
                 </Link>
+              </div>
+              {/* Trust indicators */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                  <div className="text-2xl font-bold text-blue-600">1000+</div>
+                  <div className="text-sm text-gray-600">Active Members</div>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                  <div className="text-2xl font-bold text-green-600">$2M+</div>
+                  <div className="text-sm text-gray-600">Total Savings</div>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                  <div className="text-2xl font-bold text-purple-600">150+</div>
+                  <div className="text-sm text-gray-600">Groups Created</div>
+                </div>
               </div>
             </>
           )}
@@ -92,52 +128,81 @@ export default async function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-16 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-800 mb-4">Why Choose Dhukuti?</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Experience the perfect blend of traditional Nepalese community values with modern digital convenience.
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Everything you need to manage your Dhukuti
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Modern tools for traditional community savings, designed specifically for the Nepalese community in Australia.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="text-center">
-              <div className="w-16 h-16 theme-blue rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-clean">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature Card 1 */}
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                <span className="text-2xl">👥</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Community Trust</h3>
-              <p className="text-slate-600">
-                Built on the foundation of traditional Nepalese community values and mutual trust.
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Group Management</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Create and manage Dhukuti groups with member roles, contribution tracking, and automated rotation cycles.
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="text-center">
-              <div className="w-16 h-16 theme-green rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-green">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+            {/* Feature Card 2 */}
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                <span className="text-2xl">💰</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Secure & Transparent</h3>
-              <p className="text-slate-600">
-                Modern security with complete transparency in all financial transactions and group activities.
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Financial Tracking</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Track contributions, balances, and payouts with real-time analytics and automated payment reminders.
               </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="text-center">
-              <div className="w-16 h-16 theme-orange rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-clean">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+            {/* Feature Card 3 */}
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+                <span className="text-2xl">📱</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">Easy Management</h3>
-              <p className="text-slate-600">
-                Simple and intuitive interface for managing contributions, tracking payments, and group communications.
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Community Communication</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Built-in messaging, event management, and notifications to keep your community connected and informed.
+              </p>
+            </div>
+
+            {/* Feature Card 4 */}
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-6">
+                <span className="text-2xl">🛡️</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Secure & Trusted</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Bank-level security with transparent audit trails, ensuring your community's trust and financial safety.
+              </p>
+            </div>
+
+            {/* Feature Card 5 */}
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
+                <span className="text-2xl">📊</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Analytics & Insights</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Comprehensive reporting and analytics to help you make informed decisions about your community savings.
+              </p>
+            </div>
+
+            {/* Feature Card 6 */}
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-all duration-200">
+              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-6">
+                <span className="text-2xl">🌏</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Nepalese Community Focus</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Designed specifically for the Nepalese community in Australia, respecting cultural traditions and values.
               </p>
             </div>
           </div>
@@ -145,52 +210,56 @@ export default async function HomePage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-slate-800 mb-6">About Dhukuti</h2>
-              <p className="text-slate-600 mb-4">
-                Dhukuti is a traditional Nepalese community savings system that has been practiced for generations. 
-                It's based on mutual trust, community support, and shared financial goals.
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                What is Dhukuti?
+              </h2>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA) that has been practiced for generations. It's a community-based financial system where members contribute regularly and receive lump-sum payouts in rotation.
               </p>
-              <p className="text-slate-600 mb-6">
-                Our modern platform brings this time-tested tradition to the digital age, making it easier for 
-                Nepalese communities in Australia to organize, manage, and participate in Dhukuti groups.
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Our platform modernizes this time-tested tradition with digital tools while preserving the community trust and cooperation that makes Dhukuti so valuable.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/login" className="btn btn-primary">
-                  Join a Group
-                </Link>
-                <Link href="#contact" className="btn btn-outline">
+                <Link href="/login" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-sm">
                   Learn More
+                </Link>
+                <Link href="/groups" className="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-lg border border-gray-300 transition-all duration-200 shadow-sm">
+                  See Examples
                 </Link>
               </div>
             </div>
-            <div className="relative">
-              <div className="bg-gradient-blue rounded-2xl p-8 text-white">
-                <h3 className="text-2xl font-bold mb-4">How Dhukuti Works</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">1</div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Form a Group</h4>
-                      <p className="text-blue-100 text-sm">Gather trusted community members to form a Dhukuti group.</p>
-                    </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">How it works</h3>
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-blue-600 font-semibold text-sm">1</span>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">2</div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Set Contributions</h4>
-                      <p className="text-blue-100 text-sm">Agree on regular contribution amounts and schedules.</p>
-                    </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Join a Group</h4>
+                    <p className="text-gray-600 text-sm">Find an existing Dhukuti group or create your own with trusted community members.</p>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">3</div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Rotate Payouts</h4>
-                      <p className="text-blue-100 text-sm">Members receive the collected amount in rotation.</p>
-                    </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-blue-600 font-semibold text-sm">2</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Make Regular Contributions</h4>
+                    <p className="text-gray-600 text-sm">Contribute your agreed amount regularly, whether weekly, monthly, or as arranged.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-blue-600 font-semibold text-sm">3</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Receive Your Payout</h4>
+                    <p className="text-gray-600 text-sm">When it's your turn, receive the full collected amount to use as needed.</p>
                   </div>
                 </div>
               </div>
@@ -199,100 +268,72 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-16 px-4 bg-slate-50">
-        <div className="max-w-5xl mx-auto text-center">
-          {session ? (
-            <>
-              <h2 className="text-3xl font-bold text-slate-800 mb-4">Welcome Back to Dhukuti!</h2>
-              <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
-                Continue your journey with your Nepalese community savings groups. Manage contributions, track progress, and stay connected.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/dashboard" className="btn btn-primary btn-lg">
-                  Go to Dashboard
-                </Link>
-                <Link href="/groups/create" className="btn btn-outline btn-lg">
-                  Create New Group
-                </Link>
-              </div>
-            </>
-          ) : (
-            <>
-              <h2 className="text-3xl font-bold text-slate-800 mb-4">Ready to Start Your Dhukuti Journey?</h2>
-              <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
-                Join thousands of Nepalese community members in Australia who trust Dhukuti for their savings and financial goals.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/login" className="btn btn-primary btn-lg">
-                  Get Started Today
-                </Link>
-                <Link href="/groups/join" className="btn btn-outline btn-lg">
-                  Join Existing Group
-                </Link>
-              </div>
-            </>
-          )}
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Ready to start your Dhukuti journey?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            Join thousands of Nepalese community members who are already building wealth together through trusted Dhukuti groups.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/login" className="px-8 py-4 bg-white hover:bg-gray-50 text-blue-600 font-semibold rounded-lg transition-all duration-200 shadow-sm text-lg">
+              Get Started Free
+            </Link>
+            <Link href="/groups" className="px-8 py-4 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg transition-all duration-200 text-lg">
+              Browse Groups
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="bg-slate-800 text-white py-12 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 theme-blue rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">D</span>
+      <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold">💰</span>
                 </div>
-                <span className="text-xl font-bold">Dhukuti</span>
+                <span className="text-lg font-bold">Dhukuti</span>
               </div>
-              <p className="text-slate-300 mb-4">
-                Empowering Nepalese communities in Australia with modern digital tools for traditional community savings.
+              <p className="text-gray-400 text-sm">
+                Modernizing traditional Nepalese community savings for the digital age.
               </p>
-              <div className="flex space-x-4">
-                <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                  <span className="sr-only">Facebook</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                  </svg>
-                </a>
-                <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                  <span className="sr-only">Instagram</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807v-.468zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
-                  </svg>
-                </a>
-                <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                  <span className="sr-only">Twitter</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-              </div>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-300 tracking-wider uppercase mb-4">Solutions</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Community Savings</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Group Management</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Payment Tracking</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Financial Reports</a></li>
+              <h3 className="font-semibold mb-4">Platform</h3>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">API</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-300 tracking-wider uppercase mb-4">Support</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Contact Us</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Terms of Service</a></li>
+              <h3 className="font-semibold mb-4">Support</h3>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Community</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Status</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-4">Company</h3>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-slate-700">
-            <p className="text-slate-400 text-sm text-center">
-              © 2024 Dhukuti. All rights reserved. Empowering Nepalese communities in Australia.
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p className="text-gray-400 text-sm">
+              © 2024 Dhukuti. All rights reserved. Built for the Nepalese community in Australia.
             </p>
           </div>
         </div>

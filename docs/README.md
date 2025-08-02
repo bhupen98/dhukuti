@@ -1,4 +1,4 @@
-# 📋 Dhukuti Project Summary
+# 📚 Dhukuti - Complete Documentation
 
 ## 🎯 Project Overview
 
@@ -27,7 +27,7 @@
 #### **UI/UX Design**
 - ✅ **Clean & Modern Design** - Professional, compact interface
 - ✅ **Responsive Layout** - Works on all device sizes
-- ✅ **Toast Notifications** - User feedback with react-hot-toast
+- ✅ **Toast Notifications** - User feedback with react-toastify
 - ✅ **Loading States** - Smooth user experience
 - ✅ **Navigation** - Intuitive navigation with user menu
 
@@ -44,7 +44,7 @@
 - **Next.js 15** - React framework with App Router
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
-- **React Hot Toast** - Toast notifications
+- **React Toastify** - Toast notifications
 - **NextAuth.js** - Authentication
 
 ### **Backend**
@@ -193,20 +193,28 @@ ADMIN_ACCESS_TOKEN="your-admin-token"
 - **Advanced Analytics** - Business intelligence features
 - **Multi-language Support** - Nepali language support
 
-## 📝 Documentation
+## 📝 API Documentation
 
-### **Key Documents**
-- `README.md` - Main project documentation
-- `docs/` - Detailed documentation
-- `STRUCTURE.md` - Project structure overview
-- `setup.md` - Setup instructions
+### **Authentication Endpoints**
+- `POST /api/auth/signin` - User login
+- `POST /api/auth/signup` - User registration
+- `GET /api/auth/session` - Get current session
 
-### **API Documentation**
-- Authentication endpoints
-- User management APIs
-- Group management APIs
-- Admin APIs
-- Event management APIs
+### **User Management APIs**
+- `GET /api/user/profile` - Get user profile
+- `PUT /api/user/profile` - Update user profile
+- `GET /api/user/stats` - Get user statistics
+
+### **Group Management APIs**
+- `GET /api/groups` - List groups
+- `POST /api/groups` - Create group
+- `GET /api/groups/[id]` - Get group details
+- `PUT /api/groups/[id]` - Update group
+
+### **Admin APIs**
+- `GET /api/admin/users` - List all users
+- `GET /api/admin/stats` - Platform statistics
+- `POST /api/admin/verify-token` - Verify admin token
 
 ## 🤝 Contributing
 

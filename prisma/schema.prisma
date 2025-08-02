@@ -50,6 +50,7 @@ model Group {
   startDate   DateTime?
   endDate     DateTime?
   status      GroupStatus @default(ACTIVE)
+  metadata    Json?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

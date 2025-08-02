@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { name, description, maxMembers, contributionAmount, cycleDuration } = body
+    const { name, description, maxMembers, contributionAmount, cycleDuration, startDate, metadata } = body
 
     if (!name || !maxMembers || !contributionAmount || !cycleDuration) {
       return NextResponse.json<ApiResponse>({
@@ -112,6 +112,8 @@ export async function POST(request: NextRequest) {
         maxMembers: parseInt(maxMembers),
         contributionAmount: parseFloat(contributionAmount),
         cycleDuration: parseInt(cycleDuration),
+        startDate: startDate ? new Date(startDate) : null,
+        metadata,
         ownerId: session.user.id,
         members: {
           create: {

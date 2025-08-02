@@ -2,12 +2,11 @@
 
 **Modernize traditional Dhukuti groups with digital automation for the Nepalese community in Australia.**
 
-A comprehensive platform for managing traditional Nepali rotating savings and credit associations (Dhukuti) with modern digital tools, secure transactions, and community features specifically designed for the Nepalese community in Australia.
+A comprehensive platform for managing traditional Nepali rotating savings and credit associations (Dhukuti) with modern digital tools, secure transactions, and community features.
 
-## 🚀 Live Features
+## 🚀 Key Features
 
 ### 🎯 **Core Dhukuti Management**
-
 - **👥 Group Management**: Create and manage Dhukuti groups with member roles
 - **💸 Contribution Tracking**: Automated contribution scheduling and payment tracking
 - **📊 Financial Analytics**: Real-time balance tracking and financial insights
@@ -15,55 +14,47 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 - **📱 Member Communication**: Built-in messaging and activity notifications
 
 ### 🛡️ **Security & Trust**
-
 - **NextAuth.js Authentication**: Secure user authentication with credentials
 - **Role-based Access Control**: User, Admin, and Moderator roles
 - **Transaction History**: Complete audit trail for all financial activities
 - **Data Protection**: Secure data handling with Prisma ORM
 - **Activity Logging**: Comprehensive activity tracking for transparency
-- **Admin Security**: Token-based admin access with rate limiting and audit logging
 
 ### 👥 **User Management**
-
 - **Member Profiles**: Detailed user profiles with reputation tracking
 - **Group Membership**: Easy group joining and management
 - **Reputation System**: Track member reliability and payment history
-- **Emergency Contacts**: Safety features for group members
 - **Verification System**: User verification for trust building
 - **Profile Management**: Edit profile, change password, upload avatar
 
 ### 📊 **Advanced Analytics**
-
 - **Group Performance**: Track group health and member participation
 - **Financial Reports**: Detailed contribution and payout reports
 - **Member Statistics**: Individual member performance metrics
 - **Activity Feed**: Real-time updates on group activities
 - **Dashboard Insights**: Comprehensive overview of all groups
 
-### 💬 **Community Features**
-
-- **Group Chat**: Built-in messaging for group communication
-- **Activity Feed**: Real-time updates on contributions and activities
-- **Notifications**: Automated reminders for due payments
-- **Event Management**: Schedule and manage group meetings
-- **Document Sharing**: Share important group documents
-
 ### 🎫 **Event Management**
-
 - **Event Creation**: Create and manage events with ticket sales
 - **Ticket Management**: Handle ticket purchases and distribution
 - **Event Analytics**: Track event performance and attendance
-- **Payment Integration**: Secure payment processing for tickets
 - **Marketing Tools**: Promote events with built-in marketing features
+- **Event Details**: Comprehensive event pages with full information
+- **Payment Integration**: Ready for Stripe payment processing
 
 ### 🛡️ **Admin Dashboard**
-
 - **Admin Authentication**: Secure token-based admin access
 - **User Management**: Manage all platform users
 - **Event Oversight**: Monitor and manage all events
 - **Analytics Dashboard**: Platform-wide performance metrics
 - **System Settings**: Configure platform settings
-- **Security Overview**: Monitor login attempts and system health
+
+### 🎨 **Modern UI/UX**
+- **HubSpot-Inspired Design**: Clean, professional interface
+- **Responsive Design**: Works perfectly on all devices
+- **Interactive Elements**: Smooth animations and transitions
+- **Toast Notifications**: User-friendly feedback system
+- **Consistent Styling**: Unified design language throughout
 
 ## 🏗️ Architecture
 
@@ -76,125 +67,18 @@ src/
 │   ├── groups/           # Group management
 │   ├── contributions/    # Contribution tracking
 │   ├── events/          # Event management
+│   │   └── [id]/        # Dynamic event pages
 │   ├── profile/          # User profile
 │   ├── admin/            # Admin dashboard
-│   ├── debug/            # Debug utilities
 │   └── api/              # API routes
-│       ├── auth/         # Authentication routes
-│       ├── admin/        # Admin API routes
-│       ├── groups/       # Group management
-│       ├── events/       # Event management
-│       └── user/         # User profile & activities
 ├── components/
 │   ├── features/         # Feature-specific components
-│   │   ├── groups/       # Group management
-│   │   ├── contributions/ # Contribution tracking
-│   │   ├── events/       # Event management
-│   │   ├── chat/         # Messaging system
-│   │   ├── analytics/    # Analytics components
-│   │   └── profile/      # Profile management
 │   ├── common/           # Reusable UI components
 │   ├── layout/           # Navigation components
-│   ├── admin/            # Admin-specific components
 │   └── providers/        # Context providers
 ├── lib/                  # Utilities, auth, config
-├── hooks/                # Custom React hooks
-├── utils/                # Helper functions
-└── types/                # TypeScript definitions
+└── types/                # TypeScript type definitions
 ```
-
-## 🚀 Quick Start
-
-### Option 1: Docker (Recommended)
-
-#### Prerequisites
-- Docker Desktop installed and running
-- At least 4GB of available RAM
-
-#### Quick Start with Docker
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd dhukuti
-   ```
-
-2. **Start the development environment**
-   ```bash
-   docker-compose -f docker-compose.dev.yml up --build
-   ```
-
-3. **Access the application**
-   - Application: http://localhost:3000
-   - Database: localhost:5432
-
-4. **Run database migrations (in a new terminal)**
-   ```bash
-   docker-compose -f docker-compose.dev.yml exec app-dev npm run db:push
-   docker-compose -f docker-compose.dev.yml exec app-dev npm run db:seed
-   ```
-
-### Option 2: Local Development
-
-#### Prerequisites
-- Node.js 18+ 
-- PostgreSQL 12+
-- npm or yarn
-
-#### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd dhukuti
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp env.example .env.local
-   ```
-   
-   Update `.env.local` with your database credentials:
-   ```env
-   DATABASE_URL="postgresql://username:password@localhost:5432/dhukuti"
-   NEXTAUTH_SECRET="your-secret-key-here"
-   NEXTAUTH_URL="http://localhost:3000"
-   ```
-
-4. **Set up the database**
-   ```bash
-   npx prisma db push
-   npx prisma db seed
-   ```
-
-5. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-6. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## 👥 Test Accounts
-
-### Admin User
-- **Email**: `admin@dhukuti.com`
-- **Password**: `admin123`
-
-### Regular Users
-- **Email**: `ramesh.thapa@email.com`
-- **Password**: `password123`
-- **Email**: `sita.gurung@email.com`
-- **Password**: `password123`
-- **Email**: `bhupen.rai@email.com`
-- **Password**: `password123`
-- **Email**: `anjali.shrestha@email.com`
-- **Password**: `password123`
 
 ## 🛠️ Tech Stack
 
@@ -202,8 +86,10 @@ src/
 - **Next.js 15** - React framework with App Router
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
-- **React Hot Toast** - Toast notifications
+- **React Toastify** - Toast notifications
 - **NextAuth.js** - Authentication
+- **Boring Avatars** - User avatar generation
+- **Recharts** - Data visualization
 
 ### **Backend**
 - **Next.js API Routes** - Server-side API endpoints
@@ -216,152 +102,167 @@ src/
 - **Prettier** - Code formatting
 - **TypeScript** - Type checking
 - **Docker** - Containerization
-- **Docker Compose** - Multi-container orchestration
 
-## 📁 Project Structure
+## 🚀 Quick Start
 
-```
-dhukuti/
-├── src/
-│   ├── app/              # Next.js App Router pages
-│   ├── components/       # React components
-│   ├── lib/             # Utilities and configurations
-│   ├── hooks/           # Custom React hooks
-│   └── types/           # TypeScript type definitions
-├── prisma/
-│   ├── schema.prisma    # Database schema
-│   └── seed.ts          # Database seeding
-├── docs/                # Documentation
-├── public/              # Static assets
-└── package.json         # Dependencies and scripts
-```
+### **Prerequisites**
+- Node.js 18+
+- PostgreSQL 12+
+- npm or yarn
 
-## 🔧 Development
-
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npx prisma studio` - Open Prisma Studio
-- `npx prisma db push` - Push schema to database
-- `npx prisma db seed` - Seed database with test data
-
-### Database Management
-
+### **Installation**
 ```bash
-# Generate Prisma client
-npx prisma generate
+# Clone repository
+git clone <repository-url>
+cd dhukuti
 
-# Push schema changes
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp env.example .env.local
+
+# Configure database credentials in .env.local
+DATABASE_URL="postgresql://username:password@localhost:5432/dhukuti"
+NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_URL="http://localhost:3000"
+ADMIN_ACCESS_TOKEN="your-admin-token"
+
+# Set up database
 npx prisma db push
 
 # Seed database
 npx prisma db seed
 
-# Open Prisma Studio
-npx prisma studio
+# Start development server
+npm run dev
 ```
 
-## 🐳 Docker
-
-### Development Environment
-
-The project includes a complete Docker setup for easy development:
-
+### **Docker Setup**
 ```bash
-# Start development environment
-docker-compose -f docker-compose.dev.yml up --build
+# Using Docker Compose
+docker-compose up -d
 
-# Stop development environment
-docker-compose -f docker-compose.dev.yml down
-
-# View logs
-docker-compose -f docker-compose.dev.yml logs -f app-dev
-
-# Run commands in the app container
-docker-compose -f docker-compose.dev.yml exec app-dev npm run lint
-docker-compose -f docker-compose.dev.yml exec app-dev npm run db:studio
+# Or for development
+docker-compose -f docker-compose.dev.yml up -d
 ```
 
-### Production Environment
+## 👥 Test Data
 
-```bash
-# Start production environment
-docker-compose up --build
+### **Admin User**
+- **Email**: `admin@dhukuti.com`
+- **Password**: `admin123`
 
-# Stop production environment
-docker-compose down
+### **Regular Users**
+- **Ramesh Thapa**: `ramesh.thapa@email.com` / `password123`
+- **Sita Gurung**: `sita.gurung@email.com` / `password123`
+- **Bhupen Rai**: `bhupen.rai@email.com` / `password123`
+- **Anjali Shrestha**: `anjali.shrestha@email.com` / `password123`
 
-# View logs
-docker-compose logs -f app
+## 📊 Database Schema
 
-# Run database migrations
-docker-compose exec app npm run db:push
-docker-compose exec app npm run db:seed
-```
+### **Core Models**
+- **User** - Authentication, profiles, roles, reputation
+- **Group** - Dhukuti group management with metadata support
+- **GroupMember** - Member relationships and roles
+- **Contribution** - Payment tracking and scheduling
+- **Transaction** - Financial records and audit trail
+- **Activity** - Comprehensive activity logging
+- **Message** - Group communication
+- **Event** - Event management system
+- **Ticket** - Ticket sales and management
 
-### Docker Services
+## 🎯 Recent Updates
 
-- **PostgreSQL Database** (port 5432)
-- **Next.js Application** (port 3000)
-- **Prisma Studio** (port 5555, optional)
+### **UI/UX Enhancements**
+- ✅ Complete HubSpot-inspired redesign
+- ✅ Compact dashboard layout
+- ✅ Curved button styling throughout
+- ✅ Professional homepage with conditional rendering
+- ✅ Responsive design improvements
+- ✅ Toast notification system migration to React Toastify
 
-For detailed Docker documentation, see [DOCKER_SETUP.md](DOCKER_SETUP.md).
+### **Event System**
+- ✅ Event creation interface with multi-step form
+- ✅ Event listing with images and ticket purchasing
+- ✅ Dynamic event detail pages
+- ✅ Ticket type management
+- ✅ Payment modal integration (ready for Stripe)
+
+### **Group Management**
+- ✅ Modern group creation interface
+- ✅ Group listing with compact design
+- ✅ Group API integration with metadata support
+
+### **Profile & Settings**
+- ✅ Compact profile page design
+- ✅ Inline profile editing
+- ✅ Streamlined navigation
 
 ## 🚀 Deployment
 
-### Docker Deployment
+### **Vercel (Recommended)**
+- ✅ Easy GitHub integration
+- ✅ Automatic deployments
+- ✅ Built-in environment variable management
+- ✅ Free tier available
 
-1. **Build the production image**
-   ```bash
-   docker build -t dhukuti:latest .
-   ```
+### **Other Options**
+- **Railway** - Good for full-stack apps
+- **Render** - Free PostgreSQL hosting
+- **Supabase** - Database + hosting solution
+- **Docker** - Containerized deployment
 
-2. **Run with docker-compose**
-   ```bash
-   docker-compose up --build
-   ```
+## 📝 Documentation
 
-### Vercel (Recommended)
+For detailed documentation, see the [docs/](docs/) folder:
 
-1. **Connect your GitHub repository to Vercel**
-2. **Set environment variables in Vercel dashboard**
-3. **Deploy automatically on push to main branch**
+- **[API Reference](docs/API_REFERENCE.md)** - Complete API documentation
+- **[User Guide](docs/USER_GUIDE.md)** - How to use the platform
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Deployment instructions
+- **[Component Structure](docs/COMPONENT_STRUCTURE.md)** - Architecture overview
+- **[TODO](docs/TODO.md)** - Development roadmap and current status
 
-### Environment Variables for Production
+## 🔄 Development Status
 
-```env
-DATABASE_URL="your-production-database-url"
-NEXTAUTH_SECRET="your-production-secret"
-NEXTAUTH_URL="https://your-domain.com"
-ADMIN_ACCESS_TOKEN="your-admin-token"
-```
+### **✅ Completed**
+- User authentication and authorization
+- Database schema and migrations
+- Group creation and management
+- Event system with ticket purchasing
+- Modern UI/UX design
+- Responsive layout
+- Toast notifications
+- Profile management
+
+### **🔄 In Progress**
+- Event creation API integration
+- Group details view implementation
+- Stripe payment system setup
+
+### **📋 Planned**
+- Advanced group features
+- Mobile application
+- Real-time communication
+- Advanced analytics
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Nepalese Community in Australia** - For inspiration and cultural context
-- **Next.js Team** - For the amazing framework
-- **Prisma Team** - For the excellent ORM
-- **Tailwind CSS** - For the utility-first CSS framework
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📞 Support
 
-For support, email support@dhukuti.com or create an issue in this repository.
+- **Documentation**: Check `docs/` folder
+- **Issues**: Create GitHub issues
+- **Email**: support@dhukuti.com
 
 ---
 
-**Built with ❤️ for the Nepalese community in Australia**
+**Last Updated**: December 2024
+**Status**: ✅ Ready for testing and deployment
+**Version**: 1.0.0
+**Next Milestone**: Payment system integration

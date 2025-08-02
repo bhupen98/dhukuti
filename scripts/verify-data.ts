@@ -19,7 +19,7 @@ async function verifyData() {
   console.log('👥 USERS:')
   users.forEach(user => {
     console.log(`  • ${user.name} (${user.email})`)
-    console.log(`    Role: ${user.role}, Reputation: ${user.reputation}`)
+    console.log(`    Reputation: ${user.reputation}`)
     console.log(`    Total Earnings: Rs. ${user.totalEarnings}`)
     console.log(`    Groups Owned: ${user.ownedGroups.length}`)
     console.log(`    Groups Member: ${user.memberships.length}`)

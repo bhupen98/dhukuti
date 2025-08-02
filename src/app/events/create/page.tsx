@@ -60,6 +60,7 @@ interface EventSettings {
 
 export default function CreateEventPage() {
   const { session, status } = useAuthGuard();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<EventFormData>({
@@ -97,12 +98,22 @@ export default function CreateEventPage() {
   });
 
   const categories = [
-    { id: "concert", name: "Concert", icon: "🎵" },
-    { id: "workshop", name: "Workshop", icon: "📚" },
-    { id: "meeting", name: "Meeting", icon: "🤝" },
-    { id: "celebration", name: "Celebration", icon: "🎊" },
-    { id: "sports", name: "Sports", icon: "⚽" },
-    { id: "cultural", name: "Cultural", icon: "🎭" }
+    { id: "concert", name: "Concert", icon: "🎵", color: "from-purple-500 to-pink-500" },
+    { id: "workshop", name: "Workshop", icon: "📚", color: "from-blue-500 to-cyan-500" },
+    { id: "meeting", name: "Meeting", icon: "🤝", color: "from-green-500 to-emerald-500" },
+    { id: "celebration", name: "Celebration", icon: "🎊", color: "from-yellow-500 to-orange-500" },
+    { id: "sports", name: "Sports", icon: "⚽", color: "from-red-500 to-pink-500" },
+    { id: "cultural", name: "Cultural", icon: "🎭", color: "from-indigo-500 to-purple-500" },
+    { id: "community", name: "Community", icon: "👥", color: "from-amber-500 to-orange-500" },
+    { id: "educational", name: "Educational", icon: "🎓", color: "from-teal-500 to-cyan-500" },
+  ];
+
+  const steps = [
+    { number: 1, title: "Event Details", description: "Basic information", icon: "📝" },
+    { number: 2, title: "Date & Location", description: "Schedule and venue", icon: "📍" },
+    { number: 3, title: "Tickets & Pricing", description: "Ticket types and costs", icon: "🎫" },
+    { number: 4, title: "Marketing", description: "Promotion settings", icon: "📢" },
+    { number: 5, title: "Review & Create", description: "Final confirmation", icon: "✅" },
   ];
 
   const handleInputChange = (field: keyof EventFormData, value: any) => {
@@ -137,16 +148,22 @@ export default function CreateEventPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // TODO: Implement event creation API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      alert(`Event "${formData.title}" created successfully! Redirecting to events page...`);
+      router.push("/events");
+    } catch (error) {
+      console.error('Error creating event:', error);
+      alert('Failed to create event. Please try again.');
+    } finally {
       setIsLoading(false);
-      alert("Event created successfully! Redirecting to events page...");
-      // TODO: Redirect to events page or event management dashboard
-    }, 2000);
+    }
   };
 
   const nextStep = () => {
-    if (currentStep < 5) {
+    if (currentStep < 5 && isStepValid()) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -176,10 +193,10 @@ export default function CreateEventPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading...</p>
+          <div className="w-12 h-12 border-4 border-amber-400/30 border-t-amber-400 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading event creation...</p>
         </div>
       </div>
     );
@@ -190,513 +207,470 @@ export default function CreateEventPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Create New Event</h1>
-        <p className="text-gray-600 mt-1">Share your event with the Dhukuti community</p>
-      </div>
-
-      {/* Progress Steps */}
-      <div className="mb-8">
-        <div className="flex items-center justify-center">
-          {[1, 2, 3, 4, 5].map((step) => (
-            <div key={step} className="flex items-center">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                currentStep >= step 
-                  ? "bg-blue-600 text-white" 
-                  : "bg-gray-200 text-gray-600"
-              }`}>
-                {currentStep > step ? "✓" : step}
-              </div>
-              {step < 5 && (
-                <div className={`w-12 h-0.5 mx-2 ${
-                  currentStep > step ? "bg-blue-600" : "bg-gray-200"
-                }`}></div>
-              )}
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-5xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8 fade-in">
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xl">🎉</span>
             </div>
-          ))}
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-1">Create New Event</h1>
+              <p className="text-gray-600">
+                Share your event with the Dhukuti community
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="text-center mt-2">
-          <span className="text-sm text-gray-600">
-            Step {currentStep} of 5: {
-              currentStep === 1 ? "Event Details" :
-              currentStep === 2 ? "Date & Location" :
-              currentStep === 3 ? "Ticket Types" :
-              currentStep === 4 ? "Marketing & Promotion" :
-              "Settings & Review"
-            }
-          </span>
-        </div>
-      </div>
 
-      {/* Form */}
-      <div className="bg-white rounded-lg border border-gray-200">
-        <form onSubmit={handleSubmit}>
-          {/* Step 1: Event Details */}
-          {currentStep === 1 && (
-            <div className="p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Event Details</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Event Title *</label>
-                  <input
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) => handleInputChange("title", e.target.value)}
-                    placeholder="Enter event title"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
-                  <select
-                    value={formData.category}
-                    onChange={(e) => handleInputChange("category", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  >
-                    <option value="">Select a category</option>
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.icon} {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) => handleInputChange("description", e.target.value)}
-                    placeholder="Describe your event..."
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Event Image URL</label>
-                  <input
-                    type="url"
-                    value={formData.image}
-                    onChange={(e) => handleInputChange("image", e.target.value)}
-                    placeholder="https://example.com/image.jpg"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
-                  <input
-                    type="text"
-                    placeholder="Press Enter to add tags"
-                    onKeyPress={handleTagInput}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  {formData.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {formData.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full flex items-center"
-                        >
-                          {tag}
-                          <button
-                            type="button"
-                            onClick={() => removeTag(tag)}
-                            className="ml-1 text-blue-600 hover:text-blue-800"
-                          >
-                            ×
-                          </button>
-                        </span>
-                      ))}
+        {/* Progress Steps */}
+        <div className="mb-8 slide-up">
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+            <div className="flex items-center justify-between mb-4">
+              {steps.map((stepInfo, index) => (
+                <div key={stepInfo.number} className="flex items-center flex-1">
+                  <div className="flex flex-col items-center">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                      currentStep >= stepInfo.number 
+                        ? "bg-gradient-to-br from-purple-400 to-pink-500 text-white shadow-lg scale-110" 
+                        : "bg-gray-200 text-gray-600"
+                    }`}>
+                      {currentStep > stepInfo.number ? "✓" : stepInfo.icon}
                     </div>
+                    <div className="text-center mt-2">
+                      <p className={`text-xs font-medium ${currentStep >= stepInfo.number ? 'text-gray-900' : 'text-gray-500'}`}>
+                        {stepInfo.title}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">{stepInfo.description}</p>
+                    </div>
+                  </div>
+                  {index < steps.length - 1 && (
+                    <div className={`flex-1 h-0.5 mx-4 transition-all duration-300 ${
+                      currentStep > stepInfo.number ? "bg-gradient-to-r from-purple-400 to-pink-500" : "bg-gray-200"
+                    }`} />
                   )}
                 </div>
-              </div>
+              ))}
             </div>
-          )}
+          </div>
+        </div>
 
-          {/* Step 2: Date & Location */}
-          {currentStep === 2 && (
-            <div className="p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Date & Location</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date *</label>
-                  <input
-                    type="date"
-                    value={formData.date}
-                    onChange={(e) => handleInputChange("date", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Time *</label>
-                  <input
-                    type="time"
-                    value={formData.time}
-                    onChange={(e) => handleInputChange("time", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">City/Location *</label>
-                  <input
-                    type="text"
-                    value={formData.location}
-                    onChange={(e) => handleInputChange("location", e.target.value)}
-                    placeholder="e.g., Sydney, Melbourne"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Venue *</label>
-                  <input
-                    type="text"
-                    value={formData.venue}
-                    onChange={(e) => handleInputChange("venue", e.target.value)}
-                    placeholder="e.g., Sydney Opera House"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Step 3: Ticket Types */}
-          {currentStep === 3 && (
-            <div className="p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Ticket Types & Pricing</h2>
-              
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-md font-medium text-gray-900">Ticket Types</h3>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newTicket: TicketType = {
-                        id: Date.now().toString(),
-                        name: "",
-                        description: "",
-                        price: 0,
-                        currency: "AUD",
-                        quantity: 100,
-                        sold: 0,
-                        benefits: [],
-                        isActive: true,
-                        saleStartDate: "",
-                        saleEndDate: ""
-                      };
-                      setFormData(prev => ({
-                        ...prev,
-                        ticketTypes: [...prev.ticketTypes, newTicket]
-                      }));
-                    }}
-                    className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-                  >
-                    ➕ Add Ticket Type
-                  </button>
-                </div>
-
-                {formData.ticketTypes.length === 0 ? (
-                  <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
-                    <div className="text-gray-400 text-4xl mb-2">🎫</div>
-                    <p className="text-gray-600 mb-2">No ticket types added yet</p>
-                    <p className="text-sm text-gray-500">Add different ticket types with varying prices and benefits</p>
+        {/* Form */}
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 slide-up" style={{ animationDelay: '0.1s' }}>
+          <form onSubmit={handleSubmit} className="p-8">
+            {/* Step 1: Event Details */}
+            {currentStep === 1 && (
+              <div className="space-y-6 fade-in">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span className="text-white text-2xl">📝</span>
                   </div>
-                ) : (
-                  <div className="space-y-4">
-                    {formData.ticketTypes.map((ticket, index) => (
-                      <div key={ticket.id} className="border border-gray-200 rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-3">
-                          <h4 className="font-medium text-gray-900">Ticket Type {index + 1}</h4>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setFormData(prev => ({
-                                ...prev,
-                                ticketTypes: prev.ticketTypes.filter(t => t.id !== ticket.id)
-                              }));
-                            }}
-                            className="text-red-600 hover:text-red-800 text-sm"
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Event Details</h2>
+                  <p className="text-gray-600">Tell us about your event</p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Event Title *
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.title}
+                      onChange={(e) => handleInputChange("title", e.target.value)}
+                      placeholder="Enter a compelling event title..."
+                      className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Category *
+                    </label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {categories.map((category) => (
+                        <button
+                          key={category.id}
+                          type="button"
+                          onClick={() => handleInputChange("category", category.id)}
+                          className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
+                            formData.category === category.id
+                              ? `border-purple-400 bg-gradient-to-br ${category.color} text-white shadow-lg`
+                              : "border-gray-200 hover:border-gray-300 bg-white"
+                          }`}
+                        >
+                          <div className="text-2xl mb-2">{category.icon}</div>
+                          <div className="text-sm font-medium">{category.name}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Description *
+                    </label>
+                    <textarea
+                      value={formData.description}
+                      onChange={(e) => handleInputChange("description", e.target.value)}
+                      placeholder="Describe your event, what attendees can expect, and why they should come..."
+                      rows={4}
+                      className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 resize-none border-gray-200 hover:border-gray-300"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Event Image URL
+                    </label>
+                    <input
+                      type="url"
+                      value={formData.image}
+                      onChange={(e) => handleInputChange("image", e.target.value)}
+                      placeholder="https://example.com/event-image.jpg"
+                      className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Add a high-quality image to make your event stand out</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Tags
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Press Enter to add tags (e.g., networking, food, music)"
+                      onKeyPress={handleTagInput}
+                      className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                    />
+                    {formData.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {formData.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 text-sm rounded-full flex items-center border border-purple-200"
                           >
-                            🗑️ Remove
-                          </button>
-                        </div>
+                            {tag}
+                            <button
+                              type="button"
+                              onClick={() => removeTag(tag)}
+                              className="ml-2 text-purple-600 hover:text-purple-800 font-bold"
+                            >
+                              ×
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Ticket Name *</label>
-                            <input
-                              type="text"
-                              value={ticket.name}
-                              onChange={(e) => {
-                                const updatedTickets = [...formData.ticketTypes];
-                                updatedTickets[index].name = e.target.value;
-                                setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
+            {/* Step 2: Date & Location */}
+            {currentStep === 2 && (
+              <div className="space-y-6 fade-in">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span className="text-white text-2xl">📍</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Date & Location</h2>
+                  <p className="text-gray-600">When and where is your event happening?</p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Event Date *
+                      </label>
+                      <input
+                        type="date"
+                        value={formData.date}
+                        onChange={(e) => handleInputChange("date", e.target.value)}
+                        min={new Date().toISOString().split('T')[0]}
+                        className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Event Time *
+                      </label>
+                      <input
+                        type="time"
+                        value={formData.time}
+                        onChange={(e) => handleInputChange("time", e.target.value)}
+                        className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        City/Location *
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.location}
+                        onChange={(e) => handleInputChange("location", e.target.value)}
+                        placeholder="e.g., Sydney, Melbourne, Brisbane"
+                        className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Venue Name *
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.venue}
+                        onChange={(e) => handleInputChange("venue", e.target.value)}
+                        placeholder="e.g., Sydney Opera House, Melbourne Convention Centre"
+                        className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Capacity
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.capacity}
+                        onChange={(e) => handleInputChange("capacity", parseInt(e.target.value))}
+                        placeholder="100"
+                        min="1"
+                        className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Currency
+                      </label>
+                      <select
+                        value={formData.currency}
+                        onChange={(e) => handleInputChange("currency", e.target.value)}
+                        className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                      >
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Ticket Types */}
+            {currentStep === 3 && (
+              <div className="space-y-6 fade-in">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span className="text-white text-2xl">🎫</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Tickets & Pricing</h2>
+                  <p className="text-gray-600">Set up your ticket types and pricing</p>
+                </div>
+                
+                <div className="space-y-6">
+                  {formData.ticketTypes.length === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <span className="text-3xl">🎫</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Ticket Types Yet</h3>
+                      <p className="text-gray-600 mb-6">Add your first ticket type to get started</p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newTicket: TicketType = {
+                            id: Date.now().toString(),
+                            name: "General Admission",
+                            description: "",
+                            price: 0,
+                            currency: "AUD",
+                            quantity: 100,
+                            sold: 0,
+                            benefits: [],
+                            isActive: true,
+                            saleStartDate: "",
+                            saleEndDate: "",
+                          };
+                          setFormData(prev => ({
+                            ...prev,
+                            ticketTypes: [...prev.ticketTypes, newTicket]
+                          }));
+                        }}
+                        className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                      >
+                        + Add Ticket Type
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {formData.ticketTypes.map((ticket, index) => (
+                        <div key={ticket.id} className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-semibold text-gray-900">Ticket Type {index + 1}</h3>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setFormData(prev => ({
+                                  ...prev,
+                                  ticketTypes: prev.ticketTypes.filter(t => t.id !== ticket.id)
+                                }));
                               }}
-                              placeholder="e.g., Early Bird, VIP, General"
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            />
+                              className="text-red-500 hover:text-red-700 font-bold"
+                            >
+                              ×
+                            </button>
                           </div>
-
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
-                            <div className="flex">
-                              <select
-                                value={ticket.currency}
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
+                              <input
+                                type="text"
+                                value={ticket.name}
                                 onChange={(e) => {
                                   const updatedTickets = [...formData.ticketTypes];
-                                  updatedTickets[index].currency = e.target.value;
+                                  updatedTickets[index].name = e.target.value;
                                   setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
                                 }}
-                                className="px-3 py-2 border border-r-0 border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                              >
-                                <option value="AUD">AUD</option>
-                                <option value="USD">USD</option>
-                                <option value="EUR">EUR</option>
-                              </select>
+                                className="w-full px-3 py-2 border-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200"
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">Price</label>
                               <input
                                 type="number"
                                 value={ticket.price}
                                 onChange={(e) => {
                                   const updatedTickets = [...formData.ticketTypes];
-                                  updatedTickets[index].price = parseFloat(e.target.value) || 0;
+                                  updatedTickets[index].price = parseFloat(e.target.value);
                                   setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
                                 }}
-                                placeholder="0.00"
                                 min="0"
                                 step="0.01"
-                                className="flex-1 px-3 py-2 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-3 py-2 border-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200"
                               />
                             </div>
-                          </div>
-
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Quantity Available *</label>
-                            <input
-                              type="number"
-                              value={ticket.quantity}
-                              onChange={(e) => {
-                                const updatedTickets = [...formData.ticketTypes];
-                                updatedTickets[index].quantity = parseInt(e.target.value) || 0;
-                                setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
-                              }}
-                              placeholder="100"
-                              min="1"
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Sale Period</label>
-                            <div className="grid grid-cols-2 gap-2">
+                            
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">Quantity</label>
                               <input
-                                type="date"
-                                value={ticket.saleStartDate}
+                                type="number"
+                                value={ticket.quantity}
                                 onChange={(e) => {
                                   const updatedTickets = [...formData.ticketTypes];
-                                  updatedTickets[index].saleStartDate = e.target.value;
+                                  updatedTickets[index].quantity = parseInt(e.target.value);
                                   setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
                                 }}
-                                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                                placeholder="Start Date"
+                                min="1"
+                                className="w-full px-3 py-2 border-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200"
                               />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
                               <input
-                                type="date"
-                                value={ticket.saleEndDate}
+                                type="text"
+                                value={ticket.description}
                                 onChange={(e) => {
                                   const updatedTickets = [...formData.ticketTypes];
-                                  updatedTickets[index].saleEndDate = e.target.value;
+                                  updatedTickets[index].description = e.target.value;
                                   setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
                                 }}
-                                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                                placeholder="End Date"
+                                placeholder="What's included with this ticket?"
+                                className="w-full px-3 py-2 border-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200"
                               />
                             </div>
                           </div>
                         </div>
+                      ))}
+                      
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newTicket: TicketType = {
+                            id: Date.now().toString(),
+                            name: "",
+                            description: "",
+                            price: 0,
+                            currency: "AUD",
+                            quantity: 100,
+                            sold: 0,
+                            benefits: [],
+                            isActive: true,
+                            saleStartDate: "",
+                            saleEndDate: "",
+                          };
+                          setFormData(prev => ({
+                            ...prev,
+                            ticketTypes: [...prev.ticketTypes, newTicket]
+                          }));
+                        }}
+                        className="w-full py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:border-purple-400 hover:text-purple-600 transition-all duration-200"
+                      >
+                        + Add Another Ticket Type
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
-                        <div className="mt-4">
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                          <textarea
-                            value={ticket.description}
-                            onChange={(e) => {
-                              const updatedTickets = [...formData.ticketTypes];
-                              updatedTickets[index].description = e.target.value;
-                              setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
-                            }}
-                            placeholder="Describe what's included with this ticket type..."
-                            rows={2}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                        </div>
-
-                        <div className="mt-4">
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Benefits (Optional)</label>
-                          <input
-                            type="text"
-                            placeholder="Press Enter to add benefits (e.g., VIP seating, free drinks)"
-                            onKeyPress={(e) => {
-                              if (e.key === 'Enter' && e.currentTarget.value.trim()) {
-                                e.preventDefault();
-                                const newBenefit = e.currentTarget.value.trim();
-                                const updatedTickets = [...formData.ticketTypes];
-                                updatedTickets[index].benefits = [...updatedTickets[index].benefits, newBenefit];
-                                setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
-                                e.currentTarget.value = '';
-                              }
-                            }}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                          {ticket.benefits.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {ticket.benefits.map((benefit, benefitIndex) => (
-                                <span
-                                  key={benefitIndex}
-                                  className="px-2 py-1 bg-green-100 text-green-800 text-sm rounded-full flex items-center"
-                                >
-                                  {benefit}
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      const updatedTickets = [...formData.ticketTypes];
-                                      updatedTickets[index].benefits = updatedTickets[index].benefits.filter((_, i) => i !== benefitIndex);
-                                      setFormData(prev => ({ ...prev, ticketTypes: updatedTickets }));
-                                    }}
-                                    className="ml-1 text-green-600 hover:text-green-800"
-                                  >
-                                    ×
-                                  </button>
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
+            {/* Step 4: Marketing */}
+            {currentStep === 4 && (
+              <div className="space-y-6 fade-in">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span className="text-white text-2xl">📢</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Marketing & Promotion</h2>
+                  <p className="text-gray-600">Help your event reach more people</p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-100">
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={formData.marketingSettings.socialSharing}
+                          onChange={(e) => handleInputChange("marketingSettings", {
+                            ...formData.marketingSettings,
+                            socialSharing: e.target.checked
+                          })}
+                          className="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded transition-all duration-200"
+                        />
+                        <label className="ml-3 text-sm text-gray-700 font-medium">
+                          Enable social sharing
+                        </label>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Summary */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h3 className="text-sm font-medium text-gray-900 mb-2">Ticket Summary</h3>
-                <div className="text-sm text-gray-600 space-y-1">
-                  <p><strong>Total Ticket Types:</strong> {formData.ticketTypes.length}</p>
-                  <p><strong>Total Capacity:</strong> {formData.ticketTypes.reduce((sum, ticket) => sum + ticket.quantity, 0)} tickets</p>
-                  <p><strong>Price Range:</strong> {
-                    formData.ticketTypes.length > 0 
-                      ? `${Math.min(...formData.ticketTypes.map(t => t.price))} - ${Math.max(...formData.ticketTypes.map(t => t.price))} AUD`
-                      : "Not set"
-                  }</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Step 4: Marketing & Promotion */}
-          {currentStep === 4 && (
-            <div className="p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Marketing & Promotion</h2>
-              
-              <div className="space-y-6">
-                {/* Social Sharing */}
-                <div>
-                  <h3 className="text-md font-medium text-gray-900 mb-3">Social Sharing</h3>
-                  <div className="space-y-3">
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={formData.marketingSettings.socialSharing}
-                        onChange={(e) => handleInputChange("marketingSettings", {
-                          ...formData.marketingSettings,
-                          socialSharing: e.target.checked
-                        })}
-                        className="mr-2"
-                      />
-                      <span className="text-sm text-gray-700">Enable social media sharing</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={formData.marketingSettings.featuredEvent}
-                        onChange={(e) => handleInputChange("marketingSettings", {
-                          ...formData.marketingSettings,
-                          featuredEvent: e.target.checked
-                        })}
-                        className="mr-2"
-                      />
-                      <span className="text-sm text-gray-700">Feature this event on homepage (Premium)</span>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Promotional Tools */}
-                <div>
-                  <h3 className="text-md font-medium text-gray-900 mb-3">Promotional Tools</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Promotional Code</label>
-                      <input
-                        type="text"
-                        value={formData.marketingSettings.promotionalCode}
-                        onChange={(e) => handleInputChange("marketingSettings", {
-                          ...formData.marketingSettings,
-                          promotionalCode: e.target.value
-                        })}
-                        placeholder="e.g., SAVE20"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
+                      <p className="text-xs text-gray-500 mt-2 ml-8">
+                        Allow attendees to share your event on social media
+                      </p>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Early Bird Discount (%)</label>
-                      <input
-                        type="number"
-                        value={formData.marketingSettings.earlyBirdDiscount}
-                        onChange={(e) => handleInputChange("marketingSettings", {
-                          ...formData.marketingSettings,
-                          earlyBirdDiscount: parseInt(e.target.value) || 0
-                        })}
-                        placeholder="20"
-                        min="0"
-                        max="100"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Referral Reward (AUD)</label>
-                      <input
-                        type="number"
-                        value={formData.marketingSettings.referralReward}
-                        onChange={(e) => handleInputChange("marketingSettings", {
-                          ...formData.marketingSettings,
-                          referralReward: parseFloat(e.target.value) || 0
-                        })}
-                        placeholder="5.00"
-                        min="0"
-                        step="0.01"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email Marketing</label>
-                      <label className="flex items-center mt-2">
+
+                    <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-100">
+                      <div className="flex items-center">
                         <input
                           type="checkbox"
                           checked={formData.marketingSettings.emailMarketing}
@@ -704,200 +678,230 @@ export default function CreateEventPage() {
                             ...formData.marketingSettings,
                             emailMarketing: e.target.checked
                           })}
-                          className="mr-2"
+                          className="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded transition-all duration-200"
                         />
-                        <span className="text-sm text-gray-700">Send promotional emails</span>
-                      </label>
+                        <label className="ml-3 text-sm text-gray-700 font-medium">
+                          Email marketing
+                        </label>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2 ml-8">
+                        Send promotional emails to your community
+                      </p>
                     </div>
-                  </div>
-                </div>
 
-                {/* Custom Message */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Custom Promotional Message</label>
-                  <textarea
-                    value={formData.marketingSettings.customMessage}
-                    onChange={(e) => handleInputChange("marketingSettings", {
-                      ...formData.marketingSettings,
-                      customMessage: e.target.value
-                    })}
-                    placeholder="Write a custom message to promote your event..."
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+                    <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-100">
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={formData.marketingSettings.featuredEvent}
+                          onChange={(e) => handleInputChange("marketingSettings", {
+                            ...formData.marketingSettings,
+                            featuredEvent: e.target.checked
+                          })}
+                          className="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded transition-all duration-200"
+                        />
+                        <label className="ml-3 text-sm text-gray-700 font-medium">
+                          Featured event
+                        </label>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2 ml-8">
+                        Highlight your event on the homepage
+                      </p>
+                    </div>
 
-          {/* Step 5: Settings & Review */}
-          {currentStep === 5 && (
-            <div className="p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Settings & Review</h2>
-              
-              <div className="space-y-6">
-                {/* Event Settings */}
-                <div>
-                  <h3 className="text-md font-medium text-gray-900 mb-3">Event Settings</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Contact Email *</label>
-                      <input
-                        type="email"
-                        value={formData.eventSettings.contactEmail}
-                        onChange={(e) => handleInputChange("eventSettings", {
-                          ...formData.eventSettings,
-                          contactEmail: e.target.value
-                        })}
-                        placeholder="contact@yourevent.com"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Contact Phone</label>
-                      <input
-                        type="tel"
-                        value={formData.eventSettings.contactPhone}
-                        onChange={(e) => handleInputChange("eventSettings", {
-                          ...formData.eventSettings,
-                          contactPhone: e.target.value
-                        })}
-                        placeholder="+61 400 000 000"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Max Tickets Per Person</label>
-                      <input
-                        type="number"
-                        value={formData.eventSettings.maxTicketsPerPerson}
-                        onChange={(e) => handleInputChange("eventSettings", {
-                          ...formData.eventSettings,
-                          maxTicketsPerPerson: parseInt(e.target.value) || 1
-                        })}
-                        placeholder="1"
-                        min="1"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Refund Policy</label>
-                      <select
-                        value={formData.eventSettings.refundPolicy}
-                        onChange={(e) => handleInputChange("eventSettings", {
-                          ...formData.eventSettings,
-                          refundPolicy: e.target.value
-                        })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      >
-                        <option value="No refunds">No refunds</option>
-                        <option value="Full refund up to 7 days before">Full refund up to 7 days before</option>
-                        <option value="50% refund up to 3 days before">50% refund up to 3 days before</option>
-                        <option value="Full refund up to 24 hours before">Full refund up to 24 hours before</option>
-                      </select>
+                    <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-100">
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={formData.marketingSettings.earlyBirdDiscount > 0}
+                          onChange={(e) => handleInputChange("marketingSettings", {
+                            ...formData.marketingSettings,
+                            earlyBirdDiscount: e.target.checked ? 10 : 0
+                          })}
+                          className="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded transition-all duration-200"
+                        />
+                        <label className="ml-3 text-sm text-gray-700 font-medium">
+                          Early bird discount
+                        </label>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2 ml-8">
+                        Offer 10% discount for early registrations
+                      </p>
                     </div>
                   </div>
 
-                  <div className="mt-4 space-y-3">
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={formData.eventSettings.allowWaitlist}
-                        onChange={(e) => handleInputChange("eventSettings", {
-                          ...formData.eventSettings,
-                          allowWaitlist: e.target.checked
-                        })}
-                        className="mr-2"
-                      />
-                      <span className="text-sm text-gray-700">Allow waitlist when sold out</span>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Promotional Code
                     </label>
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={formData.eventSettings.requireApproval}
-                        onChange={(e) => handleInputChange("eventSettings", {
-                          ...formData.eventSettings,
-                          requireApproval: e.target.checked
-                        })}
-                        className="mr-2"
-                      />
-                      <span className="text-sm text-gray-700">Require approval for registrations</span>
-                    </label>
+                    <input
+                      type="text"
+                      value={formData.marketingSettings.promotionalCode}
+                      onChange={(e) => handleInputChange("marketingSettings", {
+                        ...formData.marketingSettings,
+                        promotionalCode: e.target.value
+                      })}
+                      placeholder="e.g., WELCOME2024"
+                      className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 border-gray-200 hover:border-gray-300"
+                    />
                   </div>
-                </div>
 
-                {/* Terms & Conditions */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Terms & Conditions</label>
-                  <textarea
-                    value={formData.eventSettings.termsConditions}
-                    onChange={(e) => handleInputChange("eventSettings", {
-                      ...formData.eventSettings,
-                      termsConditions: e.target.value
-                    })}
-                    placeholder="Add any specific terms and conditions for your event..."
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-
-                {/* Final Preview */}
-                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-sm font-medium text-gray-900 mb-2">Event Summary</h3>
-                  <div className="text-sm text-gray-600 space-y-1">
-                    <p><strong>Title:</strong> {formData.title || "Not set"}</p>
-                    <p><strong>Date:</strong> {formData.date ? new Date(formData.date).toLocaleDateString() : "Not set"}</p>
-                    <p><strong>Location:</strong> {formData.location || "Not set"}</p>
-                    <p><strong>Ticket Types:</strong> {formData.ticketTypes.length}</p>
-                    <p><strong>Total Capacity:</strong> {formData.ticketTypes.reduce((sum, ticket) => sum + ticket.quantity, 0)} tickets</p>
-                    <p><strong>Marketing Features:</strong> {
-                      [
-                        formData.marketingSettings.socialSharing && "Social Sharing",
-                        formData.marketingSettings.emailMarketing && "Email Marketing",
-                        formData.marketingSettings.featuredEvent && "Featured Event",
-                        formData.marketingSettings.promotionalCode && "Promo Code"
-                      ].filter(Boolean).join(", ") || "None"
-                    }</p>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Custom Message
+                    </label>
+                    <textarea
+                      value={formData.marketingSettings.customMessage}
+                      onChange={(e) => handleInputChange("marketingSettings", {
+                        ...formData.marketingSettings,
+                        customMessage: e.target.value
+                      })}
+                      placeholder="Add a special message for your attendees..."
+                      rows={3}
+                      className="w-full px-4 py-3 border-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-200 resize-none border-gray-200 hover:border-gray-300"
+                    />
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Navigation Buttons */}
-          <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
-            <div className="flex justify-between">
-              <button
-                type="button"
-                onClick={prevStep}
-                disabled={currentStep === 1}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Previous
-              </button>
-              
-              {currentStep < 5 ? (
+            {/* Step 5: Review & Create */}
+            {currentStep === 5 && (
+              <div className="space-y-6 fade-in">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span className="text-white text-2xl">✅</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Review & Create</h2>
+                  <p className="text-gray-600">Review your event details before publishing</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border-2 border-gray-200 space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                        <span className="mr-2">📝</span>Event Title
+                      </h3>
+                      <p className="text-sm text-gray-600">{formData.title}</p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                        <span className="mr-2">🏷️</span>Category
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {categories.find(c => c.id === formData.category)?.name || 'Not selected'}
+                      </p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                        <span className="mr-2">📅</span>Date & Time
+                      </h3>
+                      <p className="text-sm text-gray-600">{formData.date} at {formData.time}</p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                        <span className="mr-2">📍</span>Location
+                      </h3>
+                      <p className="text-sm text-gray-600">{formData.venue}, {formData.location}</p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                        <span className="mr-2">🎫</span>Ticket Types
+                      </h3>
+                      <p className="text-sm text-gray-600">{formData.ticketTypes.length} ticket type(s)</p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                        <span className="mr-2">👥</span>Capacity
+                      </h3>
+                      <p className="text-sm text-gray-600">{formData.capacity} attendees</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white rounded-xl p-4 border border-gray-200">
+                    <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                      <span className="mr-2">📖</span>Description
+                    </h3>
+                    <p className="text-sm text-gray-600">{formData.description}</p>
+                  </div>
+                  
+                  {formData.tags.length > 0 && (
+                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                        <span className="mr-2">🏷️</span>Tags
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {formData.tags.map((tag) => (
+                          <span key={tag} className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                      <span className="text-white text-lg">🎉</span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-purple-900 mb-2">Ready to Create Your Event!</h3>
+                      <p className="text-purple-700">
+                        Your event will be published and visible to the Dhukuti community. 
+                        You can edit it anytime from your event dashboard! 🚀
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-8 pt-8 border-t border-gray-200">
+              {currentStep > 1 && (
                 <button
                   type="button"
-                  onClick={nextStep}
-                  disabled={!isStepValid()}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={prevStep}
+                  className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 flex items-center"
                 >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isLoading || !isStepValid()}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isLoading ? "Creating Event..." : "Create Event"}
+                  <span className="mr-2">←</span> Previous
                 </button>
               )}
+              
+              <div className="ml-auto">
+                {currentStep < 5 ? (
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    disabled={!isStepValid()}
+                    className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl text-sm font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    Next <span className="ml-2">→</span>
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl text-sm font-semibold hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                        Creating...
+                      </>
+                    ) : (
+                      <>
+                        <span className="mr-2">✨</span> Create Event
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

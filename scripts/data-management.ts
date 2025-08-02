@@ -14,7 +14,6 @@ export class DhukutiDataManager {
     phoneNumber?: string
     address?: string
     emergencyContact?: string
-    role?: 'USER' | 'ADMIN' | 'MODERATOR'
   }) {
     return await prisma.user.create({
       data: {
@@ -22,8 +21,7 @@ export class DhukutiDataManager {
         isVerified: false,
         reputation: 0,
         totalEarnings: 0,
-        totalContributions: 0,
-        role: userData.role || 'USER'
+        totalContributions: 0
       }
     })
   }
@@ -294,8 +292,7 @@ export async function initializeNewDhukutiGroup(
     owner = await dataManager.createUser({
       email: ownerEmail,
       name: ownerEmail.split('@')[0], // Simple name from email
-      password: 'defaultPassword123', // This should be changed in production
-      role: 'USER'
+      password: 'defaultPassword123' // This should be changed in production
     })
   }
 

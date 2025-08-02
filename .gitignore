@@ -85,6 +85,7 @@ cloudflared.exe
 # Test files
 test-*.js
 update-*.js
+add-*.js
 
 # Scripts
 *.bat
@@ -107,3 +108,49 @@ build/
 
 # Local development
 .local/
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint
+.eslintcache
+
+# Prettier
+.prettierignore
+
+# Docker
+.dockerignore
+
+# Database
+*.sql
+*.dump
+
+# Uploads
+uploads/
+public/uploads/
+
+# Stripe
+stripe-*.log
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+
+# Performance
+.next/analyze/
+
+# Misc
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

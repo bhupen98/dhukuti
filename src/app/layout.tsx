@@ -4,7 +4,8 @@ import "./globals.css";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import { Navigation } from "@/components/layout/Navigation";
 
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,57 +67,33 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100`}>
+      <body className={`${inter.className} min-h-screen bg-gray-50`}>
         <SessionProvider>
           <Navigation />
           <main className="min-h-screen">
             {children}
           </main>
-          <Toaster
+          <ToastContainer
             position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '12px',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                color: '#1e293b',
-                fontSize: '14px',
-                fontWeight: '500',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#10b981',
-                  secondary: '#ffffff',
-                },
-                style: {
-                  border: '1px solid rgba(16, 185, 129, 0.2)',
-                  background: 'rgba(255, 255, 255, 0.95)',
-                },
-              },
-              error: {
-                iconTheme: {
-                  primary: '#ef4444',
-                  secondary: '#ffffff',
-                },
-                style: {
-                  border: '1px solid rgba(239, 68, 68, 0.2)',
-                  background: 'rgba(255, 255, 255, 0.95)',
-                },
-              },
-              loading: {
-                iconTheme: {
-                  primary: '#3b82f6',
-                  secondary: '#ffffff',
-                },
-                style: {
-                  border: '1px solid rgba(59, 130, 246, 0.2)',
-                  background: 'rgba(255, 255, 255, 0.95)',
-                },
-              },
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            toastStyle={{
+              background: '#ffffff',
+              border: '1px solid rgba(229, 231, 235, 1)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              color: '#374151',
+              fontSize: '14px',
+              fontWeight: '500',
             }}
+            toastClassName="!bg-white !border !border-gray-200 !rounded-xl !shadow-lg !text-gray-700 !font-medium"
           />
         </SessionProvider>
       </body>

@@ -173,10 +173,10 @@ export default function LoginPage() {
           <div className="mx-auto h-12 w-12 australian-blue rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/25">
             <span className="text-white font-bold text-xl">D</span>
           </div>
-          <h1 className="text-2xl font-bold text-gradient-australian mb-1">
+          <h1 className="text-3xl font-bold text-gradient-australian mb-2">
             {isSignUp ? "Join Dhukuti" : "Welcome Back"}
           </h1>
-          <p className="text-sm text-slate-600">
+          <p className="text-base text-slate-600">
             {isSignUp 
               ? "Connect with your Nepalese community in Australia through traditional Dhukuti savings"
               : "Sign in to manage your Nepalese community savings groups"
@@ -216,7 +216,7 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {isSignUp && (
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                     Full Name *
                   </label>
                   <input
@@ -231,12 +231,12 @@ export default function LoginPage() {
                     placeholder="Enter your full name"
                     required
                   />
-                  {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
+                  {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name}</p>}
                 </div>
               )}
 
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                   Email Address *
                 </label>
                 <input
@@ -251,13 +251,13 @@ export default function LoginPage() {
                   placeholder="Enter your email"
                   required
                 />
-                {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
+                {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email}</p>}
               </div>
 
               {isSignUp && (
                 <>
                   <div>
-                    <label htmlFor="phoneNumber" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label htmlFor="phoneNumber" className="block text-sm font-medium text-slate-700 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -272,7 +272,7 @@ export default function LoginPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="address" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label htmlFor="address" className="block text-sm font-medium text-slate-700 mb-2">
                       Address
                     </label>
                     <input
@@ -289,7 +289,7 @@ export default function LoginPage() {
               )}
 
               <div>
-                <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
                   Password *
                 </label>
                 <input
@@ -304,12 +304,12 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                   required
                 />
-                {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}
+                {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password}</p>}
               </div>
 
               {isSignUp && (
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-semibold text-slate-700 mb-2">
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-2">
                     Confirm Password *
                   </label>
                   <input
@@ -324,7 +324,7 @@ export default function LoginPage() {
                     placeholder="Confirm your password"
                     required
                   />
-                  {errors.confirmPassword && <p className="text-xs text-red-600 mt-1">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && <p className="text-sm text-red-600 mt-1">{errors.confirmPassword}</p>}
                 </div>
               )}
 

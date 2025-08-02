@@ -30,7 +30,7 @@ export default function DebugPage() {
             <p><strong>Status:</strong> {status}</p>
             <p><strong>Email:</strong> {session?.user?.email || "Not logged in"}</p>
             <p><strong>Name:</strong> {session?.user?.name || "Not logged in"}</p>
-            <p><strong>Role:</strong> {(session?.user as any)?.role || "Not logged in"}</p>
+            <p><strong>User ID:</strong> {(session?.user as any)?.id || "Not logged in"}</p>
           </div>
         </div>
 

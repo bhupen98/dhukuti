@@ -61,8 +61,7 @@ export async function POST(request: NextRequest) {
         isVerified: false,
         reputation: 0,
         totalEarnings: 0,
-        totalContributions: 0,
-        role: 'USER'
+        totalContributions: 0
       }
     })
 

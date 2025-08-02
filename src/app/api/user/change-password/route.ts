@@ -16,38 +16,34 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { currentPassword, newPassword } = body
+    const { currentPassword, newPassword, confirmPassword } = body
 
     // Validate input
-    if (!currentPassword || !newPassword) {
+    if (!currentPassword || !newPassword || !confirmPassword) {
       return NextResponse.json<ApiResponse>({
         success: false,
-        error: 'Current password and new password are required',
+        error: 'All fields are required',
       }, { status: 400 })
     }
 
-    if (typeof currentPassword !== 'string' || typeof newPassword !== 'string') {
+    if (newPassword !== confirmPassword) {
       return NextResponse.json<ApiResponse>({
         success: false,
-        error: 'Passwords must be strings',
+        error: 'New passwords do not match',
       }, { status: 400 })
     }
 
-    if (newPassword.length < 8) {
+    if (newPassword.length < 6) {
       return NextResponse.json<ApiResponse>({
         success: false,
-        error: 'New password must be at least 8 characters long',
+        error: 'New password must be at least 6 characters long',
       }, { status: 400 })
     }
 
-    // Get the current user to verify the current password
+    // Get current user with password
     const user = await prisma.user.findUnique({
-      where: {
-        id: session.user.id,
-      },
-      select: {
-        password: true,
-      },
+      where: { id: session.user.id },
+      select: { password: true }
     })
 
     if (!user) {
@@ -66,17 +62,14 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
-    // Hash the new password
-    const hashedNewPassword = await bcrypt.hash(newPassword, 12)
+    // Hash new password
+    const saltRounds = 12
+    const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds)
 
-    // Update the password
+    // Update password
     await prisma.user.update({
-      where: {
-        id: session.user.id,
-      },
-      data: {
-        password: hashedNewPassword,
-      },
+      where: { id: session.user.id },
+      data: { password: hashedNewPassword }
     })
 
     return NextResponse.json<ApiResponse>({
