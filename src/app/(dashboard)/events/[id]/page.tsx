@@ -5,7 +5,7 @@ import { useAuthGuard } from "@/hooks/useAuthGuard";
 import Link from "next/link";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { dhukutiToast } from "@/lib/toast";
+import { dhukutiToast } from "@/lib/utils/toast";
 
 interface TicketType {
   id: string;

@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/providers/AuthProvider";
-import { signOutUser } from "@/lib/auth";
+import { signOutUser } from "@/lib/firebase/auth";
 import { usePathname } from "next/navigation";
-import { dhukutiToast } from "@/lib/toast";
+import { dhukutiToast } from "@/lib/utils/toast";
 
 export function Navigation() {
   const { user } = useAuth();

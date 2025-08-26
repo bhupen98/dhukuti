@@ -1,6 +1,6 @@
 "use client";
 
-import { dhukutiToast } from "@/lib/toast";
+import { dhukutiToast } from "@/lib/utils/toast";
 
 export default function ToastDemoPage() {
   return (

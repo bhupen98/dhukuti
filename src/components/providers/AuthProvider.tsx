@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { User, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
-import { initializeCollections, createProfileForExistingUser } from '@/lib/userService'
+import { initializeCollections, createProfileForExistingUser } from '@/lib/services/auth/userService'
 
 interface AuthContextType {
   user: User | null

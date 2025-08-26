@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
 import Avatar from "boring-avatars";
-import { dhukutiToast } from "@/lib/toast";
+import { dhukutiToast } from "@/lib/utils/toast";
 import { formatCurrency } from "@/lib/utils";
 
 interface UserProfile {

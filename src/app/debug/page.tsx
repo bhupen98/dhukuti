@@ -1,7 +1,7 @@
 "use client";
 
-import { useAuth } from "@/components/providers/AuthProvider";
-import { signIn, signOutUser } from "@/lib/auth";
+import { useState } from 'react'
+import { signIn, signOutUser } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 
 export default function DebugPage() {
