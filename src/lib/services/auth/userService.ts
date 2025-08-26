@@ -1,5 +1,5 @@
 import { doc, setDoc, getDoc, updateDoc, deleteDoc, collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore'
-import { db } from './firebase'
+import { db } from '../../firebase/config'
 import { User as FirebaseUser } from 'firebase/auth'
 
 export interface UserProfile {
