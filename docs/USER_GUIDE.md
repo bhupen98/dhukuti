@@ -182,24 +182,28 @@ Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA
 ### Common Issues
 
 #### Can't Log In
+
 - **Check Email**: Make sure you're using the correct email
 - **Reset Password**: Use "Forgot Password" if needed
 - **Clear Browser**: Clear cookies and cache
 - **Contact Support**: If problems persist
 
 #### Can't Join Group
+
 - **Check Requirements**: Make sure you meet group criteria
 - **Contact Owner**: Reach out to the group owner
 - **Wait for Approval**: Some groups require approval
 - **Try Another Group**: Look for other suitable groups
 
 #### Payment Issues
+
 - **Verify Amount**: Double-check contribution amount
 - **Check Date**: Make sure payment is on time
 - **Contact Owner**: Let group owner know about issues
 - **Document Everything**: Keep records of all payments
 
 #### Technical Problems
+
 - **Refresh Page**: Try refreshing the browser
 - **Clear Cache**: Clear browser cache and cookies
 - **Try Different Browser**: Use a different web browser
@@ -208,12 +212,14 @@ Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA
 ### Getting Help
 
 #### Support Options
+
 - **Help Center**: Check the help documentation
 - **Contact Form**: Use the contact form on the website
 - **Email Support**: Send email to support@dhukuti.com
 - **Community Forum**: Ask questions in the community
 
 #### Before Contacting Support
+
 - **Check Documentation**: Look for answers in the help section
 - **Note Error Messages**: Write down any error messages
 - **Describe the Problem**: Be specific about what's happening
@@ -222,12 +228,14 @@ Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA
 ## Security Tips
 
 ### Account Security
+
 - **Strong Password**: Use a unique, strong password
 - **Two-Factor Authentication**: Enable if available
 - **Log Out**: Always log out when done
 - **Don't Share Credentials**: Never share your login details
 
 ### Financial Security
+
 - **Verify Payments**: Always verify payment details
 - **Keep Records**: Maintain your own payment records
 - **Report Suspicious Activity**: Report any suspicious behavior
@@ -236,18 +244,21 @@ Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA
 ## Advanced Features
 
 ### Analytics and Reports
+
 - **Financial Reports**: Generate detailed financial reports
 - **Contribution Analytics**: Track contribution patterns
 - **Group Performance**: Monitor group health and activity
 - **Export Data**: Download your data for external analysis
 
 ### Mobile Access
+
 - **Responsive Design**: Access the platform on mobile devices
 - **Mobile Notifications**: Receive notifications on your phone
 - **Offline Access**: Some features work offline
 - **Mobile Optimization**: Optimized for mobile use
 
 ### Integration
+
 - **Calendar Integration**: Sync events with your calendar
 - **Email Integration**: Receive updates via email
 - **Social Media**: Share events on social media
@@ -256,6 +267,7 @@ Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA
 ## Glossary
 
 ### Dhukuti Terms
+
 - **Dhukuti**: Traditional Nepalese rotating savings system
 - **ROSCA**: Rotating Savings and Credit Association
 - **Contribution**: Regular payment made by members
@@ -265,6 +277,7 @@ Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA
 - **Member**: Person participating in the group
 
 ### Platform Terms
+
 - **Dashboard**: Main overview page
 - **Profile**: Your personal information page
 - **Groups**: Savings groups you're part of
@@ -275,4 +288,4 @@ Dhukuti is a traditional Nepalese rotating savings and credit association (ROSCA
 ---
 
 **Last Updated**: December 2024
-**Version**: 1.0.0 
+**Version**: 1.0.0

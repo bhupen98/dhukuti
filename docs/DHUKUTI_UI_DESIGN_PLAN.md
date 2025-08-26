@@ -5,6 +5,7 @@
 **Dhukuti** - A modern, culturally-inspired platform that bridges traditional Nepalese community values with contemporary digital design. The UI should feel warm, trustworthy, and community-focused while maintaining professional standards.
 
 ### **Core Design Principles:**
+
 - **🏔️ Cultural Heritage**: Incorporate Nepalese design elements and color palettes
 - **🤝 Community First**: Design that fosters trust and connection
 - **💎 Modern Elegance**: Clean, professional interface with personality
@@ -18,16 +19,19 @@
 ### **1.1 Color Palette**
 
 #### **Primary Colors:**
+
 - **Dhukuti Red** `#DC2626` - Traditional Nepalese red, represents trust and prosperity
 - **Nepal Gold** `#F59E0B` - Warm gold, symbolizes wealth and success
 - **Himalayan Blue** `#1E40AF` - Deep blue, represents stability and reliability
 
 #### **Secondary Colors:**
+
 - **Sage Green** `#10B981` - Growth and community
 - **Warm Gray** `#6B7280` - Neutral, professional
 - **Cream White** `#FEF3C7` - Warm backgrounds
 
 #### **Semantic Colors:**
+
 - **Success**: `#059669` (Emerald)
 - **Warning**: `#D97706` (Amber)
 - **Error**: `#DC2626` (Red)
@@ -36,15 +40,22 @@
 ### **1.2 Typography System**
 
 #### **Font Stack:**
+
 ```css
 /* Primary Font - Modern, readable */
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+font-family:
+  "Inter",
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
 
 /* Accent Font - For cultural elements */
-font-family: 'Poppins', 'Inter', sans-serif;
+font-family: "Poppins", "Inter", sans-serif;
 ```
 
 #### **Type Scale:**
+
 - **Display Large**: `4.5rem` (72px) - Hero headlines
 - **Display Medium**: `3.75rem` (60px) - Section headers
 - **Display Small**: `3rem` (48px) - Page titles
@@ -59,6 +70,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **1.3 Spacing System**
 
 #### **Base Unit: 4px**
+
 - **4px** - Micro spacing (borders, shadows)
 - **8px** - Tiny spacing (icon padding)
 - **12px** - Small spacing (button padding)
@@ -71,17 +83,20 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **1.4 Component Library**
 
 #### **Buttons:**
+
 - **Primary**: Filled, rounded corners, shadow
 - **Secondary**: Outlined, subtle hover effects
 - **Tertiary**: Text-only, minimal styling
 - **Icon**: Square, icon-focused
 
 #### **Cards:**
+
 - **Elevated**: Subtle shadows, rounded corners
 - **Outlined**: Border-focused, clean
 - **Interactive**: Hover effects, clickable
 
 #### **Forms:**
+
 - **Input Fields**: Rounded corners, focus states
 - **Select Dropdowns**: Custom styled, animated
 - **Checkboxes/Radio**: Custom designs, smooth animations
@@ -93,6 +108,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **2.1 Hero Section**
 
 #### **Layout Structure:**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Navigation Bar                        │
@@ -109,6 +125,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ```
 
 #### **Design Elements:**
+
 - **Background**: Subtle gradient with cultural patterns
 - **Hero Image**: Community gathering or traditional symbols
 - **Typography**: Large, welcoming headline with Nepalese flair
@@ -118,6 +135,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **2.2 Features Section**
 
 #### **Layout Structure:**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Why Choose Dhukuti?                  │
@@ -137,6 +155,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ```
 
 #### **Design Elements:**
+
 - **Feature Cards**: Elevated cards with icons and descriptions
 - **Icons**: Cultural and financial symbols
 - **Hover Effects**: Subtle animations and state changes
@@ -145,6 +164,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **2.3 Community Section**
 
 #### **Layout Structure:**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                Join Our Growing Community               │
@@ -162,6 +182,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ```
 
 #### **Design Elements:**
+
 - **Testimonials**: Real community member stories
 - **Profile Images**: Community member photos
 - **Success Metrics**: Visual statistics and achievements
@@ -170,6 +191,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **2.4 How It Works Section**
 
 #### **Layout Structure:**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    How Dhukuti Works                    │
@@ -187,6 +209,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ```
 
 #### **Design Elements:**
+
 - **Step Indicators**: Numbered circles with connecting lines
 - **Process Flow**: Visual representation of the journey
 - **Interactive Elements**: Hover to see more details
@@ -199,12 +222,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **3.1 Navigation Components**
 
 #### **Main Navigation:**
+
 - **Logo**: Dhukuti branding with cultural elements
 - **Menu Items**: Clean, accessible navigation
 - **User Menu**: Profile dropdown with actions
 - **Mobile Menu**: Responsive hamburger navigation
 
 #### **Breadcrumbs:**
+
 - **Visual Style**: Subtle, contextual navigation
 - **Interactive**: Clickable navigation elements
 - **Responsive**: Adapts to mobile layouts
@@ -212,12 +237,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **3.2 Form Components**
 
 #### **Input Fields:**
+
 - **States**: Default, focus, error, success
 - **Validation**: Real-time feedback and messages
 - **Accessibility**: ARIA labels and keyboard navigation
 - **Styling**: Consistent with design system
 
 #### **Buttons:**
+
 - **Variants**: Primary, secondary, tertiary, danger
 - **Sizes**: Small, medium, large
 - **States**: Default, hover, active, disabled
@@ -226,12 +253,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **3.3 Data Display Components**
 
 #### **Cards:**
+
 - **Types**: Information, action, selection
 - **Layouts**: Horizontal, vertical, grid
 - **Interactive**: Hover effects and click states
 - **Responsive**: Adapts to container width
 
 #### **Tables:**
+
 - **Sorting**: Interactive column headers
 - **Pagination**: Page navigation controls
 - **Responsive**: Mobile-friendly layouts
@@ -244,12 +273,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **4.1 Mobile-First Approach**
 
 #### **Breakpoints:**
+
 - **Mobile**: 320px - 767px
 - **Tablet**: 768px - 1023px
 - **Desktop**: 1024px - 1439px
 - **Large Desktop**: 1440px+
 
 #### **Mobile Considerations:**
+
 - **Touch Targets**: Minimum 44px for interactive elements
 - **Gestures**: Swipe, pinch, and tap interactions
 - **Performance**: Optimized for mobile networks
@@ -258,12 +289,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **4.2 Mobile Navigation**
 
 #### **Bottom Navigation:**
+
 - **Primary Actions**: Home, Groups, Contributions, Profile
 - **Quick Access**: Most used features
 - **Visual Feedback**: Active state indicators
 - **Smooth Transitions**: Animated state changes
 
 #### **Mobile Forms:**
+
 - **Simplified Layout**: Single column, large inputs
 - **Keyboard Optimization**: Mobile-friendly input types
 - **Validation**: Clear, mobile-appropriate messages
@@ -276,21 +309,25 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **5.1 Development Phases**
 
 #### **Week 1-2: Design System**
+
 - [ ] Color palette and typography
 - [ ] Component library foundation
 - [ ] Design tokens and variables
 
 #### **Week 3-4: Homepage**
+
 - [ ] Hero section implementation
 - [ ] Features and community sections
 - [ ] Responsive layout and interactions
 
 #### **Week 5-6: Components**
+
 - [ ] Navigation and form components
 - [ ] Data display components
 - [ ] Mobile-responsive components
 
 #### **Week 7-8: Testing & Polish**
+
 - [ ] Cross-browser testing
 - [ ] Mobile device testing
 - [ ] Accessibility testing
@@ -299,12 +336,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **5.2 Testing Strategy**
 
 #### **Visual Testing:**
+
 - **Design Review**: Compare with design specifications
 - **Cross-Browser**: Test on Chrome, Firefox, Safari, Edge
 - **Device Testing**: Test on various screen sizes
 - **Accessibility**: Screen reader and keyboard navigation
 
 #### **Performance Testing:**
+
 - **Load Times**: Optimize for fast loading
 - **Animations**: Smooth 60fps animations
 - **Responsiveness**: Quick interaction feedback
@@ -317,12 +356,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **6.1 Micro-Interactions**
 
 #### **Hover Effects:**
+
 - **Subtle Animations**: Smooth state transitions
 - **Visual Feedback**: Clear interaction states
 - **Performance**: Optimized animation performance
 - **Accessibility**: Respect reduced motion preferences
 
 #### **Loading States:**
+
 - **Skeleton Screens**: Content placeholders
 - **Progress Indicators**: Clear loading feedback
 - **Error States**: Helpful error messages
@@ -331,12 +372,14 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ### **6.2 Accessibility Enhancements**
 
 #### **Screen Reader Support:**
+
 - **ARIA Labels**: Descriptive element labels
 - **Semantic HTML**: Proper document structure
 - **Keyboard Navigation**: Full keyboard accessibility
 - **Focus Management**: Clear focus indicators
 
 #### **Visual Accessibility:**
+
 - **Color Contrast**: WCAG AA compliance
 - **Typography**: Readable font sizes and spacing
 - **Motion**: Respect reduced motion preferences
@@ -347,6 +390,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ## 📋 **Implementation Checklist**
 
 ### **Design System:**
+
 - [ ] Color palette defined and documented
 - [ ] Typography scale established
 - [ ] Spacing system implemented
@@ -354,6 +398,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 - [ ] Design tokens configured
 
 ### **Homepage:**
+
 - [ ] Hero section designed and implemented
 - [ ] Features section with interactive elements
 - [ ] Community testimonials and stories
@@ -361,6 +406,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 - [ ] Responsive mobile layout
 
 ### **Components:**
+
 - [ ] Navigation components
 - [ ] Form components with validation
 - [ ] Data display components
@@ -368,6 +414,7 @@ font-family: 'Poppins', 'Inter', sans-serif;
 - [ ] Mobile-responsive components
 
 ### **Testing:**
+
 - [ ] Cross-browser compatibility
 - [ ] Mobile device testing
 - [ ] Accessibility compliance
@@ -379,18 +426,21 @@ font-family: 'Poppins', 'Inter', sans-serif;
 ## 🎨 **Design Inspiration & References**
 
 ### **Cultural Elements:**
+
 - **Nepalese Patterns**: Traditional textile and art motifs
 - **Color Psychology**: Cultural significance of colors
 - **Typography**: Blend of modern and traditional
 - **Imagery**: Community, family, and cultural symbols
 
 ### **Modern UI Trends:**
+
 - **Glassmorphism**: Subtle transparency effects
 - **Neumorphism**: Soft, tactile design elements
 - **Micro-interactions**: Delightful user experiences
 - **Dark Mode**: Alternative color schemes
 
 ### **Financial Platforms:**
+
 - **Trust Indicators**: Security and reliability cues
 - **Clear Information**: Easy-to-understand data
 - **Professional Appearance**: Credible and trustworthy

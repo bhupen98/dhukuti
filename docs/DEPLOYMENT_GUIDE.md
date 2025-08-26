@@ -42,16 +42,19 @@ Vercel is the easiest platform for deploying Next.js applications.
 #### Setup Steps:
 
 1. **Install Vercel CLI:**
+
    ```bash
    npm install -g vercel
    ```
 
 2. **Login to Vercel:**
+
    ```bash
    vercel login
    ```
 
 3. **Deploy:**
+
    ```bash
    vercel
    ```
@@ -161,6 +164,7 @@ For production deployments on AWS.
 #### Setup Steps:
 
 1. **EC2 Instance:**
+
    ```bash
    # Install Node.js and PM2
    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -169,6 +173,7 @@ For production deployments on AWS.
    ```
 
 2. **Clone and Setup:**
+
    ```bash
    git clone your-repository
    cd dhukuti
@@ -177,6 +182,7 @@ For production deployments on AWS.
    ```
 
 3. **Environment Variables:**
+
    ```bash
    # Create .env.local file
    nano .env.local
@@ -184,6 +190,7 @@ For production deployments on AWS.
    ```
 
 4. **Start with PM2:**
+
    ```bash
    pm2 start npm --name "dhukuti" -- start
    pm2 startup
@@ -191,6 +198,7 @@ For production deployments on AWS.
    ```
 
 5. **Nginx Configuration:**
+
    ```nginx
    server {
        listen 80;
@@ -212,6 +220,7 @@ For production deployments on AWS.
 ### PostgreSQL Setup
 
 1. **Create Database:**
+
    ```sql
    CREATE DATABASE dhukuti;
    CREATE USER dhukuti_user WITH PASSWORD 'your_password';
@@ -227,21 +236,25 @@ For production deployments on AWS.
 ### Database Providers
 
 #### Vercel Postgres
+
 - Built-in with Vercel
 - Automatic backups
 - Easy scaling
 
 #### Supabase
+
 - Free tier available
 - Built-in authentication
 - Real-time features
 
 #### Railway Postgres
+
 - Easy setup
 - Automatic backups
 - Good for development
 
 #### PlanetScale
+
 - MySQL compatible
 - Serverless
 - Branch-based development
@@ -249,18 +262,22 @@ For production deployments on AWS.
 ## SSL/HTTPS Setup
 
 ### Vercel
+
 - Automatic SSL certificates
 - No additional configuration needed
 
 ### Railway
+
 - Automatic SSL certificates
 - Custom domains supported
 
 ### Render
+
 - Automatic SSL certificates
 - Custom domains supported
 
 ### Manual Setup (Nginx + Let's Encrypt)
+
 ```bash
 # Install Certbot
 sudo apt-get install certbot python3-certbot-nginx
@@ -276,21 +293,25 @@ sudo crontab -e
 ## Monitoring and Logs
 
 ### Vercel
+
 - Built-in analytics
 - Function logs
 - Performance monitoring
 
 ### Railway
+
 - Real-time logs
 - Resource monitoring
 - Error tracking
 
 ### Render
+
 - Log streaming
 - Health checks
 - Performance monitoring
 
 ### Custom Monitoring
+
 ```bash
 # PM2 monitoring
 pm2 monit
@@ -305,6 +326,7 @@ curl https://your-domain.com/api/health
 ## Performance Optimization
 
 ### Build Optimization
+
 ```bash
 # Optimize build
 npm run build
@@ -314,6 +336,7 @@ npm run analyze
 ```
 
 ### Database Optimization
+
 ```sql
 -- Add indexes for better performance
 CREATE INDEX idx_contributions_user_id ON contributions(user_id);
@@ -322,6 +345,7 @@ CREATE INDEX idx_activities_user_id ON activities(user_id);
 ```
 
 ### Caching
+
 ```javascript
 // Add caching headers
 export async function GET(request: NextRequest) {
@@ -334,6 +358,7 @@ export async function GET(request: NextRequest) {
 ## Backup Strategy
 
 ### Database Backups
+
 ```bash
 # Automated backup script
 #!/bin/bash
@@ -343,6 +368,7 @@ gzip backup_$DATE.sql
 ```
 
 ### File Backups
+
 ```bash
 # Backup uploads and assets
 tar -czf assets_backup_$DATE.tar.gz ./public/uploads
@@ -353,6 +379,7 @@ tar -czf assets_backup_$DATE.tar.gz ./public/uploads
 ### Common Issues
 
 #### Build Failures
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules .next
@@ -361,6 +388,7 @@ npm run build
 ```
 
 #### Database Connection Issues
+
 ```bash
 # Test database connection
 npx prisma db pull
@@ -368,6 +396,7 @@ npx prisma generate
 ```
 
 #### Environment Variables
+
 ```bash
 # Verify environment variables
 echo $DATABASE_URL
@@ -375,6 +404,7 @@ echo $NEXTAUTH_SECRET
 ```
 
 #### Port Issues
+
 ```bash
 # Check if port is in use
 lsof -i :3000
@@ -382,6 +412,7 @@ netstat -tulpn | grep :3000
 ```
 
 ### Log Analysis
+
 ```bash
 # View application logs
 pm2 logs dhukuti --lines 100
@@ -404,22 +435,26 @@ sudo tail -f /var/log/nginx/access.log
 ## Cost Optimization
 
 ### Vercel
+
 - Free tier: 100GB bandwidth/month
 - Pro: $20/month for unlimited bandwidth
 
 ### Railway
+
 - Free tier: $5 credit/month
 - Pay-as-you-go pricing
 
 ### Render
+
 - Free tier: 750 hours/month
 - Paid: $7/month for always-on
 
 ### AWS
+
 - EC2: ~$10-20/month for t3.small
 - RDS: ~$15/month for db.t3.micro
 
 ---
 
 **Last Updated**: December 2024
-**Version**: 1.0.0 
+**Version**: 1.0.0

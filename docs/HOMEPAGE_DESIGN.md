@@ -9,6 +9,7 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ## 🏗️ **Page Structure (Notion-Inspired)**
 
 ### **1. Navigation Bar (Compact)**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │ 🏔️ Dhukuti    [Home] [About] [How It Works] [Contact] [Login] │
@@ -16,6 +17,7 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ```
 
 ### **2. Hero Section (Compact)**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                                                               │
@@ -30,6 +32,7 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ```
 
 ### **3. Features Section (Notion-Style Cards)**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Why Choose Dhukuti?                        │
@@ -49,6 +52,7 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ```
 
 ### **4. Community Section (Compact)**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                Join Our Growing Community                     │
@@ -66,6 +70,7 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ```
 
 ### **5. How It Works Section (Compact)**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    How Dhukuti Works                          │
@@ -87,10 +92,11 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ## 🎨 **Notion-Inspired Design System**
 
 ### **Typography (Inter Font - Notion's Choice)**
+
 ```css
 :root {
-  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-accent: 'Inter', sans-serif; /* Notion uses Inter throughout */
+  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-accent: "Inter", sans-serif; /* Notion uses Inter throughout */
 }
 
 /* Compact Typography Scale */
@@ -127,16 +133,17 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ```
 
 ### **Compact Spacing System**
+
 ```css
 :root {
   /* Compact spacing inspired by Notion */
-  --space-2: 0.5rem;   /* 8px */
-  --space-3: 0.75rem;  /* 12px */
-  --space-4: 1rem;     /* 16px */
-  --space-6: 1.5rem;   /* 24px */
-  --space-8: 2rem;     /* 32px */
-  --space-12: 3rem;    /* 48px */
-  --space-16: 4rem;    /* 64px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
 }
 
 /* Compact section padding */
@@ -150,6 +157,7 @@ The new Dhukuti homepage will be inspired by **Notion's clean, professional desi
 ```
 
 ### **Notion-Style Cards**
+
 ```css
 /* Notion-inspired cards */
 .card {
@@ -193,25 +201,39 @@ const Navigation: React.FC<NavigationProps> = ({ isAuthenticated, user }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14"> {/* 56px instead of 64px */}
+        <div className="flex items-center justify-between h-14">
+          {" "}
+          {/* 56px instead of 64px */}
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="text-xl">🏔️</div> {/* Smaller emoji */}
-            <span className="font-semibold text-lg text-gray-900"> {/* Smaller text */}
+            <span className="font-semibold text-lg text-gray-900">
+              {" "}
+              {/* Smaller text */}
               Dhukuti
             </span>
           </div>
-          
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6"> {/* Reduced spacing */}
-            <a href="#home" className="nav-link">Home</a>
-            <a href="#about" className="nav-link">About</a>
-            <a href="#how-it-works" className="nav-link">How It Works</a>
-            <a href="#contact" className="nav-link">Contact</a>
+          <div className="hidden md:flex items-center space-x-6">
+            {" "}
+            {/* Reduced spacing */}
+            <a href="#home" className="nav-link">
+              Home
+            </a>
+            <a href="#about" className="nav-link">
+              About
+            </a>
+            <a href="#how-it-works" className="nav-link">
+              How It Works
+            </a>
+            <a href="#contact" className="nav-link">
+              Contact
+            </a>
           </div>
-          
           {/* Auth Buttons */}
-          <div className="flex items-center space-x-3"> {/* Reduced spacing */}
+          <div className="flex items-center space-x-3">
+            {" "}
+            {/* Reduced spacing */}
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
                 <span className="text-sm text-gray-700">
@@ -245,29 +267,37 @@ const Navigation: React.FC<NavigationProps> = ({ isAuthenticated, user }) => {
 // src/components/homepage/HeroSection.tsx
 const HeroSection: React.FC = () => {
   return (
-    <section className="py-16 flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden"> {/* Reduced padding */}
+    <section className="py-16 flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
+      {" "}
+      {/* Reduced padding */}
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-16 left-16 w-24 h-24 bg-primary rounded-full"></div> {/* Smaller circles */}
+        <div className="absolute top-16 left-16 w-24 h-24 bg-primary rounded-full"></div>{" "}
+        {/* Smaller circles */}
         <div className="absolute bottom-16 right-16 w-20 h-20 bg-secondary rounded-full"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent rounded-full"></div>
       </div>
-      
       {/* Content */}
       <div className="container mx-auto px-4 text-center relative z-10">
-        <div className="max-w-3xl mx-auto"> {/* Reduced max-width */}
+        <div className="max-w-3xl mx-auto">
+          {" "}
+          {/* Reduced max-width */}
           {/* Main Headline */}
-          <h1 className="text-4xl font-semibold text-gray-900 mb-4"> {/* Reduced size */}
+          <h1 className="text-4xl font-semibold text-gray-900 mb-4">
+            {" "}
+            {/* Reduced size */}
             🏔️ Dhukuti
           </h1>
-          
           {/* Subtitle */}
-          <p className="text-xl text-gray-600 mb-6 max-w-2xl mx-auto"> {/* Reduced size */}
+          <p className="text-xl text-gray-600 mb-6 max-w-2xl mx-auto">
+            {" "}
+            {/* Reduced size */}
             Community Savings Platform
           </p>
-          
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8"> {/* Reduced spacing */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+            {" "}
+            {/* Reduced spacing */}
             <a href="/signup" className="btn btn-primary btn-lg">
               Join Community
             </a>
@@ -275,9 +305,10 @@ const HeroSection: React.FC = () => {
               Learn More
             </a>
           </div>
-          
           {/* Trust Indicators */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-600"> {/* Reduced spacing */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-600">
+            {" "}
+            {/* Reduced spacing */}
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-success rounded-full"></div>
               <span className="text-sm">Trusted by 1000+ families</span>
@@ -306,56 +337,73 @@ const features = [
   {
     icon: "👥",
     title: "Community First",
-    description: "Join trusted groups of Nepalese families in your area"
+    description: "Join trusted groups of Nepalese families in your area",
   },
   {
     icon: "💰",
     title: "Secure Savings",
-    description: "Save money safely with transparent tracking and management"
+    description: "Save money safely with transparent tracking and management",
   },
   {
     icon: "🏦",
     title: "Traditional Values",
-    description: "Built on time-tested community savings principles"
+    description: "Built on time-tested community savings principles",
   },
   {
     icon: "📱",
     title: "Digital Platform",
-    description: "Modern app for easy access and management"
+    description: "Modern app for easy access and management",
   },
   {
     icon: "🔒",
     title: "Trusted Security",
-    description: "Bank-level security for your financial data"
+    description: "Bank-level security for your financial data",
   },
   {
     icon: "📊",
     title: "Transparent Tracking",
-    description: "See exactly where your money goes and grows"
-  }
+    description: "See exactly where your money goes and grows",
+  },
 ];
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section id="features" className="py-16 bg-white"> {/* Reduced padding */}
+    <section id="features" className="py-16 bg-white">
+      {" "}
+      {/* Reduced padding */}
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-12"> {/* Reduced margin */}
-          <h2 className="text-3xl font-semibold text-gray-900 mb-3"> {/* Reduced size */}
+        <div className="text-center mb-12">
+          {" "}
+          {/* Reduced margin */}
+          <h2 className="text-3xl font-semibold text-gray-900 mb-3">
+            {" "}
+            {/* Reduced size */}
             Why Choose Dhukuti?
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto"> {/* Reduced size */}
-            We combine the best of traditional Nepalese community values with 
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            {" "}
+            {/* Reduced size */}
+            We combine the best of traditional Nepalese community values with
             modern technology to create a platform you can trust.
           </p>
         </div>
-        
+
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> {/* Reduced gap */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {" "}
+          {/* Reduced gap */}
           {features.map((feature, index) => (
-            <div key={index} className="card card-elevated card-interactive text-center">
-              <div className="text-3xl mb-3">{feature.icon}</div> {/* Reduced size */}
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3> {/* Reduced size */}
+            <div
+              key={index}
+              className="card card-elevated card-interactive text-center"
+            >
+              <div className="text-3xl mb-3">{feature.icon}</div>{" "}
+              {/* Reduced size */}
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {feature.title}
+              </h3>{" "}
+              {/* Reduced size */}
               <p className="text-gray-600">{feature.description}</p>
             </div>
           ))}
@@ -374,57 +422,82 @@ const testimonials = [
   {
     name: "Ramesh Thapa",
     location: "Sydney",
-    story: "Dhukuti has helped our family save for our children's education. The community support is incredible.",
-    avatar: "/avatars/ramesh.jpg"
+    story:
+      "Dhukuti has helped our family save for our children's education. The community support is incredible.",
+    avatar: "/avatars/ramesh.jpg",
   },
   {
     name: "Sita Gurung",
     location: "Melbourne",
-    story: "I've been part of Dhukuti for 3 years. It's more than just saving money - it's about community.",
-    avatar: "/avatars/sita.jpg"
+    story:
+      "I've been part of Dhukuti for 3 years. It's more than just saving money - it's about community.",
+    avatar: "/avatars/sita.jpg",
   },
   {
     name: "Bikash Tamang",
     location: "Brisbane",
-    story: "The transparency and trust in Dhukuti groups is amazing. I can see my money growing safely.",
-    avatar: "/avatars/bikash.jpg"
-  }
+    story:
+      "The transparency and trust in Dhukuti groups is amazing. I can see my money growing safely.",
+    avatar: "/avatars/bikash.jpg",
+  },
 ];
 
 const CommunitySection: React.FC = () => {
   return (
-    <section id="community" className="py-16 bg-gradient-to-r from-gray-50 to-gray-100"> {/* Reduced padding */}
+    <section
+      id="community"
+      className="py-16 bg-gradient-to-r from-gray-50 to-gray-100"
+    >
+      {" "}
+      {/* Reduced padding */}
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-12"> {/* Reduced margin */}
-          <h2 className="text-3xl font-semibold text-gray-900 mb-3"> {/* Reduced size */}
+        <div className="text-center mb-12">
+          {" "}
+          {/* Reduced margin */}
+          <h2 className="text-3xl font-semibold text-gray-900 mb-3">
+            {" "}
+            {/* Reduced size */}
             Join Our Growing Community
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto"> {/* Reduced size */}
-            Hear from real families who have transformed their financial future 
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            {" "}
+            {/* Reduced size */}
+            Hear from real families who have transformed their financial future
             through Dhukuti's community-driven approach.
           </p>
         </div>
-        
+
         {/* Testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"> {/* Reduced spacing */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          {" "}
+          {/* Reduced spacing */}
           {testimonials.map((testimonial, index) => (
             <div key={index} className="card bg-white">
-              <div className="flex items-center mb-3"> {/* Reduced margin */}
-                <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div> {/* Smaller avatar */}
+              <div className="flex items-center mb-3">
+                {" "}
+                {/* Reduced margin */}
+                <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>{" "}
+                {/* Smaller avatar */}
                 <div>
-                  <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.location}</p>
+                  <h4 className="font-semibold text-gray-900">
+                    {testimonial.name}
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    {testimonial.location}
+                  </p>
                 </div>
               </div>
               <p className="text-gray-700 italic">"{testimonial.story}"</p>
             </div>
           ))}
         </div>
-        
+
         {/* CTA */}
         <div className="text-center">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3"> {/* Reduced spacing */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            {" "}
+            {/* Reduced spacing */}
             <a href="/testimonials" className="btn btn-secondary btn-lg">
               View Success Stories
             </a>
@@ -474,11 +547,11 @@ const HowItWorksSection: React.FC = () => {
             How Dhukuti Works
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto"> {/* Reduced size */}
-            Simple steps to financial security and community building. 
+            Simple steps to financial security and community building.
             It's that easy to get started with Dhukuti.
           </p>
         </div>
-        
+
         {/* Steps */}
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6"> {/* Reduced gap */}
@@ -488,14 +561,14 @@ const HowItWorksSection: React.FC = () => {
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4"> {/* Smaller circle */}
                   {step.number}
                 </div>
-                
+
                 {/* Content */}
                 <div className="text-center">
                   <div className="text-2xl mb-3">{step.icon}</div> {/* Reduced size */}
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3> {/* Reduced size */}
                   <p className="text-gray-600">{step.description}</p>
                 </div>
-                
+
                 {/* Connector Line */}
                 {index < steps.length - 1 && (
                   <div className="hidden md:block absolute top-6 left-full w-full h-0.5 bg-gray-300 transform translate-x-3"></div> {/* Adjusted positioning */}
@@ -504,7 +577,7 @@ const HowItWorksSection: React.FC = () => {
             ))}
           </div>
         </div>
-        
+
         {/* Bottom CTA */}
         <div className="text-center mt-12"> {/* Reduced margin */}
           <a href="/signup" className="btn btn-primary btn-lg">
@@ -526,11 +599,11 @@ const HowItWorksSection: React.FC = () => {
 ```css
 :root {
   /* Dhukuti Brand Colors */
-  --dhukuti-red: #DC2626;
-  --nepal-gold: #F59E0B;
-  --himalayan-blue: #1E40AF;
-  --sage-green: #10B981;
-  
+  --dhukuti-red: #dc2626;
+  --nepal-gold: #f59e0b;
+  --himalayan-blue: #1e40af;
+  --sage-green: #10b981;
+
   /* Notion-Style Neutrals */
   --gray-50: #fafafa;
   --gray-100: #f5f5f5;
@@ -542,7 +615,7 @@ const HowItWorksSection: React.FC = () => {
   --gray-700: #374151;
   --gray-800: #1f2937;
   --gray-900: #111827;
-  
+
   /* Compact Spacing */
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -551,12 +624,12 @@ const HowItWorksSection: React.FC = () => {
   --space-8: 2rem;
   --space-12: 3rem;
   --space-16: 4rem;
-  
+
   /* Notion-Style Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-  
+
   /* Notion-Style Border Radius */
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -628,13 +701,25 @@ const HowItWorksSection: React.FC = () => {
 }
 
 /* Colors */
-.text-primary { color: var(--dhukuti-red); }
-.text-secondary { color: var(--nepal-gold); }
-.text-accent { color: var(--himalayan-blue); }
+.text-primary {
+  color: var(--dhukuti-red);
+}
+.text-secondary {
+  color: var(--nepal-gold);
+}
+.text-accent {
+  color: var(--himalayan-blue);
+}
 
-.bg-primary { background-color: var(--dhukuti-red); }
-.bg-secondary { background-color: var(--nepal-gold); }
-.bg-accent { background-color: var(--himalayan-blue); }
+.bg-primary {
+  background-color: var(--dhukuti-red);
+}
+.bg-secondary {
+  background-color: var(--nepal-gold);
+}
+.bg-accent {
+  background-color: var(--himalayan-blue);
+}
 ```
 
 ---
@@ -698,12 +783,14 @@ const HowItWorksSection: React.FC = () => {
 ## 🚀 **Implementation Steps**
 
 ### **Phase 1: Notion Foundation (Week 1)**
+
 1. ✅ Create design system documentation
 2. ✅ Set up Inter font (Notion's choice)
 3. ✅ Implement compact spacing system
 4. ✅ Create Notion-style card components
 
 ### **Phase 2: Core Components (Week 2)**
+
 1. ✅ Build compact Navigation component
 2. ✅ Build compact Hero section
 3. ✅ Build Notion-style Features section
@@ -711,12 +798,14 @@ const HowItWorksSection: React.FC = () => {
 5. ✅ Build compact How It Works section
 
 ### **Phase 3: Integration (Week 3)**
+
 1. ✅ Integrate components into homepage
 2. ✅ Add smooth scrolling navigation
 3. ✅ Implement responsive design
 4. ✅ Add Notion-style interactions
 
 ### **Phase 4: Polish & Testing (Week 4)**
+
 1. ✅ Cross-browser testing
 2. ✅ Mobile device testing
 3. ✅ Performance optimization
@@ -727,12 +816,14 @@ const HowItWorksSection: React.FC = () => {
 ## 🎯 **Success Metrics**
 
 ### **User Experience Goals**
+
 - **Page Load Time**: < 3 seconds
 - **Mobile Performance**: 90+ Lighthouse score
 - **Accessibility**: WCAG AA compliance
 - **Cross-browser**: Chrome, Firefox, Safari, Edge
 
 ### **Business Goals**
+
 - **Conversion Rate**: Increase signup rate by 25%
 - **Engagement**: Increase time on site by 30%
 - **Trust**: Improve user confidence in platform
