@@ -6,8 +6,8 @@ import {
   User,
   UserCredential
 } from 'firebase/auth'
-import { auth } from './firebase'
-import { createUserProfile } from './userService'
+import { auth } from './config'
+import { createUserProfile } from '../services/auth/userService'
 
 // Sign in with email and password
 export const signIn = async (email: string, password: string) => {
