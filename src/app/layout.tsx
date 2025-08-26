@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/providers/AuthProvider";
-import { Navigation } from "@/components/layout/Navigation";
+import { MainNavigation } from "@/components/ui/navigation/MainNavigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -68,7 +68,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} min-h-screen bg-white`}>
         <AuthProvider>
-          <Navigation />
+          <MainNavigation />
           <main className="min-h-screen">
             {children}
           </main>
