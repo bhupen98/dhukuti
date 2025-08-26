@@ -76,7 +76,7 @@ export default function DashboardPage() {
 
         {/* Enhanced Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="card-stats p-4 hover:scale-105 transition-transform duration-200">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-blue-300 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +93,7 @@ export default function DashboardPage() {
             <p className="text-xs text-gray-600">This month</p>
           </div>
 
-          <div className="card-stats p-4 hover:scale-105 transition-transform duration-200">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-blue-300 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@ export default function DashboardPage() {
             <p className="text-xs text-gray-600">You're part of</p>
           </div>
 
-          <div className="card-stats p-4 hover:scale-105 transition-transform duration-200">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-blue-300 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@ export default function DashboardPage() {
             <p className="text-xs text-gray-600">Accumulated</p>
           </div>
 
-          <div className="card-stats p-4 hover:scale-105 transition-transform duration-200">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-blue-300 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,7 +135,7 @@ export default function DashboardPage() {
                 </svg>
               </div>
               <div className="text-right">
-                <div className="text-gray-600 font-bold text-xl">
+                <div className="text-blue-600 font-bold text-xl">
                   {isDemoUser ? "2" : "0"}
                 </div>
               </div>
@@ -150,7 +150,7 @@ export default function DashboardPage() {
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-4">
             {/* Recent Activity */}
-            <div className="card">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="px-4 py-3 border-b border-gray-100">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
@@ -359,7 +359,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Quick Actions */}
-            <div className="card">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="px-4 py-3 border-b border-gray-100">
                 <h2 className="text-lg font-semibold text-gray-900">Quick Actions</h2>
               </div>
@@ -367,7 +367,7 @@ export default function DashboardPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <button 
                     onClick={() => router.push('/groups/create')}
-                    className="flex items-center space-x-3 p-3 border-2 border-red-600/20 rounded-lg hover:border-red-600/40 hover:bg-red-50 transition-all duration-200 group"
+                    className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-200">
                       <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -381,7 +381,7 @@ export default function DashboardPage() {
                   </button>
                   <button 
                     onClick={() => router.push('/groups')}
-                    className="flex items-center space-x-3 p-3 border-2 border-red-600/20 rounded-lg hover:border-red-600/40 hover:bg-red-50 transition-all duration-200 group"
+                    className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 bg-gradient-to-br from-green-100 to-green-200 rounded-lg flex items-center justify-center group-hover:from-green-200 group-hover:to-green-300 transition-all duration-200">
                       <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -393,9 +393,9 @@ export default function DashboardPage() {
                       <p className="text-xs text-gray-600">Find and join a group</p>
                     </div>
                   </button>
-                  <button 
+                                      <button 
                     onClick={() => router.push('/events/create')}
-                    className="flex items-center space-x-3 p-3 border-2 border-red-600/20 rounded-lg hover:border-red-600/40 hover:bg-red-50 transition-all duration-200 group"
+                    className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center group-hover:from-purple-200 group-hover:to-purple-300 transition-all duration-200">
                       <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -409,7 +409,7 @@ export default function DashboardPage() {
                   </button>
                   <button 
                     onClick={() => router.push('/reports')}
-                    className="flex items-center space-x-3 p-3 border-2 border-red-600/20 rounded-lg hover:border-red-600/40 hover:bg-red-50 transition-all duration-200 group"
+                    className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center group-hover:from-orange-200 group-hover:to-orange-300 transition-all duration-200">
                       <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -432,7 +432,7 @@ export default function DashboardPage() {
             <ProfileWidget />
 
             {/* Upcoming Events */}
-            <div className="card">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="px-6 py-4 border-b border-gray-100">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-semibold text-gray-900">Events</h2>
@@ -447,11 +447,11 @@ export default function DashboardPage() {
               <div className="p-6">
                 {isDemoUser ? (
                   <div className="space-y-4">
-                    <div className="p-4 border-2 border-red-600/20 rounded-xl hover:border-red-600/40 hover:bg-red-50 transition-all duration-200 cursor-pointer" onClick={() => router.push('/events/1')}>
+                    <div className="p-4 border border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer" onClick={() => router.push('/events/1')}>
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center space-x-2">
-                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800 border border-purple-200">Community</span>
-                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 border border-blue-200">Upcoming</span>
+                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800 border border-gray-200">Community</span>
+                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 border border-gray-200">Upcoming</span>
                         </div>
                         <span className="text-sm text-gray-500 font-medium">Dec 15</span>
                       </div>
@@ -478,11 +478,11 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     
-                    <div className="p-4 border-2 border-red-600/20 rounded-xl hover:border-red-600/40 hover:bg-red-50 transition-all duration-200 cursor-pointer" onClick={() => router.push('/events/2')}>
+                    <div className="p-4 border border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer" onClick={() => router.push('/events/2')}>
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center space-x-2">
-                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800 border border-amber-200">Workshop</span>
-                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 border border-blue-200">Upcoming</span>
+                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800 border border-gray-200">Workshop</span>
+                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 border border-gray-200">Upcoming</span>
                         </div>
                         <span className="text-sm text-gray-500 font-medium">Dec 20</span>
                       </div>
@@ -530,7 +530,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Quick Stats */}
-            <div className="card">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="px-6 py-4 border-b border-gray-100">
                 <h2 className="text-xl font-semibold text-gray-900">Stats</h2>
               </div>
