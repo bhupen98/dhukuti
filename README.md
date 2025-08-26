@@ -64,24 +64,23 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 ```
 src/
 ├── app/                    # App Router pages
-│   ├── dashboard/         # Main dashboard with consistent styling
-│   ├── groups/           # Group management with compact design
-│   ├── contributions/    # Contribution tracking system
-│   │   └── new/         # New contribution form
-│   ├── events/          # Event management
-│   │   └── [id]/        # Dynamic event pages
-│   ├── profile/          # User profile
-│   ├── admin/            # Admin dashboard
-│   └── api/              # API routes
+│   ├── (dashboard)/       # Dashboard routes with consistent styling
+│   │   ├── groups/        # Group management with compact design
+│   │   ├── contributions/ # Contribution tracking system
+│   │   ├── events/        # Event management
+│   │   └── profile/       # User profile management
+│   ├── (admin)/           # Admin dashboard routes
+│   └── layout.tsx         # Root layout with navigation
 ├── components/
-│   ├── features/         # Feature-specific components
-│   │   ├── dashboard/    # Dashboard components
-│   │   └── groups/       # Group management components
-│   ├── homepage/         # Homepage components
-│   ├── layout/           # Navigation components
-│   └── providers/        # Context providers
-├── lib/                  # Utilities, auth, Firebase config
-└── types/                # TypeScript type definitions
+│   ├── features/          # Feature-specific components
+│   ├── ui/                # Reusable UI components
+│   │   └── navigation/    # Navigation components
+│   └── providers/         # Context providers
+├── lib/
+│   ├── hooks/             # Custom React hooks
+│   │   └── auth/          # Authentication hooks
+│   └── utils/             # Utility functions
+└── types/                 # TypeScript type definitions
 ```
 
 ## 🛠️ Tech Stack
@@ -89,9 +88,10 @@ src/
 ### **Frontend**
 - **Next.js 15** - React framework with App Router
 - **TypeScript** - Type-safe JavaScript
-- **Tailwind CSS** - Utility-first CSS framework
+- **Tailwind CSS** - Utility-first CSS framework with custom design system
 - **React Toastify** - Toast notifications
-- **Consistent Design System** - Professional styling throughout
+- **React Icons** - Icon library
+- **Recharts** - Data visualization
 
 ### **Backend & Database**
 - **Next.js API Routes** - Server-side API endpoints
@@ -102,6 +102,7 @@ src/
 ### **Development Tools**
 - **ESLint** - Code linting
 - **TypeScript** - Type checking
+- **Firebase Tools** - Firebase development utilities
 
 ## 🚀 Quick Start
 
@@ -120,7 +121,7 @@ cd dhukuti
 npm install
 
 # Set up environment variables
-node setup-env.js
+npm run setup-env
 
 # Configure Firebase credentials in .env.local
 NEXT_PUBLIC_FIREBASE_API_KEY="your-api-key"
@@ -149,6 +150,12 @@ npm run dev
 - **Blue Accents**: `#3B82F6` - Interactive elements and highlights
 - **Text Colors**: Professional gray scale for readability
 - **Status Colors**: Green, red, amber for different states
+
+### **Custom Tailwind Configuration**
+- **Custom Colors**: Dhukuti brand colors (red, gold, blue, green)
+- **Custom Spacing**: Optimized spacing values
+- **Custom Shadows**: Professional shadow system
+- **Custom Border Radius**: Consistent rounded corners
 
 ## 📊 Page Features
 
@@ -208,6 +215,14 @@ npm run dev
 
 ## 🎯 Recent Updates
 
+### **Import and CSS Fixes** 🔧
+- ✅ **Fixed Import Issues**: Resolved all import path mismatches after file structure changes
+- ✅ **Component Export Fixes**: Corrected export names for navigation components
+- ✅ **Utility Function Consolidation**: Removed duplicate exports in utility files
+- ✅ **CSS Styling Restoration**: Fixed missing Tailwind configurations and utility classes
+- ✅ **Hook Import Paths**: Updated all `useAuthGuard` import paths to correct location
+- ✅ **Legacy Dependency Cleanup**: Removed unused `next-auth/react` imports
+
 ### **Consistent Styling Across All Pages** ✨
 - ✅ **Unified Design System**: Applied consistent gray-based color scheme across all pages
 - ✅ **Compact Layout**: Reduced spacing and padding for professional appearance
@@ -251,11 +266,11 @@ npm run dev
 
 For detailed documentation, see the [docs/](docs/) folder:
 
-- **[UI Design Plan](docs/DHUKUTI_UI_DESIGN_PLAN.md)** - Complete design system documentation
-- **[Design System](docs/DESIGN_SYSTEM.md)** - Implementation guide for styling
-- **[Homepage Design](docs/HOMEPAGE_DESIGN.md)** - Homepage component specifications
-- **[Implementation Roadmap](docs/IMPLEMENTATION_ROADMAP.md)** - Development timeline and responsive design plan
-- **[Firebase Migration Plan](docs/FIREBASE_MIGRATION_PLAN.md)** - Complete Firebase migration guide
+- **[UI Design Plan](docs/technical/DHUKUTI_UI_DESIGN_PLAN.md)** - Complete design system documentation
+- **[Design System](docs/technical/DESIGN_SYSTEM.md)** - Implementation guide for styling
+- **[Implementation Roadmap](docs/technical/IMPLEMENTATION_ROADMAP.md)** - Development timeline and responsive design plan
+- **[Firebase Migration Plan](docs/technical/FIREBASE_MIGRATION_PLAN.md)** - Complete Firebase migration guide
+- **[Project Summary](docs/technical/PROJECT_SUMMARY.md)** - Current project status and achievements
 
 ## 🔄 Development Status
 
@@ -270,6 +285,7 @@ For detailed documentation, see the [docs/](docs/) folder:
 - Contributions page with payment tracking
 - Events page with professional styling
 - Modern UI/UX with consistent styling
+- **Import and CSS fixes for stable development**
 
 ### **🔄 In Progress**
 - Firebase schema design and local storage strategy
@@ -299,6 +315,6 @@ For detailed documentation, see the [docs/](docs/) folder:
 ---
 
 **Last Updated**: December 2024
-**Status**: ✅ Ready for Firebase schema design and local storage implementation
-**Version**: 2.1.0 - Consistent Design Edition
+**Status**: ✅ Stable - All import and CSS issues resolved
+**Version**: 2.1.1 - Import and CSS Fixes Edition
 **Next Milestone**: Firebase schema design and local storage strategy

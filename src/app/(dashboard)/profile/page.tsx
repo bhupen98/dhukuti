@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { useAuthGuard } from "@/lib/hooks/auth/useAuthGuard";
 import Avatar from "boring-avatars";
 import { dhukutiToast } from "@/lib/utils/toast";
 import { formatCurrency } from "@/lib/utils";

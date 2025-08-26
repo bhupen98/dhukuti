@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { useAuthGuard } from "@/lib/hooks/auth/useAuthGuard";
 import Link from "next/link";
 import { useState } from "react";
 import { dhukutiToast } from "@/lib/utils/toast";

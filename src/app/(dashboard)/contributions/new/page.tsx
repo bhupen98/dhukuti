@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { useAuthGuard } from "@/lib/hooks/auth/useAuthGuard";
 
 export default function NewContributionPage() {
   const { user, loading } = useAuthGuard();

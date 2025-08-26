@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { useAuthGuard } from "@/lib/hooks/auth/useAuthGuard";
 
 export default function CreateGroupPage() {
   const { session, status } = useAuthGuard();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { useAuthGuard } from "@/lib/hooks/auth/useAuthGuard";
 import Link from "next/link";
 import { Group, GroupWithMembers } from "@/types";
 import { formatCurrency } from "@/lib/utils";

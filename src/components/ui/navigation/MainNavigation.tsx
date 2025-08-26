@@ -7,7 +7,7 @@ import { signOutUser } from "@/lib/firebase/auth";
 import { usePathname } from "next/navigation";
 import { dhukutiToast } from "@/lib/utils/toast";
 
-export function Navigation() {
+export function MainNavigation() {
   const { user } = useAuth();
   const pathname = usePathname();
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(false);
