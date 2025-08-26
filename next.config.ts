@@ -1,28 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next/server'
 
 const nextConfig: NextConfig = {
-  // Remove experimental.appDir as it's now default in Next.js 15
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*',
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS',
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'Content-Type, Authorization',
-          },
-        ],
-      },
-    ];
-  },
-};
+  /* config options here */
+  experimental: {
+    serverComponentsExternalPackages: ['@dataconnect/generated']
+  }
+}
 
-export default nextConfig; 
+export default nextConfig
