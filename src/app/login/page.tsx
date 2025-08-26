@@ -1,12 +1,13 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signUp } from "@/lib/auth";
+import { useAuth } from "@/components/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
@@ -22,7 +23,7 @@ export default function LoginPage() {
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
   useEffect(() => {
-    if (session) {
+    if (user) {
       // Check if there's a callback URL from the URL parameters
       const urlParams = new URLSearchParams(window.location.search);
       const callbackUrl = urlParams.get('callbackUrl');
@@ -34,7 +35,7 @@ export default function LoginPage() {
         router.push("/dashboard");
       }
     }
-  }, [session, router]);
+  }, [user, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -79,28 +80,14 @@ export default function LoginPage() {
 
   const handleSignUp = async () => {
     try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          name: formData.name,
-          phoneNumber: formData.phoneNumber || undefined,
-          address: formData.address || undefined,
-        }),
-      });
+      const result = await signUp(formData.email, formData.password, formData.name);
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (result.success) {
         setMessage({ type: 'success', text: 'Account created successfully! You can now sign in.' });
         setIsSignUp(false);
         setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
       } else {
-        setMessage({ type: 'error', text: data.error || 'Signup failed' });
+        setMessage({ type: 'error', text: result.error || 'Signup failed' });
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
@@ -109,15 +96,9 @@ export default function LoginPage() {
 
   const handleSignIn = async () => {
     try {
-      const result = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
+      const result = await signIn(formData.email, formData.password);
 
-      if (result?.error) {
-        setMessage({ type: 'error', text: 'Invalid email or password' });
-      } else {
+      if (result.success) {
         // Check if there's a callback URL from the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const callbackUrl = urlParams.get('callbackUrl');
@@ -128,6 +109,8 @@ export default function LoginPage() {
         } else {
           router.push("/dashboard");
         }
+      } else {
+        setMessage({ type: 'error', text: result.error || 'Invalid email or password' });
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Login failed. Please try again.' });
@@ -154,7 +137,7 @@ export default function LoginPage() {
     }
   };
 
-  if (status === "loading") {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="flex flex-col items-center space-y-4">

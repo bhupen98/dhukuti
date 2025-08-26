@@ -14,10 +14,10 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 - **📱 Member Communication**: Built-in messaging and activity notifications
 
 ### 🛡️ **Security & Trust**
-- **NextAuth.js Authentication**: Secure user authentication with credentials
+- **Firebase Authentication**: Secure user authentication with email/password
 - **Role-based Access Control**: User, Admin, and Moderator roles
 - **Transaction History**: Complete audit trail for all financial activities
-- **Data Protection**: Secure data handling with Prisma ORM
+- **Data Protection**: Secure data handling with Firebase Firestore
 - **Activity Logging**: Comprehensive activity tracking for transparency
 
 ### 👥 **User Management**
@@ -50,7 +50,8 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 - **System Settings**: Configure platform settings
 
 ### 🎨 **Modern UI/UX**
-- **HubSpot-Inspired Design**: Clean, professional interface
+- **Logo-Inspired Design System**: Beautiful red border styling throughout
+- **Notion-Inspired Layout**: Clean, compact, and professional interface
 - **Responsive Design**: Works perfectly on all devices
 - **Interactive Elements**: Smooth animations and transitions
 - **Toast Notifications**: User-friendly feedback system
@@ -58,12 +59,12 @@ A comprehensive platform for managing traditional Nepali rotating savings and cr
 
 ## 🏗️ Architecture
 
-### **Full-Stack Next.js Application**
+### **Full-Stack Next.js Application with Firebase**
 
 ```
 src/
 ├── app/                    # App Router pages
-│   ├── dashboard/         # Main dashboard
+│   ├── dashboard/         # Main dashboard with logo-inspired design
 │   ├── groups/           # Group management
 │   ├── contributions/    # Contribution tracking
 │   ├── events/          # Event management
@@ -73,10 +74,11 @@ src/
 │   └── api/              # API routes
 ├── components/
 │   ├── features/         # Feature-specific components
-│   ├── common/           # Reusable UI components
+│   │   └── dashboard/    # Dashboard components
+│   ├── homepage/         # Homepage components with logo design
 │   ├── layout/           # Navigation components
 │   └── providers/        # Context providers
-├── lib/                  # Utilities, auth, config
+├── lib/                  # Utilities, auth, Firebase config
 └── types/                # TypeScript type definitions
 ```
 
@@ -87,27 +89,24 @@ src/
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
 - **React Toastify** - Toast notifications
-- **NextAuth.js** - Authentication
-- **Boring Avatars** - User avatar generation
-- **Recharts** - Data visualization
+- **Custom Design System** - Logo-inspired styling
 
-### **Backend**
+### **Backend & Database**
 - **Next.js API Routes** - Server-side API endpoints
-- **Prisma ORM** - Database toolkit
-- **PostgreSQL** - Primary database
-- **bcryptjs** - Password hashing
+- **Firebase Authentication** - User authentication
+- **Firebase Firestore** - NoSQL database
+- **Firebase Storage** - File storage
 
 ### **Development Tools**
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
 - **TypeScript** - Type checking
-- **Docker** - Containerization
 
 ## 🚀 Quick Start
 
 ### **Prerequisites**
 - Node.js 18+
-- PostgreSQL 12+
+- Firebase project
 - npm or yarn
 
 ### **Installation**
@@ -120,84 +119,90 @@ cd dhukuti
 npm install
 
 # Set up environment variables
-cp env.example .env.local
+node setup-env.js
 
-# Configure database credentials in .env.local
-DATABASE_URL="postgresql://username:password@localhost:5432/dhukuti"
-NEXTAUTH_SECRET="your-secret-key-here"
-NEXTAUTH_URL="http://localhost:3000"
-ADMIN_ACCESS_TOKEN="your-admin-token"
-
-# Set up database
-npx prisma db push
-
-# Seed database
-npx prisma db seed
+# Configure Firebase credentials in .env.local
+NEXT_PUBLIC_FIREBASE_API_KEY="your-api-key"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-project-id"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
+NEXT_PUBLIC_FIREBASE_APP_ID="your-app-id"
 
 # Start development server
 npm run dev
 ```
 
-### **Docker Setup**
-```bash
-# Using Docker Compose
-docker-compose up -d
+## 🎨 Design System
 
-# Or for development
-docker-compose -f docker-compose.dev.yml up -d
-```
+### **Logo-Inspired Design**
+- **Red Border Theme**: Consistent red borders throughout the interface
+- **Rounded Corners**: Modern `rounded-xl` styling for all components
+- **Gradient Accents**: Subtle gradients for visual depth
+- **Hover Effects**: Interactive elements with smooth transitions
+- **Professional Typography**: Clean, readable text hierarchy
+
+### **Color Palette**
+- **Primary Red**: `#DC2626` - Main brand color
+- **Secondary Colors**: Blue, green, purple, orange for different sections
+- **Neutral Grays**: Professional gray scale for text and backgrounds
+- **Accent Colors**: Yellow and blue for highlights and indicators
+
+## 📊 Dashboard Features
+
+### **Enhanced User Experience**
+- **Beautiful Metrics Cards**: 4 key metrics with hover effects
+- **Activity Feed**: Real-time updates with gradient backgrounds
+- **Quick Actions**: Interactive buttons with logo-inspired styling
+- **Profile Widget**: User stats with custom avatar system
+- **Responsive Layout**: Works perfectly on all screen sizes
+
+### **Navigation System**
+- **Sticky Navigation**: Always-accessible top navigation bar
+- **Search Functionality**: Full-width search with focus effects
+- **Quick Actions Menu**: Dropdown for common tasks
+- **Notifications**: Real-time notification system
+- **User Menu**: Profile management and sign out
 
 ## 👥 Test Data
 
-### **Admin User**
-- **Email**: `admin@dhukuti.com`
-- **Password**: `admin123`
+### **Demo User**
+- **Email**: `demo@example.com`
+- **Features**: Sample data for testing dashboard functionality
 
 ### **Regular Users**
-- **Ramesh Thapa**: `ramesh.thapa@email.com` / `password123`
-- **Sita Gurung**: `sita.gurung@email.com` / `password123`
-- **Bhupen Rai**: `bhupen.rai@email.com` / `password123`
-- **Anjali Shrestha**: `anjali.shrestha@email.com` / `password123`
+- Create new accounts through the signup process
+- All user data stored securely in Firebase
 
 ## 📊 Database Schema
 
-### **Core Models**
-- **User** - Authentication, profiles, roles, reputation
-- **Group** - Dhukuti group management with metadata support
-- **GroupMember** - Member relationships and roles
-- **Contribution** - Payment tracking and scheduling
-- **Transaction** - Financial records and audit trail
-- **Activity** - Comprehensive activity logging
-- **Message** - Group communication
-- **Event** - Event management system
-- **Ticket** - Ticket sales and management
+### **Firebase Collections**
+- **users** - User profiles and authentication data
+- **groups** - Dhukuti group management
+- **contributions** - Payment tracking and scheduling
+- **events** - Event management system
+- **activities** - Comprehensive activity logging
 
 ## 🎯 Recent Updates
 
-### **UI/UX Enhancements**
-- ✅ Complete HubSpot-inspired redesign
-- ✅ Compact dashboard layout
-- ✅ Curved button styling throughout
-- ✅ Professional homepage with conditional rendering
-- ✅ Responsive design improvements
-- ✅ Toast notification system migration to React Toastify
+### **Major UI/UX Redesign** ✨
+- ✅ **Complete Logo-Inspired Design System**: Red borders, rounded corners, consistent styling
+- ✅ **Notion-Inspired Layout**: Clean, compact, and professional interface
+- ✅ **Enhanced Dashboard**: Beautiful metrics, activity feed, and quick actions
+- ✅ **Navigation System**: Sticky navigation bar with search and user management
+- ✅ **Responsive Design**: Perfect on all devices and screen sizes
 
-### **Event System**
-- ✅ Event creation interface with multi-step form
-- ✅ Event listing with images and ticket purchasing
-- ✅ Dynamic event detail pages
-- ✅ Ticket type management
-- ✅ Payment modal integration (ready for Stripe)
+### **Firebase Migration** 🔥
+- ✅ **Authentication**: Migrated from NextAuth to Firebase Auth
+- ✅ **Database**: Migrated from PostgreSQL to Firebase Firestore
+- ✅ **User Management**: Complete user profile system with Firestore
+- ✅ **Data Integration**: Real-time data synchronization
 
-### **Group Management**
-- ✅ Modern group creation interface
-- ✅ Group listing with compact design
-- ✅ Group API integration with metadata support
-
-### **Profile & Settings**
-- ✅ Compact profile page design
-- ✅ Inline profile editing
-- ✅ Streamlined navigation
+### **Component Improvements** 🧩
+- ✅ **Profile Widget**: Custom avatar system with user initials
+- ✅ **Activity Feed**: Gradient backgrounds and interactive elements
+- ✅ **Quick Actions**: Logo-inspired button styling
+- ✅ **Metrics Cards**: Hover effects and smooth transitions
 
 ## 🚀 Deployment
 
@@ -209,42 +214,40 @@ docker-compose -f docker-compose.dev.yml up -d
 
 ### **Other Options**
 - **Railway** - Good for full-stack apps
-- **Render** - Free PostgreSQL hosting
-- **Supabase** - Database + hosting solution
-- **Docker** - Containerized deployment
+- **Firebase Hosting** - Integrated with Firebase backend
+- **Netlify** - Great for static sites with serverless functions
 
 ## 📝 Documentation
 
 For detailed documentation, see the [docs/](docs/) folder:
 
-- **[API Reference](docs/API_REFERENCE.md)** - Complete API documentation
-- **[User Guide](docs/USER_GUIDE.md)** - How to use the platform
-- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Deployment instructions
-- **[Component Structure](docs/COMPONENT_STRUCTURE.md)** - Architecture overview
-- **[TODO](docs/TODO.md)** - Development roadmap and current status
+- **[UI Design Plan](docs/DHUKUTI_UI_DESIGN_PLAN.md)** - Complete design system documentation
+- **[Design System](docs/DESIGN_SYSTEM.md)** - Implementation guide for styling
+- **[Homepage Design](docs/HOMEPAGE_DESIGN.md)** - Homepage component specifications
+- **[Implementation Roadmap](docs/IMPLEMENTATION_ROADMAP.md)** - Development timeline
+- **[Firebase Migration Plan](docs/FIREBASE_MIGRATION_PLAN.md)** - Complete Firebase migration guide
 
 ## 🔄 Development Status
 
 ### **✅ Completed**
-- User authentication and authorization
-- Database schema and migrations
-- Group creation and management
-- Event system with ticket purchasing
-- Modern UI/UX design
-- Responsive layout
-- Toast notifications
-- Profile management
+- Complete Firebase migration (Auth + Firestore)
+- Logo-inspired design system implementation
+- Enhanced dashboard with beautiful UI
+- Navigation system with search and user management
+- Responsive design for all devices
+- User authentication and profile management
+- Modern UI/UX with consistent styling
 
 ### **🔄 In Progress**
-- Event creation API integration
-- Group details view implementation
-- Stripe payment system setup
+- Group management system
+- Event system integration
+- Contribution tracking
 
 ### **📋 Planned**
-- Advanced group features
-- Mobile application
+- Advanced analytics dashboard
 - Real-time communication
-- Advanced analytics
+- Mobile application
+- Payment system integration
 
 ## 🤝 Contributing
 
@@ -264,5 +267,5 @@ For detailed documentation, see the [docs/](docs/) folder:
 
 **Last Updated**: December 2024
 **Status**: ✅ Ready for testing and deployment
-**Version**: 1.0.0
-**Next Milestone**: Payment system integration
+**Version**: 2.0.0 - Firebase Edition
+**Next Milestone**: Group management system

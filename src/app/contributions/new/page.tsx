@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 export default function NewContributionPage() {
-  const { session, status } = useAuthGuard();
+  const { user, loading } = useAuthGuard();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("bank_transfer");
 
-  if (status === "loading") {
+  if (loading) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="animate-pulse">
@@ -27,11 +26,11 @@ export default function NewContributionPage() {
     );
   }
 
-  if (!session) {
+  if (!user) {
     return null;
   }
 
-  const isDemoUser = session.user?.email === 'demo@example.com';
+  const isDemoUser = user.email === 'demo@example.com';
 
   const userGroups = isDemoUser ? [
     {

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/components/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { formatCurrency, formatDate } from "@/lib/utils";
@@ -19,36 +19,38 @@ interface Contribution {
 }
 
 export default function ContributionsPage() {
-  const { data: session, status } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [contributions, setContributions] = useState<Contribution[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (status === "loading") return;
-    if (!session) {
+    if (loading) return;
+    if (!user) {
       router.replace("/login");
       return;
     }
 
-    const fetchContributions = async () => {
-      try {
-        const response = await fetch('/api/contributions');
-        if (response.ok) {
-          const data = await response.json();
-          setContributions(data.data || []);
-        }
-      } catch (error) {
-        console.error('Error fetching contributions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    // TODO: Replace with Firebase data fetching
+    // const fetchContributions = async () => {
+    //   try {
+    //     const response = await fetch('/api/contributions');
+    //     if (response.ok) {
+    //       const data = await response.json();
+    //       setContributions(data.data || []);
+    //     }
+    //   } catch (error) {
+    //     console.error('Error fetching contributions:', error);
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // };
 
-    fetchContributions();
-  }, [session, status, router]);
+    // fetchContributions();
+    setIsLoading(false);
+  }, [user, loading, router]);
 
-  if (status === "loading" || loading) {
+  if (loading || isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">

@@ -20,7 +20,7 @@ dhukuti/
 ├── tsconfig.json                # TypeScript configuration
 ├── env.example                  # Environment variables template
 ├── README.md                    # Project documentation
-├── setup.md                     # Migration setup guide
+# Migration setup guide removed - using Firebase now
 └── STRUCTURE.md                 # This file
 ```
 
@@ -84,17 +84,19 @@ src/components/
 
 ```
 src/lib/
-├── prisma.ts                   # Prisma client configuration
-├── auth.ts                     # NextAuth configuration
+├── firebase.ts                 # Firebase configuration
+├── userService.ts              # User management service
+├── auth.ts                     # Firebase auth configuration
 └── utils.ts                    # Utility functions
 ```
 
-## 📊 Database Structure (`prisma/`)
+## 📊 Database Structure (Firebase)
 
 ```
-prisma/
-├── schema.prisma               # Database schema
-└── seed.ts                     # Database seeding script
+Firebase/
+├── Firestore                   # NoSQL database
+├── Authentication             # User auth
+└── Storage                    # File storage
 ```
 
 ## 🎨 Key Features Implemented

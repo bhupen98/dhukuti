@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "@/components/providers/SessionProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 import { Navigation } from "@/components/layout/Navigation";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -67,8 +66,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen bg-gray-50`}>
-        <SessionProvider>
+      <body className={`${inter.className} min-h-screen bg-white`}>
+        <AuthProvider>
           <Navigation />
           <main className="min-h-screen">
             {children}
@@ -95,7 +94,7 @@ export default function RootLayout({
             }}
             toastClassName="!bg-white !border !border-gray-200 !rounded-xl !shadow-lg !text-gray-700 !font-medium"
           />
-        </SessionProvider>
+        </AuthProvider>
       </body>
     </html>
   );

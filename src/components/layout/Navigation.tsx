@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
+import { useAuth } from "@/components/providers/AuthProvider";
+import { signOutUser } from "@/lib/auth";
 import { usePathname } from "next/navigation";
-import Avatar from "boring-avatars";
 import { dhukutiToast } from "@/lib/toast";
 
 export function Navigation() {
-  const { data: session } = useSession();
+  const { user } = useAuth();
   const pathname = usePathname();
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -34,8 +34,14 @@ export function Navigation() {
     try {
       setIsSigningOut(true);
       console.log("Signing out user...");
-      await signOut({ callbackUrl: "/" });
-      dhukutiToast.logoutSuccess();
+      const result = await signOutUser();
+      if (result.success) {
+        dhukutiToast.logoutSuccess();
+        // Redirect to home page after successful logout
+        window.location.href = "/";
+      } else {
+        throw new Error(result.error);
+      }
     } catch (error) {
       console.error("Error during sign out:", error);
       dhukutiToast.error("Failed to sign out. Please try again.");
@@ -73,9 +79,21 @@ export function Navigation() {
     };
   }, []);
 
-  if (!session) {
+  if (!user) {
     return null;
   }
+
+  // Simple avatar with initials
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const avatarInitials = user.displayName ? getInitials(user.displayName) : 'U';
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
@@ -85,8 +103,8 @@ export function Navigation() {
           <div className="flex items-center space-x-8">
             {/* Logo */}
             <Link href="/dashboard" className="flex items-center space-x-3 group">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-200">
-                <span className="text-white font-bold text-sm">💰</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-red-700 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-200">
+                <span className="text-white font-bold text-sm">D</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold text-gray-900">Dhukuti</span>
@@ -124,7 +142,7 @@ export function Navigation() {
                   placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-64 pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-64 pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -241,15 +259,12 @@ export function Navigation() {
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-md transition-all duration-200"
               >
-                <Avatar
-                  name={session.user?.name || session.user?.email || "User"}
-                  size={32}
-                  variant="beam"
-                  colors={["#3B82F6", "#1D4ED8", "#1E40AF", "#1E3A8A"]}
-                />
+                <div className="w-8 h-8 bg-gradient-to-br from-red-100 to-red-200 rounded-lg flex items-center justify-center">
+                  <span className="text-sm font-bold text-red-600">{avatarInitials}</span>
+                </div>
                 <div className="hidden sm:block text-left">
-                  <p className="text-sm font-medium text-gray-900">{session.user?.name}</p>
-                  <p className="text-xs text-gray-500">{session.user?.email}</p>
+                  <p className="text-sm font-medium text-gray-900">{user.displayName}</p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
                 </div>
                 <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -259,8 +274,8 @@ export function Navigation() {
               {isUserMenuOpen && (
                 <div className="absolute right-0 mt-2 w-64 bg-white rounded-md border border-gray-200 shadow-lg py-2 z-50">
                   <div className="px-4 py-3 border-b border-gray-100">
-                    <p className="text-sm font-semibold text-gray-900">{session.user?.name}</p>
-                    <p className="text-xs text-gray-500">{session.user?.email}</p>
+                    <p className="text-sm font-semibold text-gray-900">{user.displayName}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
                   </div>
                   <div className="py-2">
                     <Link

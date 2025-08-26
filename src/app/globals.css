@@ -3,6 +3,46 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Dhukuti Brand Colors */
+    --dhukuti-red: #DC2626;
+    --nepal-gold: #F59E0B;
+    --himalayan-blue: #1E40AF;
+    --sage-green: #10B981;
+    --success: #10B981;
+    
+    /* Notion-Style Neutrals */
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    
+    /* Compact Spacing */
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    
+    /* Notion-Style Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    
+    /* Notion-Style Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -60,6 +100,97 @@
 }
 
 @layer components {
+  /* Notion-Inspired Design System */
+  
+  /* Navigation - Logo-Inspired Design */
+  .nav-link {
+    @apply text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium text-sm;
+  }
+
+  /* Buttons - Logo-Inspired Design */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-medium transition-all duration-200 text-sm;
+  }
+
+  .btn-primary {
+    @apply bg-red-600 text-white shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-red-700 border-2 border-red-600;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-red-600 border-2 border-red-600/40 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-200;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-base rounded-xl;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm rounded-xl;
+  }
+
+  /* Cards - Logo-Inspired Design */
+  .card {
+    @apply bg-white rounded-xl border-2 border-red-600/20 shadow-sm hover:shadow-md hover:border-red-600/40 transition-all duration-200;
+  }
+
+  .card-elevated {
+    @apply shadow-md border-red-600/30;
+  }
+
+  .card-interactive {
+    @apply cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:border-red-600/50;
+  }
+
+  /* Special card variants */
+  .card-feature {
+    @apply bg-white rounded-xl border-2 border-red-600/20 shadow-sm hover:shadow-lg hover:border-red-600/40 hover:-translate-y-1 transition-all duration-200;
+  }
+
+  .card-testimonial {
+    @apply bg-white rounded-xl border-2 border-red-600/15 shadow-sm hover:shadow-md hover:border-red-600/30 transition-all duration-200;
+  }
+
+  .card-stats {
+    @apply bg-white rounded-xl border-2 border-red-600/25 shadow-sm hover:shadow-md hover:border-red-600/40 transition-all duration-200;
+  }
+
+  /* Typography */
+  .headline {
+    @apply font-semibold text-4xl leading-tight text-gray-900;
+  }
+
+  .title {
+    @apply font-semibold text-2xl leading-tight text-gray-900;
+  }
+
+  .subtitle {
+    @apply font-medium text-xl leading-relaxed text-gray-700;
+  }
+
+  .body-large {
+    @apply text-lg leading-relaxed text-gray-600;
+  }
+
+  .body {
+    @apply text-base leading-relaxed text-gray-600;
+  }
+
+  /* Colors */
+  .text-primary { color: var(--dhukuti-red); }
+  .text-secondary { color: var(--nepal-gold); }
+  .text-accent { color: var(--himalayan-blue); }
+  .text-success { color: var(--success); }
+
+  .bg-primary { background-color: var(--dhukuti-red); }
+  .bg-secondary { background-color: var(--nepal-gold); }
+  .bg-accent { background-color: var(--himalayan-blue); }
+  .bg-success { background-color: var(--success); }
+
+  /* Container */
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+
   /* Custom Toast Styles for react-toastify */
   .Toastify__toast {
     @apply !bg-white !border !border-gray-200 !rounded-md !shadow-lg !text-gray-700 !font-medium !min-h-[60px] !p-4;
@@ -122,83 +253,25 @@
     @apply p-6 pt-0 border-t border-gray-100;
   }
 
-  /* HubSpot-Style Button Styles */
-  .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-  
-  .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-sm;
-  }
-  
-  .btn-secondary {
-    @apply bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500;
-  }
-  
+  /* Additional Button Variants - Logo-Inspired Design */
   .btn-outline {
-    @apply bg-white text-gray-700 border-gray-300 hover:bg-gray-50 focus:ring-blue-500;
+    @apply bg-white text-red-600 border-2 border-red-600/40 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-200;
   }
   
   .btn-ghost {
-    @apply bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-500;
+    @apply bg-transparent text-red-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200;
   }
   
   .btn-success {
-    @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+    @apply bg-green-600 text-white border-2 border-green-600 hover:bg-green-700 shadow-sm hover:shadow-md hover:-translate-y-0.5;
   }
   
   .btn-warning {
-    @apply bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500;
+    @apply bg-yellow-600 text-white border-2 border-yellow-600 hover:bg-yellow-700 shadow-sm hover:shadow-md hover:-translate-y-0.5;
   }
   
   .btn-danger {
-    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
-  }
-  
-  .btn-sm {
-    @apply px-3 py-1.5 text-xs;
-  }
-  
-  .btn-md {
-    @apply px-4 py-2 text-sm;
-  }
-  
-  .btn-lg {
-    @apply px-6 py-3 text-base;
-  }
-
-  /* HubSpot-Style Navigation Buttons */
-  .nav-btn {
-    @apply inline-flex items-center justify-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-  }
-  
-  .nav-btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-sm;
-  }
-  
-  .nav-btn-outline {
-    @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400 focus:ring-blue-500;
-  }
-  
-  .nav-btn-ghost {
-    @apply bg-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-gray-500;
-  }
-
-  /* HubSpot-Style Action Buttons */
-  .action-btn {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-  }
-  
-  .action-btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-sm;
-  }
-  
-  .action-btn-secondary {
-    @apply bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500;
-  }
-  
-  .action-btn-outline {
-    @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400 focus:ring-blue-500;
+    @apply bg-red-600 text-white border-2 border-red-600 hover:bg-red-700 shadow-sm hover:shadow-md hover:-translate-y-0.5;
   }
 
   /* Modern Input Styles */
@@ -290,31 +363,6 @@
   
   .data-table tr:hover {
     @apply bg-gray-50;
-  }
-
-  /* HubSpot-Style Navigation Styles */
-  .nav-link {
-    @apply px-3 py-2 rounded-md text-sm font-medium transition-all duration-200;
-  }
-  
-  .nav-link.active {
-    @apply bg-blue-50 text-blue-700 border border-blue-200;
-  }
-  
-  .nav-link:not(.active) {
-    @apply text-gray-600 hover:text-gray-900 hover:bg-gray-50;
-  }
-  
-  .nav-link-compact {
-    @apply px-2 py-1 rounded-md text-sm font-medium transition-all duration-200;
-  }
-  
-  .nav-link-compact.active {
-    @apply bg-blue-100 text-blue-700;
-  }
-  
-  .nav-link-compact:not(.active) {
-    @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100;
   }
 
   /* Modern Glass Effect */

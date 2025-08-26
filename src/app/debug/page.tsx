@@ -1,10 +1,11 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useAuth } from "@/components/providers/AuthProvider";
+import { signIn, signOutUser } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
 export default function DebugPage() {
-  const { data: session, status } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   const resetToDemo = async () => {

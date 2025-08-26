@@ -1,18 +1,97 @@
-import { User, Group, Contribution, Transaction, Activity, Message, Comment } from '@prisma/client'
-import { DefaultSession } from "next-auth";
-
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-    } & DefaultSession["user"];
-  }
+// Firebase Auth types
+export interface FirebaseSession {
+  user: {
+    uid: string;
+    email: string;
+    displayName?: string;
+    photoURL?: string;
+  };
+  expires: string;
 }
 
-declare module "next-auth/jwt" {
-  interface JWT {
-    uid: string;
-  }
+export interface FirebaseJWT {
+  uid: string;
+  email: string;
+  displayName?: string;
+  photoURL?: string;
+}
+
+// Firebase-compatible types
+export interface User {
+  uid: string
+  email: string
+  displayName: string
+  createdAt: Date
+  updatedAt: Date
+  phoneNumber?: string
+  avatar?: string
+  isActive: boolean
+}
+
+export interface Group {
+  id: string
+  name: string
+  description?: string
+  ownerId: string
+  maxMembers: number
+  contributionAmount: number
+  cycleDuration: number
+  createdAt: Date
+  updatedAt: Date
+  isActive: boolean
+}
+
+export interface Contribution {
+  id: string
+  userId: string
+  groupId: string
+  amount: number
+  cycleNumber: number
+  dueDate: Date
+  paidAt?: Date
+  status: 'PENDING' | 'PAID' | 'OVERDUE'
+  notes?: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Transaction {
+  id: string
+  userId: string
+  groupId: string
+  amount: number
+  type: 'CONTRIBUTION' | 'WITHDRAWAL' | 'PENALTY'
+  description?: string
+  createdAt: Date
+}
+
+export interface Activity {
+  id: string
+  userId?: string
+  groupId?: string
+  type: string
+  title: string
+  description?: string
+  metadata?: Record<string, any>
+  createdAt: Date
+}
+
+export interface Message {
+  id: string
+  userId: string
+  groupId: string
+  content: string
+  createdAt: Date
+  updatedAt?: Date
+}
+
+export interface Comment {
+  id: string
+  messageId: string
+  userId: string
+  content: string
+  createdAt: Date
+  updatedAt?: Date
 }
 
 // Extended types with relations

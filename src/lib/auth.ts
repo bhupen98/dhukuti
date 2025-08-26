@@ -1,66 +1,62 @@
-import { NextAuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { prisma } from './prisma'
-import bcrypt from 'bcryptjs'
+import { 
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  User,
+  UserCredential
+} from 'firebase/auth'
+import { auth } from './firebase'
+import { createUserProfile } from './userService'
 
-export const authOptions: NextAuthOptions = {
-  providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        email: { label: "Email", type: "email", placeholder: "your@email.com" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null
-        }
+// Sign in with email and password
+export const signIn = async (email: string, password: string) => {
+  try {
+    const userCredential: UserCredential = await signInWithEmailAndPassword(auth, email, password)
+    return { success: true, user: userCredential.user }
+  } catch (error: any) {
+    return { success: false, error: error.message }
+  }
+}
 
-        try {
-          // Find user by email
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email }
-          })
+// Sign up with email, password, and name
+export const signUp = async (email: string, password: string, name: string) => {
+  try {
+    const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password)
+    
+    // Update display name
+    await updateProfile(userCredential.user, { displayName: name })
+    
+    // Create user profile in Firestore
+    const profileResult = await createUserProfile(userCredential.user)
+    
+    if (!profileResult.success) {
+      console.error('Failed to create user profile:', profileResult.error)
+      // Note: User is still created in Auth, but profile creation failed
+    }
+    
+    return { success: true, user: userCredential.user }
+  } catch (error: any) {
+    return { success: false, error: error.message }
+  }
+}
 
-          if (!user) {
-            return null
-          }
+// Sign out user
+export const signOutUser = async () => {
+  try {
+    await signOut(auth)
+    return { success: true }
+  } catch (error: any) {
+    return { success: false, error: error.message }
+  }
+}
 
-          // Verify password
-          const isPasswordValid = await bcrypt.compare(credentials.password, user.password)
+// Get current user
+export const getCurrentUser = (): User | null => {
+  return auth.currentUser
+}
 
-          if (!isPasswordValid) {
-            return null
-          }
-
-          // Return user without password
-          const { password: _, ...userWithoutPassword } = user
-          return userWithoutPassword
-        } catch (error) {
-          console.error('Auth error:', error)
-          return null
-        }
-      }
-    }),
-  ],
-  callbacks: {
-    session: async ({ session, user }) => {
-      if (session?.user && user) {
-        session.user.id = user.id
-      }
-      return session
-    },
-    jwt: async ({ user, token }) => {
-      if (user) {
-        token.uid = user.id
-      }
-      return token
-    },
-  },
-  pages: {
-    signIn: '/login',
-  },
-  session: {
-    strategy: 'jwt',
-  },
+// Check if user is authenticated
+export const isAuthenticated = (): boolean => {
+  return !!auth.currentUser
 } 

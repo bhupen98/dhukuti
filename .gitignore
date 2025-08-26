@@ -31,6 +31,7 @@ Thumbs.db
 
 # Logs
 *.log
+firebase-debug.log
 
 # Runtime data
 pids
@@ -62,8 +63,7 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
-# Prisma
-prisma/migrations/
+# Prisma (removed - using Firebase now)
 
 # Cloudflare Tunnel
 cloudflared.exe
@@ -111,6 +111,7 @@ build/
 
 # TypeScript
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # ESLint
 .eslintcache
@@ -118,8 +119,7 @@ build/
 # Prettier
 .prettierignore
 
-# Docker
-.dockerignore
+
 
 # Database
 *.sql
