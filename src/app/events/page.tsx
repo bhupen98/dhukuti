@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
 import Link from "next/link";
 import { useState } from "react";
@@ -266,8 +265,8 @@ export default function EventsPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="animate-pulse space-y-6">
             <div className="h-6 bg-gray-200 rounded w-1/4"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -283,30 +282,18 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Compact Header */}
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        {/* Header */}
         <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-1">Community Events</h1>
-              <p className="text-gray-600">
-                Discover and join Nepalese community events across Australia
-              </p>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Link href="/events/create" className="action-btn action-btn-primary">
-                Create Event
-              </Link>
-              <Link href="/events/manage" className="action-btn action-btn-outline">
-                Manage Events
-              </Link>
-            </div>
-          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">Community Events</h1>
+          <p className="text-sm text-gray-600">
+            Discover and join Nepalese community events across Australia
+          </p>
         </div>
 
-        {/* Compact Demo Notice */}
+        {/* Demo Notice */}
         {session?.user?.email === 'demo@example.com' && (
-          <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-3">
+          <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
             <div className="flex items-center space-x-2">
               <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -323,130 +310,139 @@ export default function EventsPage() {
         )}
 
         {/* Events Grid */}
-        {session?.user?.email === 'demo@example.com' ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {true ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event, index) => (
-                             <div key={event.id} className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col h-full">
-                 {/* Event Image */}
-                 {event.image ? (
-                   <div className="relative h-32 overflow-hidden">
-                     <img 
-                       src={event.image} 
-                       alt={event.title}
-                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                       onError={(e) => {
-                         const target = e.target as HTMLImageElement;
-                         target.style.display = 'none';
-                       }}
-                     />
-                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                     <div className="absolute top-2 right-2">
-                       <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(event.status)}`}>
-                         {event.status}
-                       </span>
-                     </div>
-                   </div>
-                 ) : (
-                   <div className="h-32 bg-gray-100 flex items-center justify-center">
-                     <span className="text-gray-400 text-2xl">📅</span>
-                   </div>
-                 )}
+              <div key={event.id} className="bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors overflow-hidden flex flex-col h-full">
+                {/* Event Image */}
+                {event.image && (
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(event.status)}`}>
+                        {event.status}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
-                 {/* Event Content */}
-                 <div className="p-4 flex flex-col flex-1">
-                   <div className="flex items-start justify-between mb-2">
-                     <h3 className="text-base font-semibold text-gray-900 line-clamp-2">{event.title}</h3>
-                   </div>
-                   
-                   <p className="text-gray-600 text-xs mb-3 line-clamp-2">{event.description}</p>
-                   
-                   <div className="space-y-2 mb-4 flex-1">
-                     <div className="flex items-center space-x-2 text-xs text-gray-600">
-                       <div className="w-3 h-3 bg-blue-100 rounded flex items-center justify-center">
-                         <svg className="w-1.5 h-1.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                         </svg>
-                       </div>
-                       <span>{new Date(event.date).toLocaleDateString()}</span>
-                     </div>
-                     
-                     <div className="flex items-center space-x-2 text-xs text-gray-600">
-                       <div className="w-3 h-3 bg-green-100 rounded flex items-center justify-center">
-                         <svg className="w-1.5 h-1.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                         </svg>
-                       </div>
-                       <span>{event.location}</span>
-                     </div>
-                     
-                     <div className="flex items-center space-x-2 text-xs text-gray-600">
-                       <div className="w-3 h-3 bg-purple-100 rounded flex items-center justify-center">
-                         <svg className="w-1.5 h-1.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                         </svg>
-                       </div>
-                       <span>{event.attendees}/{event.maxAttendees} attending</span>
-                     </div>
+                <div className="p-6 flex-1 flex flex-col">
+                  {/* Event Header */}
+                  <div className="mb-4">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(event.type)}`}>
+                        {event.type}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{event.title}</h3>
+                    <p className="text-sm text-gray-600 line-clamp-2">{event.description}</p>
+                  </div>
 
-                     {/* Ticket Prices */}
-                     <div className="flex items-center space-x-2 text-xs text-gray-600">
-                       <div className="w-3 h-3 bg-yellow-100 rounded flex items-center justify-center">
-                         <svg className="w-1.5 h-1.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                         </svg>
-                       </div>
-                       <span>From ${Math.min(...event.ticketTypes.map(t => t.price))}</span>
-                     </div>
-                   </div>
+                  {/* Event Details */}
+                  <div className="space-y-2 mb-4 flex-1">
+                    <div className="flex items-center text-sm">
+                      <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-gray-600">{new Date(event.date).toLocaleDateString()}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-gray-600">{event.time}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span className="text-gray-600">{event.location}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                      <span className="text-gray-600">{event.attendees}/{event.maxAttendees} attendees</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                      </svg>
+                      <span className="text-gray-600">From ${Math.min(...event.ticketTypes.map(t => t.price))}</span>
+                    </div>
+                  </div>
 
-                   <div className="flex items-center justify-between mt-auto">
-                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${getTypeColor(event.type)}`}>
-                       {event.type}
-                     </span>
-                     
-                     <div className="flex space-x-2">
-                       <Link 
-                         href={`/events/${event.id}`}
-                         className="w-20 px-2 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md border border-gray-300 transition-all duration-200 text-xs text-center"
-                       >
-                         View Details
-                       </Link>
-                       {event.status === "Upcoming" && event.ticketTypes.some(t => t.available > 0) ? (
-                         <button 
-                           onClick={() => openPurchaseModal(event)}
-                           className="w-20 px-2 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-all duration-200 text-xs text-center"
-                         >
-                           Buy Tickets
-                         </button>
-                       ) : (
-                         <button className="w-20 px-2 py-1.5 bg-gray-100 text-gray-500 font-medium rounded-md border border-gray-300 text-xs cursor-not-allowed text-center">
-                           {event.status === "Completed" ? "Ended" : "Sold Out"}
-                         </button>
-                       )}
-                     </div>
-                   </div>
-                 </div>
-               </div>
+                  {/* Action Buttons */}
+                  <div className="flex space-x-2 mt-auto">
+                    {event.status === "Upcoming" && event.ticketTypes.some(t => t.available > 0) ? (
+                      <button 
+                        onClick={() => openPurchaseModal(event)}
+                        className="flex-1 px-3 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                      >
+                        Buy Tickets
+                      </button>
+                    ) : (
+                      <button className="flex-1 px-3 py-2 bg-gray-100 text-gray-500 rounded-md text-sm font-medium cursor-not-allowed">
+                        {event.status === "Completed" ? "Ended" : "Sold Out"}
+                      </button>
+                    )}
+                    
+                    <Link 
+                      href={`/events/${event.id}`}
+                      className="px-3 py-2 border border-gray-300 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : (
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <span className="text-purple-600 text-2xl">📅</span>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Events Yet</h3>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto text-sm">Create or join community events to connect with your Nepalese community</p>
+            <div className="text-4xl mb-4">📅</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No events found</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Create or join community events to connect with your Nepalese community
+            </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href="/events/create" className="action-btn action-btn-primary">
+              <Link 
+                href="/events/create" 
+                className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+              >
                 Create Your First Event
               </Link>
-              <Link href="/events" className="action-btn action-btn-outline">
+              <Link 
+                href="/events" 
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors"
+              >
                 Browse Events
               </Link>
             </div>
           </div>
         )}
+
+        {/* Create Your Own Event */}
+        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <div className="text-center">
+            <div className="text-3xl mb-3">🎉</div>
+            <h3 className="text-lg font-semibold text-blue-900 mb-2">Want to host an event?</h3>
+            <p className="text-sm text-blue-700 mb-4">
+              Create your own community event and bring people together for cultural celebrations, workshops, or networking!
+            </p>
+            <Link
+              href="/events/create"
+              className="px-6 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+            >
+              Create New Event
+            </Link>
+          </div>
+        </div>
       </div>
 
       {/* Purchase Modal */}
